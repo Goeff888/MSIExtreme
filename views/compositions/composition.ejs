@@ -1,0 +1,81 @@
+<% include ../partials/compositionHeader %>
+<% include ../partials/navBarTop %>
+
+  <div class="row">
+    <div class="col-md-2">
+      <h2>Kategorien</h2>
+      <ul>
+        <li>Liste in der </li>
+        <li>Datenbank erstellen</li>
+        <li>und mit</li>
+        <li>Posts verknüpfen</li>
+      </ul>
+      <h2>über Blender</h2>
+      <ul>
+        <li>Post </li>
+        <li>aus der anotherberrydb</li>
+        <li>und Bildern aus PPT</li>
+       </ul>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="container">
+        <header class="jumbotron">
+          <div class="container">
+            <h1> Blender Gallerie</h1>
+            <p>Meine persönliche Digital Art Gallery</p>
+            <a href="/composition/new" class="btn btn-large" >Neues Bild hinzufügen</a>
+          </div>  
+        </header>
+        <div class="row text-center">
+          <% composition.forEach(function(entry){ %>
+             <div class="col-md-3 col-sm-6">
+                <img src="<%= entry.image %>" class="img-thumbnail">
+                <div class="caption">
+                  <%= entry.name %>
+                </div>
+                <p><a href="/composition/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
+            </div>
+           <% }); %>
+            <div class="col-md-3 col-sm-6">
+              <div id="dropzone">
+                <img src="images/winkenderPanda.jpg" class="img-thumbnail">
+                <div class="caption">
+                  neues Bild hinzufügen
+                </div>
+              </div>
+            </div>
+        </div> 
+        
+      </div>
+    </div>
+    
+    <div class="col-md-2">
+        <h2>Links</h2>
+        <a href="/composition/new">Neues Bild hinzufügen</a>
+        <ul>
+          <li>Liste in der </li>
+          <li>Datebank erstellen</li>
+          <li>und mit</li>
+          <li>Projekt verknüpfen</li>
+        </ul>
+        <h2>externe Tutorials</h2>
+        <ul>
+          <% tutorials.forEach(function(tutorial){ %>
+          <li><a href="<%= tutorial.url %>" target="_blank"><%= tutorial.name %></a> </li>
+          <% }); %>
+
+
+        </ul>
+    </div>
+  </div>
+
+
+<div class="footer">Trademark 2018 Groefics</div>
+
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/composition.js"></script>
+
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>

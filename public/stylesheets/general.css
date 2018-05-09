@@ -1,0 +1,13 @@
+body{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+h1{
+    text-align:center;
+}
+
+.footer{
+    float:right;
+    font-size: 10px;
+}

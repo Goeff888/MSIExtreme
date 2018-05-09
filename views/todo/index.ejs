@@ -1,0 +1,41 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To Do Liste</title>
+
+    <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/task.css">
+    
+</head>
+<body>
+<% include ../partials/navbarTop %>
+
+<h1>Alle To-Do Listen</h1>
+<hr>
+  <div class="row">
+    <% for(var i=0; i < todo.length; i++){ %>
+      
+      <div class="task">
+          <h3><a href="/todo/<%= todo[i]._id %>"><%= todo[i].project %></a></h3> 
+        <hr>
+        <ul>
+            <li><%= todo[i].project %></li>
+        </ul>         
+        <a href="/todo/<%= todo[i]._id %>/edit"><span class="editTask"><i class="fas fa-edit"></i></span></a>
+        <form method="POST" action="/todo/<%= todo[i]._id %>?_method=DELETE">
+          <button type="submit" class="deleteBtn"><i class="far fa-trash-alt"></i></button>
+          
+        </form>
+      </div>    
+    <% } %>
+      
+      <div class="task">      
+         <h3>Neue Aufgabe</h3>
+          <a href="/todo/new"><i class="fas fa-plus fa-8x"></i></a>
+     </div>     
+  </div>
+<div class="footer">Trademark 2018 Groefics</div>
+
+<% include ../partials/footer %>
