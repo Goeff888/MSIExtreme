@@ -51,7 +51,7 @@ router.post("/cms", function(req, res){
     res.render("error", {error: err});
    }else{
     console.log(newEntry);
-    res.redirect ("/cms/new");
+    res.redirect ("cms/:id/new");
    }
   });
 });
