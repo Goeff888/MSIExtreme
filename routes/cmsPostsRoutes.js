@@ -1,21 +1,21 @@
 var express = require ("express");
+var promise = require('bluebird');
+var mongoose = require("mongoose");
 var router = express.Router();
-
-//var dBCMS = require("../models/cms");
+promise.promisifyAll(mongoose);
+var dBCMS = require("../models/cms");
 var dBCMSPosts = require("../models/cmsPosts");
 var dBCMSUnit = require("../models/cmsUnit");
 
-function createNewEntry(task,id){
- var newEntry = {task:"Hallo" , todoID:id};
- dBCMSPosts.create(newEntry,function(err,newEntry){
-  if(err){
-   console.log(err);
-   console.log(task);
-   //res.render("error", {error:err});
-  }else{
-   console.log("Unterabschnitt hinzugefügt:" +newEntry);
-  }
- });
+function createDate(entriesDateless){
+ var now = new Date();
+ var entries = new Object();
+ 
+ entries.date = now;
+ console.log("Datum:" +now);
+ console.log("Daten aus Formular:" +entriesDateless);
+ //var newEntry = entriesDateless[0].push({created:now });
+ //return newEntry;
 }
 
 
@@ -28,17 +28,24 @@ function createNewEntry(task,id){
 //CREATE ROUTES###########################
 //neuer Eintrag
 router.post("/cms/:id/cmsUnit/:idUnit/cmsPost", function(req, res){
- console.log("Create Route: cmsUnit");
- dBCMSUnit.findById(req.params.id, function(err, entries){
+ console.log("Create Route: cmsPost");
+ dBCMSPosts.findById(req.params.idUnit, function(err, entries){
   if(err){
    res.render("error", {error: err});
   }else{
-   dBCMSPosts.create(req.body.cmsUnit, function(err, newEntry){
+   var now = new Date();
+   var entries = new Object;
+   entries.content = req.body.cmsPost.content;
+   entries.created = now;
+   entries.updated = now;
+   console.log("Parameter aus dem Formular:" + req.body.cmsPost);
+   console.log("Parameter nach der Funktion:" + createDate(req.body.cmsPost));
+   dBCMSPosts.create(req.body.cmsPost, function(err, newEntry){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log(newEntry);
-    res.redirect ("/cms/:id/cmsUnit/:idUnit/cmsPost/edit");
+    //console.log(newEntry);
+    res.redirect ("/cms/new");
    }
   });
 
@@ -50,18 +57,32 @@ router.post("/cms/:id/cmsUnit/:idUnit/cmsPost", function(req, res){
 //ANZEIGE eines Tasks
 
 //EDIT ROUTES###########################
-//Seite zum Bearbeiten einer Aufgabe
+//Seite zum Bearbeiten eines Posts
 router.get("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
-
+ console.log("CMSPOST edit Seite");
+ promise.props({
+     cms:       dBCMS.find().execAsync(),
+     cmsUnit:   dBCMSUnit.find().execAsync(),
+     cmsPost:   dBCMSPosts.find().execAsync(),
+     navigation: [{cms:req.params.id,cmsUnit:req.params.idUnit, cmsPost:req.params.idPost}]
+   })
+   .then(function(results) {
+    //console.log(results.cmsPost);
+     res.render("cms/edit", results);
+   })
+   .catch(function(err) {
+     res.send(500); // oops - we're even handling errors!
+     console.log(err);
+   });
 });
 //UPDATE ROUTES###########################
-//Bearbeiten einer Aufgabe
-router.put("/cms/:id/cmsUnit/:id/edit", function(req, res){
-  dBCodingPost.findByIdAndUpdate(req.params.id, entries, function(err, updatedPost){
+//Bearbeiten einer Posts
+router.put("/cms/:id/cmsUnit/:idUnit/edit", function(req, res){
+  dBCMSPosts.findByIdAndUpdate(req.params.id, entries, function(err, updatedPost){
    if(err){
     res.render("error", {error: err});
    }else{
-    res.render("cms/edit", {todo: updatedPost});
+    res.render("cms/edit", {cms: updatedPost});
    }
  });
 });

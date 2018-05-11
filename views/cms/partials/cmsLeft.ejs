@@ -2,46 +2,83 @@
   <div class="col-md-3">
      <div id="accordion">
 
-   <% for (var i = 0, z=0; i < cms.length; i++){ %>
+   <% for (var i = 0, z=0; i < cms.length; i++,z++){ %>
 
     <div class="card">
       <div class="card-header" id="headingOne">
         <h5 class="mb-0"> 
-         <button class="btn btn-link" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
+         <button class="btn btn-link btnCMSMain" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
+          <span class="entryTools"><i class="fas fa-pencil-alt"></i></span>
           <%= cms[i].name %>
+          <span class="entryTools"><i class="fas fa-trash-alt"></i></span>
         </button>
       </h5>
     </div>
 
     <div id="collapse<%= z %>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
-       <% for (var j = 0; j< cmsUnit.length;j++){ z++; %>
 
-        <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="false" aria-controls="collapse<%= z %>">
+       <% for (var j = 0; j< cmsUnit.length;j++){z++;  %>
+        <% console.log("Vor der Schleife cms:    "+JSON.stringify(cms[i]._id)) %>
+        <% console.log("Vor der Schleife cmsUnit:"+JSON.stringify(cmsUnit[j].cmsID)) %>
+         <% if (JSON.stringify(cms[i]._id) == JSON.stringify(cmsUnit[j].cmsID)){ %>
+         <% console.log("Überprüfung erfolgreich"+JSON.stringify(cmsUnit[i].name)); %>
+ 
+         <p>
+          <button class="btn btn-primary btnUnitName" type="button" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="false" aria-controls="collapse<%= z %>">
             <%= cmsUnit[j].name %>
           </button>
         </p>
         <div class="collapse" id="collapse<%= z %>">
           <div class="card card-body">
-          <%= cmsUnit[j].description %>
+          <% for (var k=0;k< cmsPost.length;k++,z++){ %>
+          
+          
+           <% if (JSON.stringify(cmsUnit[j]._id) == JSON.stringify(cmsPost[k].cmsUnitID)){ %>
+          <a href="/cms/<%=cms[i]._id%>/cmsUnit/<%=cmsUnit[j]._id%>/<%=cmsPost[k]._id%>/edit" class="btn btn-primary btnPostName">
+            <%= cmsPost[k].name %>
+          </a>
+           <% } %>     
+             
+          <% z++;} %>
+        <p>
+          <button class="btn btn-primary btnPostName" type="button" data-toggle="collapse" data-target="#collapseNewPost<%= z %>" aria-expanded="false" aria-controls="collapseNewPost<%= z %>">
+            Neuen Post hinzufügen
+          </button>
+        </p>
+        <div class="collapse" id="collapseNewPost<%= z %>">
+          <div class="card card-body">
+            <form action="/cms/<%= cms[i]._id %>/cmsUnit/<%=cmsUnit[j]._id %>/cmsPost" method="post">
+                <input type="text" placeholder="Neuer Post" name="cmsPost[name]">
+                <input type="text" value="<%= cmsUnit[j]._id %>" Post" name="cmsPost[cmsUnitID]">
+                <input type="submit">
+            </form>
           </div>
         </div>
+
+
+          </div>
+        </div>
+ 
+         
+       <% } %>
+
        
-       <% z++; } %>
+       <%  z++;} %>
        
        
        
         <p>
-          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          <button class="btn btn-primary btnUnitName" type="button" data-toggle="collapse" data-target="#collapseNewUnit<%= z %>" aria-expanded="false" aria-controls="collapseNewUnit<%= z %>">
             Neuen Abschnitt hinzufügen
           </button>
         </p>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="collapseNewUnit<%= z %>">
           <div class="card card-body">
             <form action="/cms/<%= cms[i]._id %>/cmsUnit" method="post">
-                <input type="text" placeholder="Name" name="cmsUnit[name]" disabled>
-                <input type="text" placeholder="Beschreibung" name="cmsUnit[description]" disabled>
+                <input type="text" placeholder="Name" name="cmsUnit[name]">
+                <input type="text" placeholder="Beschreibung" name="cmsUnit[description]">
+                <input type="text" value="<%= cms[i]._id %>" Post" name="cmsUnit[cmsID]">
                 <input type="submit">
             </form>
           </div>
@@ -49,14 +86,14 @@
       </div>
     </div>
   </div>
-   <% } %>
+   <% z++;} %>
         
 
   
   <div class="card">
     <div class="card-header" id="headingThree">
       <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        <button class="btn btn-link btnCMSMain collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
           Neuen Bereich hinuzfügen
         </button>
       </h5>

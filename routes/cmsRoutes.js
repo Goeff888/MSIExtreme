@@ -6,8 +6,21 @@ var router = express.Router();
 promise.promisifyAll(mongoose);
 var dBCMS = require("../models/cms");
 var dBCMSUnit = require("../models/cmsUnit");
+var dBCMPosts = require("../models/cmsPosts");
+
+function createDate(entriesDateless){
+ var now = new Date();
+ var entries = new Object();
+ entries.name = entriesDateless.name;
+ entries.date = now;
+ console.log("Datum:" +now);
+ console.log("Daten aus Formular:" + entries.date);
+ //var newEntry = entriesDateless[0].push({created:now });
+ return entries;
+}
+
 //INDEX ROUTES###########################
-//Anzeige aller Aufgaben
+//Anzeige aller Haupteinträge
 router.get("/cms", function(req, res){
  dBCMS.find({}, function(err, entries){
   if(err){
@@ -22,36 +35,32 @@ router.get("/cms", function(req, res){
 router.get("/cms/new", function(req, res){
  console.log("CMS New Seite");
  promise.props({
-     cms:       dBCMS.find().execAsync(),
-     cmsUnit:   dBCMSUnit.find().execAsync(),
+     cms:       dBCMS.find({},'name').execAsync(),
+     cmsUnit:   dBCMSUnit.find({},'name cmsID').execAsync(),
+     cmsPost:   dBCMPosts.find({},'name cmsUnitID').execAsync()
    })
    .then(function(results) {
-    console.log(results.cmsUnit);
+    console.log("CMS:"+results.cms);
+    console.log("CMSUnit:"+results.cmsUnit);
      res.render("cms/new", results);
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
      console.log(err);
    });
- 
- /*dBCMS.find({}, function(err, entries){
-  if(err){
-   res.render("error", {error: err});
-  }else{
-   console.log(entries);
-    res.render ("cms/new", {cms: entries});
-  }
- });*/
 });
 //CREATE ROUTES###########################
 //neuer Eintrag
 router.post("/cms", function(req, res){
+ var entryWithDate = createDate(req.body.cms);
+ console.log(entryWithDate.date);
+ console.log(entryWithDate.name);
    dBCMS.create(req.body.cms, function(err, newEntry){
    if(err){
     res.render("error", {error: err});
    }else{
     console.log(newEntry);
-    res.redirect ("cms/:id/new");
+    res.redirect ("cms/new");
    }
   });
 });
@@ -70,7 +79,7 @@ router.get("/cms/:id", function(req, res){
     }else{
      console.log("id:" + entries._id);
 
-     res.render("todo/show", {todo: entries, tasks: tasks});
+     res.render("cms/show", {todo: entries, tasks: tasks});
     } 
    });
    
@@ -86,10 +95,10 @@ router.get("/cms/:id/edit", function(req, res){
   if(err){
     res.render("error", {error: err});
   }else{
-   res.render("todo/edit", {todo: entries, tasks: task});
+   res.render("cms/edit", {todo: entries, tasks: task});
   }
  }); 
-// res.render ("todo/edit");
+
 });
 //UPDATE ROUTES###########################
 //Bearbeiten einer Aufgabe
@@ -98,7 +107,7 @@ router.put("/cms/:id/edit", function(req, res){
    if(err){
     res.render("error", {error: err});
    }else{
-    res.render("todo/edit", {todo: updatedTodo});
+    res.render("cms/edit", {cms: updatedTodo});
    }
  });
 });
@@ -111,7 +120,7 @@ router.delete("/cms/:id", function(req, res){
       res.render("error", {error: err});
      }else{
       console.log("Eintrag entfernt");
-      res.redirect("/todo");
+      res.redirect("/cms");
      }
   }); 
 });

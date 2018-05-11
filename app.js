@@ -6,10 +6,10 @@ var mongoose = require("mongoose");
 var todoRoutes = require("./routes/todoRoutes");
 var taskRoutes = require("./routes/taskRoutes");
 var cmsRoutes = require("./routes/cmsRoutes");
-var cmsUnitRoutes = require("./routes/cmsUnitRoutes"); 
+var cmsUnitRoutes = require("./routes/cmsUnitRoutes");
+var cmsPostRoutes = require("./routes/cmsPostsRoutes");
 //////MONGO-DATABASE-SCHEMES////////
-//var dBTodo = require("./models/todo");
-//var dBTasks = require("./models/tasks");
+
 var app = express();
 //////APP INIT////////
 //promise.promisifyAll(mongoose);
@@ -28,6 +28,7 @@ app.use(taskRoutes);
 app.use(todoRoutes);
 app.use(cmsRoutes);
 app.use(cmsUnitRoutes);
+app.use(cmsPostRoutes);
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index");

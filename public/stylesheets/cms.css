@@ -1,7 +1,7 @@
 body{
   background-image:  url(/images/winkenderPanda.jpg);
   background-size: 100%;/* fallback for old browsers */
-
+  
   color: black;
   font-family: 'Arvo', serif;
 }
@@ -75,6 +75,54 @@ hr {
   padding:2px;
   color:white;
   border-color: white;
+}
+
+.entryTools{
+  visibility: hidden;
+}
+
+span:hover{
+  visibility: visible;
+}
+
+.btnPostName{
+  background-color: beige;
+  font-family: "Allerta";
+  width:90%;
+  border: none;
+  color: dimgrey;
+  padding: 0px 0px;
+  text-align: right;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;  
+}
+
+.btnUnitName{
+  background-color: teal;
+  font-family: "Allerta";
+  width:90%;
+  letter-spacing: 0.1em;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: left;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 15px;  
+}
+
+.btnCMSMain{
+  background-color: white;
+  font-family: "Allerta";
+  width:90%;
+  letter-spacing: 0.1em;
+  border: none;
+  color: black;
+  padding: 5px 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px; 
 }
 
 #savePost{
