@@ -25,7 +25,7 @@
          <% if (JSON.stringify(cms[i]._id) == JSON.stringify(cmsUnit[j].cmsID)){ %>
           
           <button class="btn btn-primary btnUnitName" type="button" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="false" aria-controls="collapse<%= z %>" draggable="true">
-            <span class="edittools"><i class="fas fa-pen-square"></i></span><%= cmsUnit[j].name %><span><i class="fas fa-pen-square"></i></span>
+            <%= cmsUnit[j].name %>
           </button>
           
           <div class="btnDropzone">

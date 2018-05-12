@@ -1,0 +1,91 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CMS Editor</title>
+    <link href="https://fonts.googleapis.com/css?family=Allerta" rel="stylesheet">
+    <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/cms.css">
+    
+</head>
+<body>
+<% include ../partials/navbarTop %>
+<h1>Post Editor</h1>
+<div class="row" id="center">
+  <% include partials/cmsLeft %>
+
+  <div class="col-md-6">
+    <h2>Beitrags Editor</h2>
+    <div class="toolbar">
+      <a href="#" data-command='undo'><i class='fa fa-undo'></i></a>
+      <a href="#" data-command='redo'><i class='fa fa-redo'></i></a>
+      <div class="fore-wrapper"><i class='fa fa-font' style='color:#C96;'></i>
+        <div class="fore-palette"></div>
+      </div>
+      <div class="back-wrapper"><i class='fa fa-font' style='background:#C96;'></i>
+        <div class="back-palette"></div>
+      </div>
+        <a href="#" data-command='bold'><i class='fa fa-bold'></i></a>
+        <a href="#" data-command='italic'><i class='fa fa-italic'></i></a>
+        <a href="#" data-command='underline'><i class='fa fa-underline'></i></a>
+        <a href="#" data-command='strikeThrough'><i class='fa fa-strikethrough'></i></a>
+        <a href="#" data-command='justifyLeft'><i class='fa fa-align-left'></i></a>
+        <a href="#" data-command='justifyCenter'><i class='fa fa-align-center'></i></a>
+        <a href="#" data-command='justifyRight'><i class='fa fa-align-right'></i></a>
+        <a href="#" data-command='justifyFull'><i class='fa fa-align-justify'></i></a>
+        <a href="#" data-command='indent'><i class='fa fa-indent'></i></a>
+        <a href="#" data-command='outdent'><i class='fa fa-outdent'></i></a>
+        <a href="#" data-command='insertUnorderedList'><i class='fa fa-list-ul'></i></a>
+        <a href="#" data-command='insertOrderedList'><i class='fa fa-list-ol'></i></a>
+        <a href="#" data-command='h1'>H1</a>
+        <a href="#" data-command='h2'>H2</a>
+        <a href="#" data-command='createlink'><i class='fa fa-link'></i></a>
+        <a href="#" data-command='unlink'><i class='fa fa-unlink'></i></a>
+        <a href="#" data-command='insertimage'><i class='fa fa-image'></i></a>
+        <a href="#" data-command='p'>P</a>
+        <a href="#" data-command='subscript'><i class='fa fa-subscript'></i></a>
+        <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
+        <button id="switchCode" name="Code">Code</button>
+    </div>
+    <form action="#" method="POST" id="formContent">
+      <div id="editor" name="post[content]" contenteditable>
+          <% console.log(cmsPost); %>
+          <%= cmsPost[0].content %>
+      </div>
+      <textarea name="post[content]"rows="5" cols="40" id="clipped" hidden="true" ></textarea>
+      <div class="row">
+        <div class="col-md-4">
+          Erstellt am:
+        </div>
+        <div class="col-md-4">
+           Zuletzt geändert am:         
+        </div>
+        <div class="col-md-4">
+          <select class="form-control form-control-lg" name="post2[status]" >
+           <option>neu</option>
+           <option selected>in Arbeit</option>
+           <option>veröffentlicht</option>
+         </select>         
+        </div>
+      </div>
+
+      <input type=submit id="savePost">
+    </form>
+  </div>
+  <div class="col-md-3">
+    <form method="post" action="/new/upload">
+      <div id="dropzone" class="dragShow">Dropzone</div>
+      <div id="list">noch keine Bilder vorhanden</div>
+      <input type="submit" id="uploadPic">
+    </form>
+    <hr>
+  <h3>Beiträge</h3>
+  <form method="post" action="">
+    <input type="text" name=cmsPost[name] placeholder="Neuer Post">
+    <input type="submit">
+  </form>
+  </div>
+</div>
+  
+<% include ../partials/footer %>

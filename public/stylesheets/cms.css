@@ -85,13 +85,33 @@ span:hover{
   visibility: visible;
 }
 
+.btnDropzone{
+  font-size: 10px;
+  visibility:hidden;
+}
+
+
+.btnDropzoneVisible{
+  background-color: white;
+  font-family: "Allerta";
+  width:90%;
+  border: 1px dotted black;
+  color: dimgrey;
+  padding: 0px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  visibility:visible;
+}
+
 .btnPostName{
   background-color: beige;
   font-family: "Allerta";
   width:90%;
   border: none;
   color: dimgrey;
-  padding: 0px 0px;
+  padding: 0px 4px;
   text-align: right;
   text-decoration: none;
   display: inline-block;
@@ -101,7 +121,7 @@ span:hover{
 .btnUnitName{
   background-color: teal;
   font-family: "Allerta";
-  width:90%;
+  width:80%;
   letter-spacing: 0.1em;
   border: none;
   color: white;
@@ -119,7 +139,7 @@ span:hover{
   letter-spacing: 0.1em;
   border: none;
   color: black;
-  padding: 5px 10px;
+  padding: 0px 00px;
   text-align: center;
   display: inline-block;
   font-size: 17px; 
