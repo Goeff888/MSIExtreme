@@ -1,9 +1,8 @@
 var mongoose =require("mongoose");
 
 var todoSchema = new mongoose.Schema({
-  project:       String,
+  project:      String,
   description:  String,
-  tasks:        {type: String, default: 'n.a.'},
   result:       String,
   order:        Number,
   created:      {type:Date, default: Date.now},

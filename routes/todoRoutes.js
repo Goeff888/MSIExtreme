@@ -27,7 +27,7 @@ router.post("/todo", function(req, res){
     res.render("error", {error: err});
    }else{
     console.log(newEntry);
-    res.render ("todo/show", {todo: newEntry});
+    res.redirect("/todo/"+ newEntry._id+"/edit");
    }
   });
 });
@@ -46,8 +46,7 @@ router.get("/todo/:id", function(req, res){
     }else{
      console.log("id:" + entries._id);
      console.log("tasks:" + tasks);
-     console.log("entries:" + entries);
-     res.render("todo/show", {todo: entries, tasks: tasks});
+     res.redirect("/todo/"+ tasks._id+"/edit");
     } 
    });
    
@@ -58,12 +57,22 @@ router.get("/todo/:id", function(req, res){
 //Seite zum Bearbeiten einer Aufgabe
 router.get("/todo/:id/edit", function(req, res){
   console.log("Edit Route ToDo ");
-  var task = [{task:'hallo'}];
+  //var task = [{task:'hallo'}];
   dBTodo.findById(req.params.id, function(err, entries){
   if(err){
     res.render("error", {error: err});
   }else{
-   res.render("todo/edit", {todo: entries, tasks: task});
+   
+   dBTasks.find({todoID:entries.todoID}, function(err, task){
+    if(err){
+      res.render("error", {error: err});
+    }else{
+     
+     res.render("todo/edit", {todo: entries, tasks: task});
+    }
+   });
+   
+   //res.render("todo/edit", {todo: entries, tasks: task});
   }
  }); 
 // res.render ("todo/edit");

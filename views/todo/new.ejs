@@ -10,35 +10,42 @@
 </head>
 <body>
 <% include ../partials/navbarTop %>
-<h1>Neue To-Do Liste</h1>
+
   <div class="row">
      <form action="/todo" method="post">
       <div class="task">      
           <input type="text" class="newProject" name="todo[project]" placeholder="Aufgabenbereich">
           <hr>
-          <input type="text" class="newTask" name="todo[task]" placeholder="Aufgabe1" disabled>
-          <input type="text" class="newTask" placeholder="Aufgabe2" disabled>
-          <input type="text" class="newTask" placeholder="fällig am:">
+          <input type="text" class="newTask" name="todo[description]" placeholder="Beschreibung">
+          <input type="text" class="newTask" name="todo[result]" placeholder="Ziel">
           <p><input type="submit"></p>
       </div>
-    </form>
-     
-         <div class="task">
-
-        <h3>Aufgaben-Bereich</h3>
-        <hr>
-        <ul>
-          <% /*for (var i=0; i< tasks.length;i++){ %>
-            <li><%= tasks.task %></li>
-          <% /*}*/ %>
-          
-        </ul>
-        
-        <input type="text" class="taskName" placeholder="Neue Aufgabe">
-        <span class="addTask"><i class="fas fa-plus"></i></span>
-        <input type="submit"></button>
-
+    </form> 
+    <div class="task">
+      <h3>Aufgaben</h3>
+      <hr>
+      Hier stehen die einzelnen Aufgaben. Diese können in der Edit Route hinzugefügt werden.
     </div>
   </div>
-  
-<% include ../partials/footer %>
+ <a href="/todo">Start</a>
+ <div id="overlay"><h1>Neue To-Do Liste</h1></div>
+<div id="hey"><div id="layer-up"></div></div>
+<div id="layer-0">
+	
+	<div id="layer-1">
+		<div id="layer-2">
+			<div id="lines">
+				<div id="layer-corner"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="mtnZZZ"></div>
+
+<div class="footer">Trademark 2018 Groefics</div>
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/task.js"></script>
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>

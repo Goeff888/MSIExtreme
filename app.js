@@ -5,6 +5,7 @@ var express = require ("express");
 var mongoose = require("mongoose");
 var todoRoutes = require("./routes/todoRoutes");
 var taskRoutes = require("./routes/taskRoutes");
+var todoAjaxRoutes = require("./routes/todoAjaxRoutes");
 var cmsRoutes = require("./routes/cmsRoutes");
 var cmsUnitRoutes = require("./routes/cmsUnitRoutes");
 var cmsPostRoutes = require("./routes/cmsPostsRoutes");
@@ -24,11 +25,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 //##########################
 //////RESTFUL ROUTES////////
 //##########################
-app.use(taskRoutes);
 app.use(todoRoutes);
+app.use(taskRoutes);
+app.use(todoAjaxRoutes);
 app.use(cmsRoutes);
 app.use(cmsUnitRoutes);
 app.use(cmsPostRoutes);
+
+/*app.get("/save",function(req,res){
+ console.log("Hallo von Ajax");
+});*/
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index");

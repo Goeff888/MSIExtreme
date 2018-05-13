@@ -13,45 +13,50 @@
 <h1>To-Do Liste Bearbeiten</h1>
 <hr>
   <div class="row">
+    <div class="task">
      <form action="/todo" method="post">
-      <div class="task">      
-          <input type="text" class="newTask" name="todo[project]" value="<%= todo.project %>">
+          <input type="text" class="newProject" name="todo[project]" value="<%= todo.project %>">
           <hr>
+          Beschreibung:
           <input type="text" class="newTask" name="todo[description]" value="<%= todo.description %>">
+          Ergebnis:
           <input type="text" class="newTask" name="todo[result]" value="<%= todo.result %>">
           <p><input type="submit" ></p>
-      </div>
-    </form>
-    
+      </form>
+    </div>
+
     <div class="task">
-    <form action="/todo/<%= todo._id %>/tasks" method="post" id="addTaskForm">
         <h3>Aufgaben-Bereich</h3>
         <hr>
-        <ul>
-          <% for (var i=0; i< tasks.length;i++){ %>
+        <ul class="addedTask">
+          <% for(var i = 0;i < tasks.length; i++){ %>
             <li><%= tasks[i].task %></li>
           <% } %>
-          
         </ul>
-        
-        <input type="text" class="taskName" placeholder="Neue Aufgabe">
-        <span class="addTask"><i class="fas fa-plus"></i></span>
-        <input type="submit"></button>
-         </form>
+        <input type="text" id="taskName" name="task" placeholder="Neue Aufgabe">
     </div>
  
-    <form action="/todo" method="post">
-      <div class="task">      
-          <h3>Info</hr>
-          <hr>
-          <input type="text" class="newTask" name="task[deadline]" placeholder="fällig am">
-          <p class="date">erstellt am:
+    <div class="task">
+      <form action="/todo" method="post">
+        <h3>Info</hr>
+        <hr>
+        <input type="text" class="date" name="task[deadline]" placeholder="fällig am">
+        <p class="date">erstellt am:
           <%= todo.created.getDate() %>.
           <%= todo.created.getMonth() %>.
-           <%= todo.created.getYear() +1900 %>
-          </p>
-          <p><input type="submit" disabled></p>
-      </div>
-    </form>
+          <%= todo.created.getYear() +1900 %>
+        </p>
+        <p class="date">Anzahl der Aufgaben gesamt:</p>
+        <p class="date">bereits erledigte Aufgaben:</p>
+      </form>
+    </div>
+    
+    
   </div>
-<% include ../partials/footer %>
+<a href="/todo">Start</a>
+<div class="footer">Trademark 2018 Groefics</div>
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/task.js"></script>
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>
