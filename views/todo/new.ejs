@@ -12,23 +12,33 @@
 <% include ../partials/navbarTop %>
 
   <div class="row">
-     <form action="/todo" method="post">
-      <div class="task">      
-          <input type="text" class="newProject" name="todo[project]" placeholder="Aufgabenbereich">
-          <hr>
-          <input type="text" class="newTask" name="todo[description]" placeholder="Beschreibung">
-          <input type="text" class="newTask" name="todo[result]" placeholder="Ziel">
-          <p><input type="submit"></p>
-      </div>
-    </form> 
+   <div class="col-3">
+    <a href="/todo">Alle Aufgaben</a>
+   </div>
+   
+   <div class="col-6">
+    
+      <form action="/todo" method="post" class="createForm"> 
+           <input type="text" class="newProject" name="todo[project]" placeholder="Projekt">
+           <hr>
+           <textarea class="newTask" name="todo[description]" placeholder="Beschreibung" rows="2" cols="50"></textarea>
+           <textarea class="newTask" name="todo[result]" placeholder="Ziel" rows="2" cols="50"></textarea>
+           <p><button type="submit">Erstellen</button></p>
+      </form>
+    
+   </div>
+   <div class="col-3">
     <div class="task">
       <h3>Aufgaben</h3>
       <hr>
+      
       Hier stehen die einzelnen Aufgaben. Diese können in der Edit Route hinzugefügt werden.
     </div>
+   </div>
+
   </div>
- <a href="/todo">Start</a>
- <div id="overlay"><h1>Neue To-Do Liste</h1></div>
+ 
+<div id="overlay"><h1>Neue To-Do Liste</h1></div> 
 <div id="hey"><div id="layer-up"></div></div>
 <div id="layer-0">
 	

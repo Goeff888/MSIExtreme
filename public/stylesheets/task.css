@@ -1,15 +1,4 @@
-body{
-	background: radial-gradient(ellipse at center, rgba(127,0,173,0.6) 0%,
-  rgba(0,0,0,0.8) 60%, 
-  rgba(0,0,0,1) 90%), 
-  url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/31787/stars.jpg);
-	background-size: cover;
-	z-index:-5;
-	color: white;
-	overflow: hidden;
-	font-family: 'Monoton', monospace;
-	font-size: 2em;
-}
+
 body {
 	background: radial-gradient(ellipse at center, rgba(127,0,173,0.6) 0%,
   rgba(0,0,0,0.8) 60%, 
@@ -26,8 +15,13 @@ body {
 h1 {
 	animation: neon1 1.5s ease-in-out infinite alternate;
  text-align: center;
+
 }
 
+.createForm{
+	padding-top: 50px;
+	margin-top: 20px;
+}
 
 
 hr{
@@ -56,6 +50,33 @@ hr{
  padding-left: 10px;
 }
 
+.iconRight{
+	background-color: red;
+	margin-left: 20px;
+	float: right;
+	color:white;
+	width:0px;
+	display:inline-block;
+	visibility: hidden;
+}
+li:hover .iconRight{
+	width:20px;
+	visibility: visible;
+}
+ .iconLeft{
+	background-color: red;
+	margin-right: 20px;
+	text-align: center;
+	color:white;
+	width:0px;
+	display:inline-block;
+	visibility: hidden;
+}
+li:hover .iconLeft{
+	width:20px;
+	visibility: visible;
+}
+
 .addTask{
  margin-left:10px;
  text-align: right;
@@ -64,10 +85,36 @@ hr{
 .addedTask{
  background-color: #ccc;
  color:black;
- margin-left:10px;
- text-align: right;
- text-align:center;
- list-style: circle
+ margin-left:0px;
+	padding: 0;
+ text-align:left;
+ list-style: none
+}
+
+.addedTasksm{
+	width:100%;
+ background-color: #ccc;
+ color:black;
+ margin:0px;
+	padding: 0px;
+ text-align:left;
+ list-style: none;
+}
+.taskEdit{
+	  width:90%;
+  float:none;
+  border:2px solid black;
+  background-color: #ccc;
+  margin-left: 0px;
+  margin-right:0px;
+  margin-top: 20px;
+  padding-top: 5px;
+		padding-right: 0px;
+		padding-left: 0px;
+  font-size: 0.6em;
+  border-radius:10px;
+  box-shadow:inset 00 3px #000;
+  text-align:center;
 }
 
 .task{
@@ -75,10 +122,11 @@ hr{
   float:left;
   border:2px solid black;
   background-color: #ccc;
-  margin-left: 20px;
-  margin-right:5px;
+  margin-left: 0px;
+  margin-right:0px;
   margin-top: 20px;
   padding-top: 5px;
+		padding-left: 0px;
   font-size: 0.5em;
   border-radius:10px;
   box-shadow:inset 00 3px #000;
@@ -107,12 +155,7 @@ hr{
   border-width: 0 0 1px 0; 
   border-radius: 20px; 
 }
-.task li{
-  background-color: white;
-  border: 0.5px solid #ccc;
-  width: 90%;
-  list-style: none;
-}
+
 
 .row{
  padding-left:0;

@@ -1,17 +1,36 @@
-<% include ../partials/compositionHeader %>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blender Gallerie</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
+</head>
+<body>
 <% include ../partials/navBarTop %>
 
 
 
   <div class="row">
     <div class="col-md-2">
-      <h2>Kategorien</h2>
-      <ul>
-        <li>Liste in der </li>
-        <li>Datenbank erstellen</li>
-        <li>und mit</li>
-        <li>Posts verknüpfen</li>
-      </ul>
+      <div class="taskEdit">
+        <h2>Kategorien</h2>
+        <hr>
+        <ul>
+          
+          <% for (var i = 0; i < categories.length;i++){ %>
+          <% console.log(categories.length); %>
+            <li><%= categories[i].category %> </li>
+         <% } %>
+        </ul>
+        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
+      </div>
+      <hr>
+      
       <h2>Tutorials</h2>
       <ul>
         <li>Post </li>
@@ -25,18 +44,19 @@
        
           <h1> Neues Blender File</h1>
           <div style="width :30%; margin: 50px auto;">
-            <form action="/composition/new" method="post">
+            <form action="/composition/new" method="post" name="newFile">
               <div class="form-group">
                 <input class="form-control" type="text" name="composition[name]" placeholder="Name">                
               </div>
               <div class="form-group">
-                <input class="form-control" type="text" name="composition[image]" placeholder="gerenderte Datei">  
+                
+                <input type="file" name="composition[renderedImage]" placeholder="gerenderte Datei">
               </div>
               <div class="form-group">
                 <input class="form-control" type="text" name="composition[description]" placeholder="Beschreibung">  
               </div>
               <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
+                <button class="btn btn-lg btn-primary btn-block" type="submit" id="sendBtn">Speichern</button>  
               </div>                           
             </form>
           </div>
@@ -53,7 +73,7 @@
         </ul>
         <h2>externe Tutorials</h2>
         <ul>
-          <form method="post" action="/tutorials/new">
+          <form method="post" action="/tutorial">
             <input type="text" name=tutorials[name] placeholder="Name">
             <input type="text" name=tutorials[url] placeholder="URL">
             <input type="text" name=tutorials[category] placeholder="Kategorie">

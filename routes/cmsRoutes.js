@@ -3,10 +3,12 @@ var express = require ("express");
 var promise = require('bluebird');
 var mongoose = require("mongoose");
 var router = express.Router();
-promise.promisifyAll(mongoose);
+
 var dBCMS = require("../models/cms");
 var dBCMSUnit = require("../models/cmsUnit");
 var dBCMPosts = require("../models/cmsPosts");
+
+promise.promisifyAll(mongoose);
 
 function createDate(entriesDateless){
  var now = new Date();

@@ -13,16 +13,17 @@
 <body>
 <% include ../partials/navBarTop %>
 
+
+
   <div class="row">
     <div class="col-md-2">
-      <p class="lead">Kategorien</p>
-      <div class="list-group">
-        <li class="list-group-item active">Liste in der </li>
-        <li class="list-group-item">Datenbank erstellen</li>
-        <li class="list-group-item">und mit</li>
-        <li class="list-group-item">Posts verknüpfen</li>        
-      </div>
-
+      <h2>Kategorien</h2>
+      <ul>
+        <li>Liste in der </li>
+        <li>Datenbank erstellen</li>
+        <li>und mit</li>
+        <li>Posts verknüpfen</li>
+      </ul>
       <h2>Tutorials</h2>
       <ul>
         <li>Post </li>
@@ -30,37 +31,29 @@
         <li>und Bildern aus PPT</li>
        </ul>
     </div>
-
+    
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="<%= composition.image %>">
-        <div class="caption">
-          
-          <h4><a><%= composition.name %></a></h2>
-          <p><%= composition.description %></p>
-        <div class="well">
-          <div class="text-right">
-            <a class="btn btn-success" href="/composition/<%= composition._id%>/comments/new">Neuer Kommentar</a>          
-        </div>   
+      <div class="container">
+       
+          <h2>Hinzufügen eines Kommentars</h2>
+          <div style="width :30%; margin: 50px auto;">
+            <form action="/comments" method="post" name="newComment">
+              <div class="form-group">
+                <input class="form-control" type="text" name="comment[name]" placeholder="Kommentar">                
+              </div>
+              <div class="form-group">
+                <input class="form-control" type="text" name="comment[author]" placeholder="Autor">  
+              </div>
+              <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
+              </div>                           
+            </form>
+          </div>
+      </div>
     </div>
-
-          
-          <% composition.comments.forEach(function(comment){ %>
-            
-         
-       <div class ="row">
-        <div class="col-md-8">
-          <%= comment.author%>
-          <span class="pull-right">10 days ago</span>
-          <p><%= comment.text %></p>
-        </div>
-      </div>
-        <% });%>
-      </div>
-     </div>
-  
     <div class="col-md-2">
         <h2>Links</h2>
-        <a href="/composition/new">Neues Bild hinzufügen</a>
+        <a href="/composition">zurück</a>
         <ul>
           <li>Liste in der </li>
           <li>Datebank erstellen</li>
@@ -69,12 +62,15 @@
         </ul>
         <h2>externe Tutorials</h2>
         <ul>
-          <li>Links </li>
-          <li>kategorisieren</li>
+          <form method="post" action="/tutorials/new">
+            <input type="text" name=tutorials[name] placeholder="Name">
+            <input type="text" name=tutorials[url] placeholder="URL">
+            <input type="text" name=tutorials[category] placeholder="Kategorie">
+            <input type="submit">
+          </form>
         </ul>
     </div>
   </div>
-
 
 <div class="footer">Trademark 2018 Groefics</div>
 

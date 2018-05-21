@@ -5,8 +5,8 @@ var cmsPostsSchema = new mongoose.Schema({
   content:      {type: String, default: 'Geben Sie hier den Text ein'},
   order:        Number,
   cmsUnitID:       {type: mongoose.Schema.Types.ObjectId, ref:"cmsUnit"},
-  created:      Date,
-  updated:      Date
+  created:      {type:Date, default: Date.now},
+  updated:      {type:Date, default: Date.now},
 });
 
 module.exports = mongoose.model("cmsPosts", cmsPostsSchema);

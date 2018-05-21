@@ -1,0 +1,86 @@
+body{
+  font-family: Arial;
+  background: #6441A5;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #2a0845, #6441A5);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #2a0845, #6441A5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color:white;
+
+}
+
+h1 {
+  text-align:center;
+    
+}
+
+h2 {
+    font-size: 2.0em;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 2em;
+    text-align: left;
+    margin-left: 1.66%;
+    text-align: center;
+}
+
+li {
+  margin-left: 1.33%;
+  list-style: none; 
+}
+
+
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+
+.img-composition{
+  width:80%;
+  
+  text-align: center;
+}
+
+.thumbnail img{
+  width: 100%;
+}
+
+.thumbnail{
+  padding:0;
+}
+
+.thumbnail .caption{
+  padding:9px;
+}
+
+img {
+  width: 30%;
+  margin:1.66%;
+}
+
+.dragShow{
+  width:80%;
+  height:200px;
+  background-color: grey;
+  margin:auto;
+  padding-top: 85px;
+  text-align:center;
+  margin-top: 10%; 
+}
+
+.dragOver{
+  border:2px dashed #000;
+}
+
+.jumbotron{
+  background-color: black;
+  background-image: url("/images/blender_jumbotron.jpg");
+}
+
+
+

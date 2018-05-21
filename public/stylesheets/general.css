@@ -11,3 +11,33 @@ h1{
     float:right;
     font-size: 10px;
 }
+
+.card-todo{
+    background-image: url("/images/todo_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.card-cms{
+    background-image: url("/images/cms_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.card-composition{
+    background-image: url("/images/blender_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.card-html{
+    background-image: url("/images/html_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.card-media{
+    background-image: url("/images/media_background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}

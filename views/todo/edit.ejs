@@ -13,44 +13,61 @@
 <h1>To-Do Liste Bearbeiten</h1>
 <hr>
   <div class="row">
-    <div class="task">
-     <form action="/todo" method="post">
-          <input type="text" class="newProject" name="todo[project]" value="<%= todo.project %>">
+    <div class="col-3">
+      <div class="task">
+       <form action="/todo" method="post">
+            <input type="text" class="newProject" name="todo[project]" value="<%= todo.project %>">
+            <hr>
+            Beschreibung:
+            <textarea class="newTask" name="todo[description]" rows="3" cols="25"><%= todo.description %></textarea>
+            Ergebnis:
+            <textarea class="newTask" name="todo[result]"  rows="3" cols="25"><%= todo.result %></textarea>>
+            <hr>
+            Termin:
+            <input type="text" class="date" name="task[deadline]" placeholder="fällig am">
+            <p><input type="submit" ></p>
+        </form>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="taskEdit">
+          <h3>Aufgaben-Bereich</h3><span id="todoID"><%= todo._id %></span>
           <hr>
-          Beschreibung:
-          <input type="text" class="newTask" name="todo[description]" value="<%= todo.description %>">
-          Ergebnis:
-          <input type="text" class="newTask" name="todo[result]" value="<%= todo.result %>">
-          <p><input type="submit" ></p>
-      </form>
+          <ul class="addedTasksm">
+            <% for(var i = 0;i < tasks.length; i++){ %>
+              
+              <li class="taskListItem">
+                <span class="iconLeft" data-value="<%= tasks[i]._id %>"><i class="fas fa-edit" ></i></span>
+                  <% if (tasks[i].status == "open"){ %>
+                   <input type="checkbox" class="form-check-input" id="exampleCheck1" > 
+                  <% }else{ %>
+                  <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
+                  <% } %> 
+                  <%= tasks[i].task %>
+                <span class="iconRight" data-value="<%= tasks[i]._id %>"><i class="fas fa-trash"></i></span>
+              </li>
+              
+            <% } %>
+          </ul>
+          <input type="text" id="taskName" name="task" placeholder="Neue Aufgabe">
+      </div>
     </div>
-
-    <div class="task">
-        <h3>Aufgaben-Bereich</h3>
-        <hr>
-        <ul class="addedTask">
-          <% for(var i = 0;i < tasks.length; i++){ %>
-            <li><%= tasks[i].task %></li>
-          <% } %>
-        </ul>
-        <input type="text" id="taskName" name="task" placeholder="Neue Aufgabe">
+    <div class="col-3">    
+      <div class="task">
+        <form action="/todo" method="post">
+          <h3>Info</hr>
+          <hr>
+          
+          <p class="date">erstellt am:
+            <%= todo.created.getDate() %>.
+            <%= todo.created.getMonth() %>.
+            <%= todo.created.getYear() +1900 %>
+          </p>
+          <p class="date">Anzahl der Aufgaben gesamt:</p>
+          <p class="date">bereits erledigte Aufgaben:</p>
+        </form>
+      </div>
     </div>
- 
-    <div class="task">
-      <form action="/todo" method="post">
-        <h3>Info</hr>
-        <hr>
-        <input type="text" class="date" name="task[deadline]" placeholder="fällig am">
-        <p class="date">erstellt am:
-          <%= todo.created.getDate() %>.
-          <%= todo.created.getMonth() %>.
-          <%= todo.created.getYear() +1900 %>
-        </p>
-        <p class="date">Anzahl der Aufgaben gesamt:</p>
-        <p class="date">bereits erledigte Aufgaben:</p>
-      </form>
-    </div>
-    
     
   </div>
 <a href="/todo">Start</a>

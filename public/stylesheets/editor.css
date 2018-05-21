@@ -1,0 +1,255 @@
+body{
+  background-image:  url(/images/winkenderPanda.jpg);
+  background-size: 100%;/* fallback for old browsers */
+
+  color: black;
+  font-family: 'Arvo', serif;
+}
+
+h1 {
+    font-size: 5.0em;    
+    text-align: center;
+
+}
+
+h2 {
+    font-size: 3.0em;
+    text-align: center;
+    margin-left: 1%;
+}
+
+h3 {
+    font-size: 2em;
+    margin-left: 1.66%;
+    text-align: center;
+}
+
+li {
+  margin-left: 1.66%;
+}
+
+
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.sectionbtn{
+  border: none;
+  float: right;
+}
+
+.dragShow{
+  width:80%;
+  height:200px;
+  
+  background-color: grey;
+  margin:auto;
+  padding-top: 85px;
+  text-align:center;
+  margin-top: 10%; 
+}
+
+.dragOver{
+  border:2px dashed #000;
+}
+
+
+.aligninput{
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+
+.tools{
+  border: 0.5px solid black;
+  margin-left: 1px;
+  background-color: grey;
+  padding:5px;
+  color:#e2e2e2;
+}
+
+.tools:hover{
+  padding:2px;
+  color:white;
+  border-color: white;
+}
+
+#savePost{
+  margin-top:10px;
+}
+
+a {
+  cursor: pointer;
+}
+
+#editor {
+  box-shadow: 0 0 2px #CCC;
+  height: 250px;
+  overflow: auto;
+  margin-top: 20px;
+  margin-left:1px;
+
+  outline: none;
+  background-color: white;
+}
+
+#postView{
+  width: 100%;
+  height: 300px;
+  background-color: white;
+}
+
+.card-post{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.btnList{
+  border: none;
+  width:70%;
+  height:30px;
+  padding-left: 5px;
+  margin-left:0;
+  margin-top:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+  text-align:left;
+  font-weight: bolder;
+  font-family:Arial;
+  background-color: white;
+}
+
+.deleteBtn{
+  text-align:center;
+  padding:0;
+  margin:0 auto;
+  width:20px;
+  height:20px;
+  border:none;
+  background-color: white;
+}
+
+.card-post{
+  border: 0;
+}
+
+.sections{
+  list-style: none;
+  padding-left:0;
+  margin-left: 0;
+}
+
+.entries{
+  list-style: none;
+    padding-left:0;
+  margin-left: 0;
+}
+
+.leftNavTools{
+  width: 10px;
+  height:10px;
+}
+
+.hierarchy{
+  background-color: white;
+  float: right;
+}
+
+.btn{
+  margin-top:5px;
+}
+
+.toolbar {
+  text-align: center;
+}
+
+.toolbar a,
+.fore-wrapper,
+.back-wrapper {
+  border: 1px solid #AAA;
+  background: #FFF;
+  font-family: 'Candal';
+  border-radius: 1px;
+  color: black;
+  padding: 5px;
+  width: 1.5em;
+  margin: -2px;
+  margin-top: 10px;
+  display: inline-block;
+  text-decoration: none;
+  box-shadow: 0px 1px 0px #CCC;
+}
+
+.toolbar a:hover,
+.fore-wrapper:hover,
+.back-wrapper:hover {
+  background: #f2f2f2;
+  border-color: #8c8c8c;
+}
+
+a[data-command='redo'],
+a[data-command='strikeThrough'],
+a[data-command='justifyFull'],
+a[data-command='insertOrderedList'],
+a[data-command='outdent'],
+a[data-command='p'],
+a[data-command='superscript'] {
+  margin-right: 5px;
+  border-radius: 0 3px 3px 0;
+}
+
+a[data-command='undo'],
+.fore-wrapper,
+a[data-command='justifyLeft'],
+a[data-command='insertUnorderedList'],
+a[data-command='indent'],
+a[data-command='h1'],
+a[data-command='subscript'] {
+  border-radius: 3px 0 0 3px;
+}
+
+a.palette-item {
+  height: 1em;
+  border-radius: 3px;
+  margin: 2px;
+  width: 1em;
+  border: 1px solid #CCC;
+}
+
+a.palette-item:hover {
+  border: 1px solid #CCC;
+  box-shadow: 0 0 3px #333;
+}
+
+.fore-palette,
+.back-palette {
+  display: none;
+}
+
+.fore-wrapper,
+.back-wrapper {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.fore-wrapper:hover .fore-palette,
+.back-wrapper:hover .back-palette {
+  display: block;
+  float: left;
+  position: absolute;
+  padding: 3px;
+  width: 160px;
+  background: #FFF;
+  border: 1px solid #DDD;
+  box-shadow: 0 0 5px #CCC;
+  height: 70px;
+}
+
+.fore-palette a,
+.back-palette a {
+  background: #FFF;
+  margin-bottom: 2px;
+}

@@ -5,6 +5,7 @@ var tasksSchema = new mongoose.Schema({
   order:      Number,
   todoID:       {type: mongoose.Schema.Types.ObjectId, ref:"todo"},
   description:  {type: String, default: 'n.a.'},
+  status:       {type: String, default: 'open'},
   created:      {type:Date, default: Date.now},
   deadline:     {type:Date, default: Date.now}
 });

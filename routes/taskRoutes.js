@@ -44,15 +44,7 @@ router.post("/todo/:id/tasks", function(req, res){
     createNewTask(req.body.tasks.task[i], entries._id);
    }
    res.redirect("/todo/" +req.params.id);
-    /*dBTasks.create(req.body.tasks, function(err, newEntry){
-     if(err){
-      res.render("error", {error: err});
-     }
-     console.log("task hinzugefügt:" + newEntry);
-     res.redirect("/todo/:" + req.params.id);
-     });*/
-   //for(var i=0; i<req.body.newTasks.length;i++ ){
-    //console.log(req.body.tasks.task.length);
+
   }
  }); 
 
@@ -78,8 +70,8 @@ router.put("/todo/:id/edit", function(req, res){
 });
 //DESTROY ROUTES###########################
 //Löschen einer Aufgabe
-router.delete("/todo/:id", function(req, res){
-  dBCodingUnit.findByIdAndRemove(req.params.id, function(err){
+router.delete("/task/:id", function(req, res){
+  dBTasks.findByIdAndRemove(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{

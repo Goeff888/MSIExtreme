@@ -9,6 +9,9 @@ var todoAjaxRoutes = require("./routes/todoAjaxRoutes");
 var cmsRoutes = require("./routes/cmsRoutes");
 var cmsUnitRoutes = require("./routes/cmsUnitRoutes");
 var cmsPostRoutes = require("./routes/cmsPostsRoutes");
+var compositionRoutes = require ("./routes/compositionRoutes");
+var tutorialRoutes = require ("./routes/tutorialRoutes");
+var commentRoutes = require ("./routes/commentRoutes");
 //////MONGO-DATABASE-SCHEMES////////
 
 var app = express();
@@ -31,10 +34,9 @@ app.use(todoAjaxRoutes);
 app.use(cmsRoutes);
 app.use(cmsUnitRoutes);
 app.use(cmsPostRoutes);
-
-/*app.get("/save",function(req,res){
- console.log("Hallo von Ajax");
-});*/
+app.use(compositionRoutes);
+//app.use(commentRoutes);
+app.use(tutorialRoutes);
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index");

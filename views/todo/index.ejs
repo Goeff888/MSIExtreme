@@ -20,10 +20,17 @@
       <div class="task">
           <h3><a href="/todo/<%= todo[i]._id %>"><%= todo[i].project %></a></h3> 
         <hr>
-        <ul>
-            <li><%= todo[i].project %></li>
+        <ul class="addedTask">
+          <% for (var j = 0; j < 5; j++){ %>
+          <% console.log(JSON.stringify(tasks[j])); %>
+          <% console.log(JSON.stringify(todo[i])); %>
+            <% if(tasks[j] != undefined && (JSON.stringify(tasks[j].todoID) == JSON.stringify(todo[i]._id)) ){ %>
+              <li><%= tasks[j].task %></li>
+            <% } %>            
+          <% } %>
+
         </ul>         
-        <a href="/todo/<%= todo[i]._id %>/edit"><span class="editTask"><i class="fas fa-edit"></i></span></a>
+        <a href="/todo/<%= todo[i]._id %>"><span class="editTask"><i class="fas fa-edit"></i></span></a>
         <form method="POST" action="/todo/<%= todo[i]._id %>?_method=DELETE">
           <button type="submit" class="deleteBtn"><i class="far fa-trash-alt"></i></button>
           

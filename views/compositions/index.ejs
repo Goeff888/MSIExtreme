@@ -11,53 +11,56 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
 </head>
 <body>
+
 <% include ../partials/navBarTop %>
 
   <div class="row">
     <div class="col-md-2">
-      <p class="lead">Kategorien</p>
-      <div class="list-group">
-        <li class="list-group-item active">Liste in der </li>
-        <li class="list-group-item">Datenbank erstellen</li>
-        <li class="list-group-item">und mit</li>
-        <li class="list-group-item">Posts verknüpfen</li>        
-      </div>
+      <h2>Kategorien</h2>
+      <ul>
+        <li>Hier entsteht eine Auflistung der Kategorien</li>
 
-      <h2>Tutorials</h2>
+      </ul>
+      <h2>über Blender</h2>
       <ul>
         <li>Post </li>
         <li>aus der anotherberrydb</li>
         <li>und Bildern aus PPT</li>
        </ul>
     </div>
-
+    
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="<%= composition.image %>">
-        <div class="caption">
-          
-          <h4><a><%= composition.name %></a></h2>
-          <p><%= composition.description %></p>
-        <div class="well">
-          <div class="text-right">
-            <a class="btn btn-success" href="/composition/<%= composition._id%>/comments/new">Neuer Kommentar</a>          
-        </div>   
+      <div class="container">
+        <header class="jumbotron">
+          <div class="container">
+            <h1> Blender Gallerie</h1>
+            <p>Meine persönliche Digital Art Gallery</p>
+            <a href="/composition/new" class="btn btn-large" >Neues Bild hinzufügen</a>
+          </div>  
+        </header>
+        <div class="row text-center">
+          <% composition.forEach(function(entry){ %>
+             <div class="col-md-3 col-sm-6">
+                <img src="<%= entry.image %>" class="img-thumbnail">
+                <div class="caption">
+                  <%= entry.name %>
+                </div>
+                <p><a href="/composition/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
+            </div>
+           <% }); %>
+            <div class="col-md-3 col-sm-6">
+              <div id="dropzone">
+                <img src="images/winkenderPanda.jpg" class="img-thumbnail">
+                <div class="caption">
+                  neues Bild hinzufügen
+                </div>
+              </div>
+            </div>
+        </div> 
+        
+      </div>
     </div>
-
-          
-          <% composition.comments.forEach(function(comment){ %>
-            
-         
-       <div class ="row">
-        <div class="col-md-8">
-          <%= comment.author%>
-          <span class="pull-right">10 days ago</span>
-          <p><%= comment.text %></p>
-        </div>
-      </div>
-        <% });%>
-      </div>
-     </div>
-  
+    
     <div class="col-md-2">
         <h2>Links</h2>
         <a href="/composition/new">Neues Bild hinzufügen</a>
@@ -69,8 +72,11 @@
         </ul>
         <h2>externe Tutorials</h2>
         <ul>
-          <li>Links </li>
-          <li>kategorisieren</li>
+          <% tutorials.forEach(function(tutorial){ %>
+          <li><a href="<%= tutorial.url %>" target="_blank"><%= tutorial.name %></a> </li>
+          <% }); %>
+
+
         </ul>
     </div>
   </div>
