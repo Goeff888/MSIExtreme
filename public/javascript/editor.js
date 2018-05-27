@@ -102,7 +102,17 @@ function openCollapses(url){
 
 
 $('#switchCode').click(function(e){
-  var status = document.querySelector('#switchCode').name;
+  //Prüfen ob Coder oder WYSIWG-Ansicht
+  
+  //textarea (de-)aktiveren
+  
+  //contenteditable (de-)aktiveren
+  
+  //Inhalt kopieren
+  
+  
+  //Bisheriger Code: FUnkioniert
+  /*var status = document.querySelector('#switchCode').name;
   var originHTML = document.querySelector('#editor').textContent;
   var originText = document.querySelector('#editor').innerHTML;
   if (status === "Browser"){
@@ -120,7 +130,7 @@ $('#switchCode').click(function(e){
   }else{
     document.querySelector('#switchCode').name = "Browser";
     console.log("StatusErr: " + status);   
-  }
+  }*/
 });
 
 function validateForm(){

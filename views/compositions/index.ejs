@@ -41,7 +41,7 @@
         <div class="row text-center">
           <% composition.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
-                <img src="<%= entry.image %>" class="img-thumbnail">
+                <img src="/images/compositions/<%= entry.image %>" class="img-thumbnail">
                 <div class="caption">
                   <%= entry.name %>
                 </div>
@@ -50,9 +50,10 @@
            <% }); %>
             <div class="col-md-3 col-sm-6">
               <div id="dropzone">
+                <a href="/composition/new">
                 <img src="images/winkenderPanda.jpg" class="img-thumbnail">
                 <div class="caption">
-                  neues Bild hinzufügen
+                  Neues Bild hinzufügen</a>
                 </div>
               </div>
             </div>
@@ -63,7 +64,6 @@
     
     <div class="col-md-2">
         <h2>Links</h2>
-        <a href="/composition/new">Neues Bild hinzufügen</a>
         <ul>
           <li>Liste in der </li>
           <li>Datebank erstellen</li>

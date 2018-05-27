@@ -1,13 +1,13 @@
 var express = require ("express");
 var router = express.Router();
 var promise = require('bluebird');
-var dBTutorials = require("../models/todo");
+var dBTutorials = require("../models/tutorials");
 //var dBTasks = require("../models/tasks");
 var mongoose = require("mongoose");
 promise.promisifyAll(mongoose);
 //INDEX ROUTES###########################
 //Anzeige aller Tutorials
-router.get("/tutorial", function(req, res){
+router.get("/tutorials", function(req, res){
  /*promise.props({
      todo:    dBTodo.find({}).execAsync(),
      tasks:   dBTasks.find({}).execAsync(),
@@ -25,8 +25,8 @@ router.get("/tutorial", function(req, res){
 
 //CREATE ROUTES###########################
 //neuer Eintrag
-router.post("/tutorial", function(req, res){
-  console.log("Route: Tutorial Post");
+router.post("/tutorials/new", function(req, res){
+  console.log("Route: Tutorial create");
    dBTutorials.create(req.body.tutorials, function(err, newEntry){
    if(err){
     res.render("error", {error: err});

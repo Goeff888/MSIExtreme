@@ -35,7 +35,7 @@ app.use(cmsRoutes);
 app.use(cmsUnitRoutes);
 app.use(cmsPostRoutes);
 app.use(compositionRoutes);
-//app.use(commentRoutes);
+app.use(commentRoutes);
 app.use(tutorialRoutes);
 //LANDING PAGE
 app.get("/", function(req, res){

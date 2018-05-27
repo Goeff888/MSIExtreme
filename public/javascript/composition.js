@@ -1,13 +1,64 @@
 console.log("Hallo vom Blender.js");
+//Drag n Drop*****************************
+//File Dialog mit Klick auf Dropzone öffnen
+function openFileDialog(e){
+  console.log("Dateidialog öffnen");
+}
 
+function showSelectedImage(){
+  console.log("Funktion Bild anzeigen");
+  var file = document.getElementById("fileLoader");
+  //var file = fileInput.files[0];
+  console.log("Variable erstellt");
+  console.log("Datei:" + file.name);
+  //Bild auf der Seite anzeigen
+  var imageField = document.getElementById("renderDropzone");
+  imageField.appendChild("<img src=' + file.name +'>");
+  //imageFiled.style.image();
+}
+
+function handleDragOverZone(e){
+  //e.stopPropagation();
+  e.preventDefault();
+  //e.style.opacity ='0.7'; 
+  this.classList.remove('renderDropzone');
+  this.classList.add('renderDropzoneOver');
+  console.log("Über Dropzone gezogen");
+}
+
+
+function handleDragLeaveZone(e){
+  e.preventDefault();
+  this.classList.remove('renderDropzoneOver');
+  this.classList.add('renderDropzone');
+  console.log("von Dropzone weggezogen");
+}
+
+function handleDrop(e){
+  e.preventDefault();
+ // e.dataTransfer.effectAllowed ='move';
+  //this.classList.remove('dropzoneOver');
+  this.classList.add('renderDropzoneOverDrop');
+  console.log(e.target);
+  console.log("daten in e:" + e.dataTransfer.getData("text"));
+  //e.target.appendChild("HAllo");
+  //this.innerHTML = e.dataTransfer.getData('text');
+  this.style.background="white";
+  //this.style.background-image=e.dataTransfer.getData('text');
+  console.log("Abgelegt");
+}
+//Formulareinträge prüfen*****************************
 //Überprüfen, ob Formular korrekt ausgefüllt ist
-var sendBtn = document.getElementById("sendBtn");
+
 function chkFormular() {
-  if (document.newFile.composition.image == "") {
-    alert("Bitte Ihren Namen eingeben!");
-    document.newFile.composition.image.focus();
-    return false; //Verhindern, dass das Formular gesendet wird
+  if (document.getElementsByName("renderedImage")[0].value == "") {
+    alert("Bitte ein Bild auswählen!");
+    event.preventDefault();
+  }else if(document.getElementsByName("name")[0].value == ""){
+    alert("Bitte einen Namen eingeben!");
+    event.preventDefault();    
   }
+  //return false;
 }
 
 
@@ -36,8 +87,25 @@ function addCategorybyEnter(e){
         saveEntry(categoryText);
    }
 }
+/////////////////EVENT LISTENER
+//Speichern Button
+var sendBtn = document.getElementById("sendBtn");
+sendBtn.addEventListener("click", chkFormular);
 //Kategorie
 var addCategory = document.getElementById("newCategory");//Hier die Klasse Anpassen, auf die das Tastenelement hören soll
-
 addCategory.addEventListener("keypress", addCategorybyEnter);
 //Tutorials
+
+//Dropzone 
+var dropzone = document.getElementById("renderDropzone");
+dropzone.addEventListener("click", openfileDialog);
+dropzone.addEventListener("dragover", handleDragOverZone);
+dropzone.addEventListener('dragleave', handleDragLeaveZone, false);
+dropzone.addEventListener('drop', handleDrop, false);
+
+//Datei öffnen Dialog
+function openfileDialog() {
+    $("#fileLoader").click();
+}
+var fileDialog = document.getElementById("fileLoader");
+fileDialog.addEventListener('change', showSelectedImage);

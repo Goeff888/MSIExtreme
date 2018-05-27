@@ -15,13 +15,17 @@
 
   <div class="row">
     <div class="col-md-2">
-      <p class="lead">Kategorien</p>
-      <div class="list-group">
-        <li class="list-group-item active">Liste in der </li>
-        <li class="list-group-item">Datenbank erstellen</li>
-        <li class="list-group-item">und mit</li>
-        <li class="list-group-item">Posts verknüpfen</li>        
+      <div class="taskEdit">
+        <h2>Kategorien</h2>
+        <hr>
+        <ul>
+          <% for (var i = 0; i < categories.length;i++){ %>
+            <li><%= categories[i].category %> </li>
+         <% } %>
+        </ul>
+        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
       </div>
+      <hr>
 
       <h2>Tutorials</h2>
       <ul>
@@ -32,46 +36,89 @@
     </div>
 
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="<%= composition.image %>">
-        <div class="caption">
-          
-          <h4><a><%= composition.name %></a></h2>
-          <p><%= composition.description %></p>
-        <div class="well">
-          <div class="text-right">
-            <a class="btn btn-success" href="/composition/<%= composition._id%>/comments/new">Neuer Kommentar</a>          
-        </div>   
-    </div>
-
-          
-          <% composition.comments.forEach(function(comment){ %>
-            
-         
-       <div class ="row">
-        <div class="col-md-8">
-          <%= comment.author%>
-          <span class="pull-right">10 days ago</span>
-          <p><%= comment.text %></p>
+      <img class="img-responsive img-composition" src="/images/compositions/<%= composition[0].image %>">
+      <div class="caption">
+        <h4>
+          <%= composition[0].name %>
+          <span><%= composition[0].created %></span>
+        </h4>
+        <p class="compText"><%= composition[0].description %></p>
+        <% comments.forEach(function(comment){ %>    
+        <div class ="row">
+         <div class="col-md-8">
+           <%= comment.author%>
+           <span class="pull-right">10 days ago</span>
+           <p class="compText"><%= comment.comment %></p>
+         </div>
         </div>
-      </div>
         <% });%>
-      </div>
-     </div>
-  
+        </div>
+      <form method="post" action="/composition/<%= composition[0]._id %>?_method=DELETE""
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+            Neuer Kommentar
+          </button>
+            <button class="btn btn-primary" type="submit">
+              Eintrag löschen
+            </button>
+          </form>
+        </p>
+        <div class="collapse" id="collapseComment">
+          <div class="card card-body">
+            <form method="post" action="/composition/<%= composition[0]._id  %>/comments">
+              <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
+              <button class="btn btn-primary" name="comment[compositionID]" value="<%=composition[0]._id  %>" type="submit">Speichern</button>
+            </form>
+          </div>
+        </div>
+    </div>
+    
     <div class="col-md-2">
-        <h2>Links</h2>
-        <a href="/composition/new">Neues Bild hinzufügen</a>
+        <h2>Historie</h2>
+        <a href="">Neues Bild hinzufügen</a>
         <ul>
-          <li>Liste in der </li>
-          <li>Datebank erstellen</li>
-          <li>und mit</li>
-          <li>Projekt verknüpfen</li>
+          <li>Hier alle vorherigen Bilder anzeigen </li>
+
         </ul>
-        <h2>externe Tutorials</h2>
+        <h2>Tutorials</h2>
         <ul>
-          <li>Links </li>
-          <li>kategorisieren</li>
+          <% tutorials.forEach(function(tutorial){ %>
+          <li><a href="<%= tutorial.url %>"><%= tutorial.name %></a></li>
+          <%}) %>
         </ul>
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tutorial hinzufügen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="/tutorials/new">
+              <div class="modal-body">
+                
+                  <input type="text" name="tutorials[name]" placeholder="Name">
+                  <input type="text" name="tutorials[url]" placeholder="Url">
+                  <input type="text" name="tutorials[format]" placeholder="Format">
+                  <input type="text" name="tutorials[category]" placeholder="Kategorie">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 
