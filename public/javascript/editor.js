@@ -1,4 +1,5 @@
 
+console.log("Editor Javascript");
 ////////////////////////Editor Funktionen/////////////////////////////////////////////
   var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF'];
   var forePalette = $('.fore-palette');
@@ -99,9 +100,28 @@ function openCollapses(url){
 }
 
 //############Umschalten zwischen HTML und PLAIN#############
+function switchView(){
+  console.log("switchView");
+  var editor= document.getElementById("editor");
+  var textarea= document.getElementById("clipped");
+  editor.style.display = "none";
+  //Prüfen ob Coder oder WYSIWG-Ansicht
+  
+  //textarea (de-)aktiveren
+  
+  //contenteditable (de-)aktiveren
+  
+  //Inhalt kopieren
+  
+  
+  //Bisheriger Code: FUnkioniert
+}
 
-
-$('#switchCode').click(function(e){
+/*$('#switchCode').click(function(e){
+  console.log("switchCode");
+  var editor= document.getElementById("editor");
+  var textarea= document.getElementById("clipped");
+  editor.style.display = "none";
   //Prüfen ob Coder oder WYSIWG-Ansicht
   
   //textarea (de-)aktiveren
@@ -147,7 +167,7 @@ function validateForm(){
 function showContent(content){
   document.querySelector('#clipped').textContent = content;
   document.querySelector("#editor").append(content);
-  console.log("dbContent.content: " + content );
+  //console.log("dbContent.content: " + content );
 }
 
 $('#formContent').click(function(e){
@@ -155,4 +175,5 @@ $('#formContent').click(function(e){
   
   });
 
-
+var switchView = document.getElementById("switchCode");
+switchView.addEventListener("click",switchView);

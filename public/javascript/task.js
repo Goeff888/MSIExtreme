@@ -46,6 +46,7 @@ function setStatusReady(e){
   if (this.checked == true){
     console.log("ausgewählt");
     status = "finished";
+    //this.getChild();
     
   }else{
     console.log("leer");

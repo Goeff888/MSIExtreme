@@ -36,6 +36,10 @@ hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
+.btnUnitName{
+  width:50%;
+  color:white;
+}
 .sectionbtn{
   border: none;
   float: right;
@@ -125,13 +129,24 @@ span:hover{
   letter-spacing: 0.1em;
   border: none;
   color: white;
-  padding: 5px 10px;
-  text-align: left;
+  padding: 5px;
   text-decoration: none;
-  display: inline-block;
+  text-align:left;
+  display: inline;
   font-size: 15px;  
 }
-
+.btnModal{
+  background-color: teal;
+  font-family: "Allerta";
+  width:10%;
+  letter-spacing: 0.1em;
+  border: none;
+  color: white;
+  padding: 5px;
+  text-decoration: none;
+  display: inline;
+  font-size: 15px;  
+}
 .btnCMSMain{
   background-color: white;
   font-family: "Allerta";

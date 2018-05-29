@@ -46,21 +46,22 @@
         <a href="#" data-command='p'>P</a>
         <a href="#" data-command='subscript'><i class='fa fa-subscript'></i></a>
         <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
-        <button id="switchCode" name="Code">Code</button>
+        <a href="#" data-command='switchCode'><i class='fa fa-edit'></i></a>
+        <button id="switchCode" name="Code" value="code">Code</button>
     </div>
     <form action="#" method="POST" id="formContent">
       
       <div id="editor" contenteditable>
           Inhalt aus Variable
       </div>
-      <textarea name="post[content]"rows="5" cols="40" id="clipped" hidden="true" ></textarea>
+      <textarea name="post[content]"rows="5" cols="114" id="clipped"  ></textarea>
       
       <div class="row">
         <div class="col-md-4">
           Erstellt am:
         </div>
         <div class="col-md-4">
-           Zuletzt geändert am:         
+           Zuletzt geändert am: <%= cmsPost.created %>        
         </div>
         <div class="col-md-4">
           <select class="form-control form-control-lg" name="post2[status]" >

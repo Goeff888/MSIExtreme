@@ -36,7 +36,7 @@
           <ul class="addedTasksm">
             <% for(var i = 0;i < tasks.length; i++){ %>
               
-              <li class="taskListItem">
+              <li class="taskList">
                 <span class="iconLeft" data-value="<%= tasks[i]._id %>"><i class="fas fa-edit" ></i></span>
                   <% if (tasks[i].status == "open"){ %>
                    <input type="checkbox" class="form-check-input" id="exampleCheck1" > 

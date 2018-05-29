@@ -37,6 +37,8 @@ hr{
 .taskList{
  height:30px;
  font-size:0.75em;
+	text-decoration:line-through;
+	color: white;
 }
 .taskName{
  width:60%;
