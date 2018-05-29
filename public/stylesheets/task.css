@@ -65,19 +65,7 @@ li:hover .iconRight{
 	width:20px;
 	visibility: visible;
 }
- .iconLeft{
-	background-color: red;
-	margin-right: 20px;
-	text-align: center;
-	color:white;
-	width:0px;
-	display:inline-block;
-	visibility: hidden;
-}
-li:hover .iconLeft{
-	width:20px;
-	visibility: visible;
-}
+
 
 .addTask{
  margin-left:10px;

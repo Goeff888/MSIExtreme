@@ -31,15 +31,15 @@
     </div>
     <div class="col-6">
       <div class="taskEdit">
-          <h3>Aufgaben-Bereich</h3><span id="todoID"><%= todo._id %></span>
+          <h3>Aufgaben-Bereich</h3>
           <hr>
           <ul class="addedTasksm">
             <% for(var i = 0;i < tasks.length; i++){ %>
               
-              <li class="taskList">
-                <span class="iconLeft" data-value="<%= tasks[i]._id %>"><i class="fas fa-edit" ></i></span>
+              <li class="taskList" id="li<%= tasks[i]._id %>" >
+                
                   <% if (tasks[i].status == "open"){ %>
-                   <input type="checkbox" class="form-check-input" id="exampleCheck1" > 
+                   <input type="checkbox" class="form-check-input" id="ck<%= tasks[i]._id %> " > 
                   <% }else{ %>
                   <input type="checkbox" class="form-check-input" id="exampleCheck1" checked>
                   <% } %> 
