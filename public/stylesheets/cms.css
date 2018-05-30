@@ -35,7 +35,13 @@ hr {
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
+#clipped{
+  display:none;
+}
 
+.date{
+  background-color: white;
+}
 .btnUnitName{
   width:50%;
   color:white;
@@ -150,7 +156,7 @@ span:hover{
 .btnCMSMain{
   background-color: white;
   font-family: "Allerta";
-  width:90%;
+  width:80%;
   letter-spacing: 0.1em;
   border: none;
   color: black;
@@ -158,6 +164,10 @@ span:hover{
   text-align: center;
   display: inline-block;
   font-size: 17px; 
+}
+.btnCMSMain:hover .btnModal{
+	width:70px;
+	display: none;
 }
 
 #savePost{

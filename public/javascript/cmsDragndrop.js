@@ -64,26 +64,23 @@ function switchView(){
   textarea.style.visibility ="visible";
   //Prüfen ob Coder oder WYSIWG-Ansicht
   console.log(status.value);
-  if(status.value ==="code"){
-    editor.style.display = "none";
-    status.value ="plain";
+  if(status.value ==="plain"){
+    textarea.style.display = "none";
+    status.value ="code";
     editor.style.display = "block";
-    
     //textarea.style.visibility ="hidden";
     console.log(status.value);
-  }else if(status.value ==="plain"){
+  }else if(status.value ==="code"){
     editor.style.display = "none";
-    
+    textarea.style.display = "block";
     //textarea.style.visibility ="visible";
-    status.value ="code";
+    status.value ="plain";
     console.log(status.value);
   }else{
     //undefinierter Zustand
      console.log(status.value);
   }
-  //textarea (de-)aktiveren
   
-  //contenteditable (de-)aktiveren
   
   //Inhalt kopieren
   

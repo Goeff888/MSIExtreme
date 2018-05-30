@@ -7,7 +7,7 @@ var router = express.Router();
 var dBCMS = require("../models/cms");
 var dBCMSUnit = require("../models/cmsUnit");
 var dBCMPosts = require("../models/cmsPosts");
-
+var dBCategories = require("../models/categories");
 promise.promisifyAll(mongoose);
 
 function createDate(entriesDateless){
@@ -39,7 +39,8 @@ router.get("/cms/new", function(req, res){
  promise.props({
      cms:       dBCMS.find({},'name').execAsync(),
      cmsUnit:   dBCMSUnit.find({},'name cmsID').execAsync(),
-     cmsPost:   dBCMPosts.find({},'name cmsUnitID').execAsync()
+     cmsPost:   dBCMPosts.find({},'name cmsUnitID').execAsync(),
+     categories:dBCategories.find().execAsync()
    })
    .then(function(results) {
     console.log("CMS:"+results.cms);

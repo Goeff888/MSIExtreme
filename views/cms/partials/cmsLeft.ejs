@@ -7,14 +7,41 @@
     <div class="card">
       <div class="card-header" id="headingOne">
         <h5 class="mb-0"> 
+         
          <button class="btn btn-link btnCMSMain" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
-          <span class="entryTools"><i class="fas fa-pencil-alt"></i></span>
           <%= cms[i].name %>
-          <span class="entryTools"><i class="fas fa-trash-alt"></i></span>
         </button>
+        <button class="btn btnModal" type="button" >
+          <span data-toggle="modal" data-target="#cmsModal<%=z %>"><i class="fas fa-pen-square"></i></span>
+        </button>
+
       </h5>
     </div>
-
+<!-- Modal CMS-->
+          <div class="modal fade" id="cmsModal<%=z %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><%= cms[i].name %></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form method="post" action="cms/<%= cms[i]._id %>/edit">
+                 Beschreibung:
+                 <textarea rows=3 cols=50 name="cms[description]"><%= cms[i].description %></textarea>
+                 
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+                  <button type="button" class="btn btn-primary">Speichern</button>
+                </div>
+              </div>
+            </div>
+          </div>          
+  <!-- Modal CMS ENDE--> 
     <div id="collapse<%= z %>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">    
        

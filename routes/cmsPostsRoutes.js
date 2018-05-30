@@ -6,7 +6,7 @@ promise.promisifyAll(mongoose);
 var dBCMS = require("../models/cms");
 var dBCMSPosts = require("../models/cmsPosts");
 var dBCMSUnit = require("../models/cmsUnit");
-
+var dBCategories = require("../models/categories");
 function createDate(entriesDateless){
  var now = new Date();
  var entries = new Object();
@@ -64,6 +64,7 @@ router.get("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
      cms:       dBCMS.find().execAsync(),
      cmsUnit:   dBCMSUnit.find().execAsync(),
      cmsPost:   dBCMSPosts.find().execAsync(),
+     categories:dBCategories.find().execAsync(),
      navigation: [{cms:req.params.id,cmsUnit:req.params.idUnit, cmsPost:req.params.idPost}]
    })
    .then(function(results) {
@@ -76,13 +77,29 @@ router.get("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
    });
 });
 //UPDATE ROUTES###########################
-//Bearbeiten einer Posts
-router.put("/cms/:id/cmsUnit/:idUnit/edit", function(req, res){
-  dBCMSPosts.findByIdAndUpdate(req.params.id, entries, function(err, updatedPost){
+//Aktualisieren einer Posts mit Navigation
+router.put("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
+ console.log("Update Route cmsPost mit");
+  dBCMSPosts.findByIdAndUpdate(req.params.idPost, req.params.post, function(err, updatedPost){
    if(err){
     res.render("error", {error: err});
    }else{
-    res.render("cms/edit", {cms: updatedPost});
+    console.log();
+    res.redirect("/cms/");//+ req.params.post.cmsID +"/cmsUnit/"+ req.params.post.cmsUnitID +"/"+ req.params.post.cmsPostID +"/edit", {cms: updatedPost});
+   }
+ });
+});
+
+//Bearbeiten einer Posts ohne Navigation
+router.put("/cmsPost/:id/edit", function(req, res){
+ console.log("Update Route cmsPost ohne");
+ console.log("");
+  dBCMSPosts.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
+   if(err){
+    res.render("error", {error: err});
+   }else{
+    console.log();
+    res.redirect("/cms/"+ req.body.post.cmsID +"/cmsUnit/"+ req.body.post.cmsUnitID +"/"+ req.body.post.cmsPostID +"/edit");
    }
  });
 });

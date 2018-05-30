@@ -57,11 +57,11 @@
       <textarea name="post[content]"rows="5" cols="114" id="clipped"  ></textarea>
       
       <div class="row">
-        <div class="col-md-4">
-          Erstellt am:
+        <div class="col-md-4 date">
+          Erstellt am: <%= cmsPost.created %> 
         </div>
-        <div class="col-md-4">
-           Zuletzt geändert am: <%= cmsPost.created %>        
+        <div class="col-md-4 date">
+           Zuletzt geändert am: <%= cmsPost.updated %>        
         </div>
         <div class="col-md-4">
           <select class="form-control form-control-lg" name="post2[status]" >
@@ -82,7 +82,19 @@
       <input type="submit" id="uploadPic">
     </form>
     <hr>
-  <h3>Beiträge</h3>
+  
+
+    <div class="taskEdit">
+      <h3>Kategorien</h2>
+      <hr>
+      <ul>
+        <% for (var i = 0; i < categories.length;i++){ %>
+          <li><%= categories[i].category  %></li>
+       <% } %>
+      </ul>
+      <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
+    </div>
+    <hr>
 
   </div>
 </div>
