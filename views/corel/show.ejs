@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blender Gallerie</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
+</head>
+<body>
+<% include ../partials/navBarTop %>
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="taskEdit">
+        <h2>Kategorien</h2>
+        <hr>
+        <ul>
+          <% for (var i = 0; i < categories.length;i++){ %>
+            <li><%= categories[i].category %> </li>
+         <% } %>
+        </ul>
+        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
+      </div>
+      <hr>
+
+      <h2>Tutorials</h2>
+      <ul>
+        <li>Post </li>
+        <li>aus der anotherberrydb</li>
+        <li>und Bildern aus PPT</li>
+       </ul>
+    </div>
+
+    <div class="col-md-8">
+      <img class="img-responsive img-composition" src="/images/compositions/<%= composition[0].image %>">
+      <div class="caption">
+        <h4>
+          <%= composition[0].name %>
+          <span><%= composition[0].created %></span>
+        </h4>
+        <p class="compText"><%= composition[0].description %></p>
+        <% comments.forEach(function(comment){ %>    
+        <div class ="row">
+         <div class="col-md-8">
+           <%= comment.author%>
+           <span class="pull-right">10 days ago</span>
+           <p class="compText"><%= comment.comment %></p>
+         </div>
+        </div>
+        <% });%>
+        </div>
+      <form method="post" action="/composition/<%= composition[0]._id %>?_method=DELETE""
+        <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
+            Neuer Kommentar
+          </button>
+            <button class="btn btn-primary" type="submit">
+              Eintrag löschen
+            </button>
+          </form>
+        </p>
+        <div class="collapse" id="collapseComment">
+          <div class="card card-body">
+            <form method="post" action="/composition/<%= composition[0]._id  %>/comments">
+              <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
+              <button class="btn btn-primary" name="comment[compositionID]" value="<%=composition[0]._id  %>" type="submit">Speichern</button>
+            </form>
+          </div>
+        </div>
+    </div>
+    
+    <div class="col-md-2">
+        <h2>Historie</h2>
+        <a href="">Neues Bild hinzufügen</a>
+        <ul>
+          <li>Hier alle vorherigen Bilder anzeigen </li>
+
+        </ul>
+        <h2>Tutorials</h2>
+        <ul>
+          <% tutorials.forEach(function(tutorial){ %>
+          <li><a href="<%= tutorial.url %>"><%= tutorial.name %></a></li>
+          <%}) %>
+        </ul>
+        
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Launch demo modal
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tutorial hinzufügen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <form method="post" action="/tutorials/new">
+              <div class="modal-body">
+                
+                  <input type="text" name="tutorials[name]" placeholder="Name">
+                  <input type="text" name="tutorials[url]" placeholder="Url">
+                  <input type="text" name="tutorials[format]" placeholder="Format">
+                  <input type="text" name="tutorials[category]" placeholder="Kategorie">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+<div class="footer">Trademark 2018 Groefics</div>
+
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/composition.js"></script>
+
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>

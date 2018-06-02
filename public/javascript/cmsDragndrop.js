@@ -1,5 +1,16 @@
 //Javascript für den Editor
 console.log("editor Javascript mit Drag&Drop");
+window.onload= function(){
+  var editor= document.getElementById("editor");
+  var textarea= document.getElementById("clipped");
+  var originHTML = textarea.textContent;
+  var originText = editor.innerHTML;
+  textarea.textContent = originText;
+  //editor.innerHTML = originHTML;
+  console.log("originHTML:" + originHTML);
+  console.log("originText:" +originText);
+  };
+
 //Drag and Drop Funktionen///////////////////////////////////////
 function handleDragStart(e){
   var hiddenElements = document.querySelectorAll('.btnDropzone');
@@ -60,32 +71,36 @@ function switchView(){
   var status= document.getElementById("switchCode");
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
+
   editor.style.display = "none";
   textarea.style.visibility ="visible";
   //Prüfen ob Coder oder WYSIWG-Ansicht
-  console.log(status.value);
   if(status.value ==="plain"){
+    editor.style.display = "block";
     textarea.style.display = "none";
     status.value ="code";
-    editor.style.display = "block";
     //textarea.style.visibility ="hidden";
-    console.log(status.value);
+    editor.innerHTML = textarea.textContent;
+    console.log("editor sichtbar");
   }else if(status.value ==="code"){
     editor.style.display = "none";
     textarea.style.display = "block";
-    //textarea.style.visibility ="visible";
     status.value ="plain";
-    console.log(status.value);
+    //textarea.style.visibility ="visible";
+    textarea.textContent = editor.innerHTML;
+    console.log("textarea sichtbar");
   }else{
     //undefinierter Zustand
      console.log(status.value);
   }
   
-  
-  //Inhalt kopieren
-  
-  
-  //Bisheriger Code: FUnkioniert
+}
+
+//Inhalt von Div in Textarea kopieren und Formular zum Speichern senden
+function chkFormular() {
+  var editor= document.getElementById("editor");
+  var textarea= document.getElementById("clipped");
+  textarea.textContent = editor.innerHTML;
 }
 ////////////////////////Editor Funktionen/////////////////////////////////////////////
   var colorPalette = ['000000', 'FF9966', '6699FF', '99FF66', 'CC0000', '00CC00', '0000CC', '333333', '0066FF', 'FFFFFF'];
@@ -118,7 +133,7 @@ function switchView(){
 //////////////////////Event-Listener definieren/////////////////////////////
 var dropzone = document.querySelectorAll(".btnDropzone");
 var dragElement = document.querySelectorAll('.btnUnitName');
-
+var saveContent = document.getElementById("savePost");
 ////////////////////DROPZONES//////////////
 for (var i = 0;i < dropzone.length;i++){
   dropzone[i].addEventListener('dragover', handleDragOverZone, false);
@@ -126,7 +141,6 @@ for (var i = 0;i < dropzone.length;i++){
   dropzone[i].addEventListener('drop', handleDrop, false);
   //console.log(dropzone[i]);
 }
-console.log();
 ////////////////////DRAGELEMENTE//////////////
 for (var i = 0;i < dragElement.length;i++){
   dragElement[i].addEventListener('dragstart', handleDragStart, false);
@@ -138,5 +152,6 @@ for (var i = 0;i < dragElement.length;i++){
 //CodeButton
 //var switchView = document.getElementById("switchCode");
 //switchView.addEventListener("click",switchView);
-
+////////////////////Speichern Button//////////////
+saveContent.addEventListener('click',chkFormular );
 

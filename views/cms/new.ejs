@@ -61,10 +61,11 @@
           Erstellt am: <%= cmsPost.created %> 
         </div>
         <div class="col-md-4 date">
-           Zuletzt geändert am: <%= cmsPost.updated %>        
+           Zuletzt geändert am: 
+
         </div>
         <div class="col-md-4">
-          <select class="form-control form-control-lg" name="post2[status]" >
+          <select class="form-control form-control-lg" name="post[status]" >
            <option>neu</option>
            <option selected>in Arbeit</option>
            <option>veröffentlicht</option>
@@ -72,7 +73,7 @@
         </div>
       </div>
 
-      <input type=submit id="savePost">
+      <input type=submit id="savePost" disabled>
     </form>
   </div>
   <div class="col-md-3">

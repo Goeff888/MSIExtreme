@@ -38,8 +38,8 @@ router.post("/cms/:id/cmsUnit/:idUnit/cmsPost", function(req, res){
    entries.content = req.body.cmsPost.content;
    entries.created = now;
    entries.updated = now;
-   console.log("Parameter aus dem Formular:" + req.body.cmsPost);
-   console.log("Parameter nach der Funktion:" + createDate(req.body.cmsPost));
+   //console.log("Parameter aus dem Formular:" + req.body.cmsPost);
+   //console.log("Parameter nach der Funktion:" + createDate(req.body.cmsPost));
    dBCMSPosts.create(req.body.cmsPost, function(err, newEntry){
    if(err){
     res.render("error", {error: err});
@@ -68,7 +68,7 @@ router.get("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
      navigation: [{cms:req.params.id,cmsUnit:req.params.idUnit, cmsPost:req.params.idPost}]
    })
    .then(function(results) {
-    //console.log(results.cmsPost);
+    //console.log(results.cmsPost[0].created);
      res.render("cms/edit", results);
    })
    .catch(function(err) {
@@ -98,7 +98,7 @@ router.put("/cmsPost/:id/edit", function(req, res){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log();
+    console.log(updatedPost);
     res.redirect("/cms/"+ req.body.post.cmsID +"/cmsUnit/"+ req.body.post.cmsUnitID +"/"+ req.body.post.cmsPostID +"/edit");
    }
  });

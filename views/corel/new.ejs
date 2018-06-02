@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Blender Gallerie</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
+    <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
+</head>
+<body>
+<% include ../partials/navBarTop %>
+
+
+
+  <div class="row">
+    <div class="col-md-2">
+      <div class="taskEdit">
+        <h2>Kategorien</h2>
+        <hr>
+        <ul>
+          <% for (var i = 0; i < categories.length;i++){ %>
+            <li><%= categories[i].category %> </li>
+         <% } %>
+        </ul>
+        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
+      </div>
+      <hr>
+      
+      <h2>Tutorials</h2>
+      <ul>
+        <li>Post </li>
+        <li>aus der anotherberrydb</li>
+        <li>und Bildern aus PPT</li>
+       </ul>
+    </div>
+    
+    <div class="col-md-8">
+      <div class="container">
+        <h1> Neues Blender File</h1>
+        
+          
+          <form action="/composition/new" method="post" encType="multipart/form-data" id="newForm">
+            <div class="row">
+              <div class="col formFields">
+                <p>
+                  <input type="text" name="name" placeholder="Name">                
+                </p>
+                <p>
+                  <textarea name="description" placeholder="Beschreibung" rows="3" cols="60"></textarea>  
+               </p> 
+                  <button class="btn btn-lg btn-primary" type="submit" id="sendBtn">Speichern</button>          
+              </div> 
+              </div>
+              
+              <div class="col"> 
+                <div id="renderDropzone">
+                  <input type="file" id="fileLoader" name="renderedImage" title="loadImage">
+                  Bild hier reinziehen oder klicken
+                </div> 
+              </div>    
+          </form>
+      </div>
+    </div>
+    <div class="col-md-2">
+        <h2>Links</h2>
+        <a href="/composition">zurück</a>
+        <ul>
+          <li>Liste in der </li>
+          <li>Datebank erstellen</li>
+          <li>und mit</li>
+          <li>Projekt verknüpfen</li>
+        </ul>
+        <h2>externe Tutorials</h2>
+        <ul>
+          <form method="post" action="/tutorial">
+            <input type="text" name=tutorials[name] placeholder="Name">
+            <input type="text" name=tutorials[url] placeholder="URL">
+            <input type="text" name=tutorials[category] placeholder="Kategorie">
+            <input type="submit">
+          </form>
+        </ul>
+    </div>
+  </div>
+
+<div class="footer">Trademark 2018 Groefics</div>
+
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/composition.js"></script>
+
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>

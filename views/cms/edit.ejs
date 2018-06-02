@@ -58,11 +58,17 @@
       
       <div class="row">
         <div class="col-md-4 date">
-          Erstellt am: <%= cmsPost[0].created %>
+          Erstellt am: 
+          <%= cmsPost[0].created.getDate() %>.
+          <%= cmsPost[0].created.getMonth() %>.
+          <%= cmsPost[0].created.getYear() +1900 %>
           <input type="text" value="<%= navigation[0].cms %>" name="post[cmsID]">
         </div>
         <div class="col-md-4 date">
-           Zuletzt geändert am: <%= cmsPost[0].updated %>
+           Zuletzt geändert am:
+          <%= cmsPost[0].updated.getDate() %>.
+          <%= cmsPost[0].updated.getMonth() %>.
+          <%= cmsPost[0].updated.getYear() +1900 %>
            <input type="text" value="<%= navigation[0].cmsUnit %>" name="post[cmsUnitID]">
         </div>
         <div class="col-md-4">
@@ -77,8 +83,12 @@
     </form>
   </div>
   <div class="col-md-3">
-    <form method="post" action="/new/upload">
-      <div id="dropzone" class="dragShow">Dropzone</div>
+    <form method="post" action="#">
+      <div id="dropzone" class="dragShow">
+        <input type="file" id="fileLoader" name="renderedImage" title="loadImage">
+        Bild hier reinziehen oder klicken
+      </div>
+      
       <div id="list">noch keine Bilder vorhanden</div>
       <input type="submit" id="uploadPic">
     </form>

@@ -7,6 +7,39 @@ h1{
     text-align:center;
 }
 
+.firstRow{
+   background: linear-gradient(to bottom, #061700, #52c234);
+   color:white;
+}
+
+.secRow{
+  color:white;
+   background: linear-gradient(to top, #F9D423, #52c234);
+}
+
+.thirdRow{
+   color:white;
+    background: linear-gradient(to bottom, #ffc500, #c21500);
+}
+
+.picThumb{
+   
+    margin-left: auto;
+    margin-right: auto;
+   display: block;
+   padding-top: 40px;
+   
+}
+img{
+    width: 100%;
+    height: auto;
+}
+.textArea{
+   
+   margin: 0 0;
+   padding:  0 0;
+}
+
 .footer{
     float:right;
     font-size: 10px;
