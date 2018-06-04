@@ -49,32 +49,7 @@
         <a href="#" data-command='switchCode'><i class='fa fa-edit'></i></a>
         <button id="switchCode" name="Code" value="code">Code</button>
     </div>
-    <form action="#" method="POST" id="formContent">
-      
-      <div id="editor" contenteditable>
-          Inhalt aus Variable
-      </div>
-      <textarea name="post[content]"rows="5" cols="114" id="clipped"  ></textarea>
-      
-      <div class="row">
-        <div class="col-md-4 date">
-          Erstellt am: <%= cmsPost.created %> 
-        </div>
-        <div class="col-md-4 date">
-           Zuletzt geändert am: 
-
-        </div>
-        <div class="col-md-4">
-          <select class="form-control form-control-lg" name="post[status]" >
-           <option>neu</option>
-           <option selected>in Arbeit</option>
-           <option>veröffentlicht</option>
-         </select>         
-        </div>
-      </div>
-
-      <input type=submit id="savePost" disabled>
-    </form>
+    
   </div>
   <div class="col-md-3">
     <form method="post" action="/new/upload">

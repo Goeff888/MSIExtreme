@@ -1,0 +1,12 @@
+h1 {
+    font-size: 5.0em;
+    text-align: center;
+    
+}
+
+
+div {
+    background-image:url('w3css.gif');
+    background-repeat:no-repeat;
+    background-position:right center;
+}
