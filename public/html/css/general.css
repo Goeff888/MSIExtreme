@@ -7,10 +7,14 @@ body{
 
 h1 {
     font-size: 5.0em;
-    text-align: center;
-    
+    text-align: center;   
 }
 
+.todoBody{
+    background-image:url('/images/cms_logo_jamaica.png');
+    background-repeat:no-repeat;
+    background-position:right center;   
+}
 
 .column{
   height:150px;
@@ -67,21 +71,6 @@ h1 {
   cursor:crosshair;
 }
 
-h2 {
-
-}
-
-h3 {
-
-}
-
-li {
-
-  
-}
-
-
-
 hr {
  
 }
@@ -90,9 +79,7 @@ img {
   width: 40%;
   margin:1.66%;
 }
-span{
 
-}
 
 
 

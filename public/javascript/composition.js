@@ -8,13 +8,8 @@ function openFileDialog(e){
 function showSelectedImage(){
   console.log("Funktion Bild anzeigen");
   var file = document.getElementById("fileLoader");
-  //var file = fileInput.files[0];
-  console.log("Variable erstellt");
   console.log("Datei:" + file.name);
   //Bild auf der Seite anzeigen
-  var imageField = document.getElementById("renderDropzone");
-  imageField.appendChild("<img src=' + file.name +'>");
-  //imageFiled.style.image();
 }
 
 function handleDragOverZone(e){

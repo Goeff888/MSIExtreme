@@ -5,8 +5,8 @@ h1 {
 }
 
 
-div {
-    background-image:url('w3css.gif');
+.todoBody{
+    background-image:url('/images/cms_logo_jamaica.png');
     background-repeat:no-repeat;
-    background-position:right center;
+    background-position:right center;   
 }
