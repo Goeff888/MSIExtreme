@@ -47,14 +47,16 @@
         <a href="#" data-command='subscript'><i class='fa fa-subscript'></i></a>
         <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
         <a href="#" data-command='switchCode'><i class='fa fa-edit'></i></a>
-        <button id="switchCode" name="Code" value="code">Code</button>
     </div>
     <form action="/cmsPost/<%= cmsPost[0]._id %>/edit?_method=PUT %>" method="POST" id="formContent">
-      
+<div class="d-flex flex-row-reverse">
+<button type="button" class="btn btn-secondary" id="html" value="unchecked" disabled>HTML</button>
+<button type="button" class="btn btn-secondary" id="plain" value="checked" >PLAIN</button> 
+      </div>
       <div id="editor" contenteditable>
           <%= cmsPost[0].content %>
       </div>
-      <textarea name="post[content]"rows="5" cols="114" id="clipped"  ></textarea>
+      <textarea name="post[content]"rows="5" cols="114" id="clipped"></textarea>
       
       <div class="row">
         <div class="col-md-4 date">
@@ -110,4 +112,12 @@
   </div>
 </div>
   
-<% include ../partials/footer %>
+<a href="/">Start</a>
+<div class="footer">Trademark 2018 Groefics</div>
+
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/bootstrap.js"></script>
+<script src="/javascript/cmsDragndrop.js"></script>
+
+</body>
+</html>

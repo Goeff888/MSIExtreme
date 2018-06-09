@@ -7,7 +7,7 @@ window.onload= function(){
   var originText = editor.innerHTML;
   textarea.textContent = originText;
   //editor.innerHTML = originHTML;
-  console.log("originHTML:" + originHTML);
+  //console.log("originHTML:" + originHTML);
   console.log("originText:" +originText);
   };
 
@@ -65,33 +65,59 @@ function handleDrop(e){
 }
 
 //############Textarea und Editor Funktionen#############
+//Ermitteln des aktuellen Ansicht
+function getStatus(){
+  console.log("Function status");
+  var statusHTML = document.getElementById("html");
+  var statusPlain = document.getElementById("plain");
+  var status = "plain";
+  //console.log(statusHTML.value);
+  
+  if (statusHTML.value === "checked"){
+    statusHTML.value = "unchecked";
+    statusPlain.value = "checked";
+    status="html";
+    
+  }else{
+    statusPlain.value = "unchecked";
+    statusHTML.value = "checked";
+    status="plain";
+  }
+  return status;
+}
 //Umschalten zwischen HTML und PLAIN
 function switchView(){
-  console.log("switchView");
-  var status= document.getElementById("switchCode");
+  console.log("Function switchView");
+  var status= getStatus();
+  console.log("Status nach Unterfunktion:"+status);
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
-
-  editor.style.display = "none";
-  textarea.style.visibility ="visible";
+  //editor.style.display = "none";
+  //textarea.style.visibility ="visible";
   //Prüfen ob Coder oder WYSIWG-Ansicht
-  if(status.value ==="plain"){
+  if(status ==="plain"){
     editor.style.display = "block";
     textarea.style.display = "none";
-    status.value ="code";
+    document.getElementById("plain").removeEventListener("click", switchView);
+    document.getElementById("html").addEventListener("click", switchView);
+    document.getElementById("plain").disabled = true;
+    document.getElementById("html").disabled = false;
     //textarea.style.visibility ="hidden";
     editor.innerHTML = textarea.textContent;
-    console.log("editor sichtbar");
-  }else if(status.value ==="code"){
+    console.log("editor sichtbar: "+document.getElementById("plain").disabled);
+  }else if(status ==="html"){
     editor.style.display = "none";
     textarea.style.display = "block";
-    status.value ="plain";
+    document.getElementById("html").removeEventListener("click", switchView);
+    document.getElementById("plain").addEventListener("click", switchView);
+    document.getElementById("html").disabled = true;
+    document.getElementById("plain").disabled = false;
     //textarea.style.visibility ="visible";
     textarea.textContent = editor.innerHTML;
     console.log("textarea sichtbar");
   }else{
     //undefinierter Zustand
-     console.log(status.value);
+     console.log("undefinierter Zustand:" + status);
   }
   
 }
@@ -134,6 +160,10 @@ function chkFormular() {
 var dropzone = document.querySelectorAll(".btnDropzone");
 var dragElement = document.querySelectorAll('.btnUnitName');
 var saveContent = document.getElementById("savePost");
+
+var plainView = document.getElementById("plain");
+plainView.addEventListener('click', switchView);
+
 ////////////////////DROPZONES//////////////
 for (var i = 0;i < dropzone.length;i++){
   dropzone[i].addEventListener('dragover', handleDragOverZone, false);
@@ -150,8 +180,11 @@ for (var i = 0;i < dragElement.length;i++){
 }
 ////////////////////EDITORTOOLBAR//////////////
 //CodeButton
-//var switchView = document.getElementById("switchCode");
+// $('#option1').click(switchView()) 
+//htmlView.addEventListener('click', switchView);
+//plainView.addEventListener('click', switchView);
 //switchView.addEventListener("click",switchView);
 ////////////////////Speichern Button//////////////
 saveContent.addEventListener('click',chkFormular );
+
 

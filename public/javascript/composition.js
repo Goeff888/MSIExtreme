@@ -43,8 +43,7 @@ function handleDrop(e){
   console.log("Abgelegt");
 }
 //Formulareinträge prüfen*****************************
-//Überprüfen, ob Formular korrekt ausgefüllt ist
-
+//Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
 function chkFormular() {
   if (document.getElementsByName("renderedImage")[0].value == "") {
     alert("Bitte ein Bild auswählen!");
@@ -56,6 +55,18 @@ function chkFormular() {
   //return false;
 }
 
+//Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
+function verifyDelete() {
+  alert("Wollen Sie das Bild wirklich löschen?");
+var txt;
+var r = confirm("Press a button!");
+if (r == true) {
+    txt = "You pressed OK!";
+} else {
+    txt = "You pressed Cancel!";
+}
+  //return false;
+}
 
 //neuen Eintrag erzeugen*****************************
 //Funktionen:
@@ -102,5 +113,13 @@ dropzone.addEventListener('drop', handleDrop, false);
 function openfileDialog() {
     $("#fileLoader").click();
 }
+function openfileDialog() {
+    $("#historyLoader").click();
+}
 var fileDialog = document.getElementById("fileLoader");
 fileDialog.addEventListener('change', showSelectedImage);
+
+//Button Bild löschen
+var deleteBtn = document.getElementById("btnDelete");
+deleteBtn.addEventListener("click", verifyDelete);
+

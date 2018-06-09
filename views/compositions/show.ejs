@@ -15,32 +15,26 @@
 
   <div class="row">
     <div class="col-md-2">
-      <div class="taskEdit">
-        <h2>Kategorien</h2>
-        <hr>
-        <ul>
-          <% for (var i = 0; i < categories.length;i++){ %>
-            <li><%= categories[i].category %> </li>
-         <% } %>
-        </ul>
-        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
-      </div>
+      <% include partials/category %>
       <hr>
-
-      <h2>Tutorials</h2>
-      <ul>
-        <li>Post </li>
-        <li>aus der anotherberrydb</li>
-        <li>und Bildern aus PPT</li>
-       </ul>
+      <% include partials/magazin %>
     </div>
 
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="/images/compositions/<%= composition[0].image %>">
+      <div class="container">
+        <a href="/composition" class="btn btn-primary">zur Startseite</a>
+        <a href="/composition" class="btn btn-primary">vorheriges Bild</a>
+        <a href="/composition" class="btn btn-primary">nächstes Bild</a>
+      </div>
+      <img class="img-responsive img-composition imgComp" src="/images/compositions/<%= composition[0].image %>">
       <div class="caption">
         <h4>
-          <%= composition[0].name %>
-          <span><%= composition[0].created %></span>
+          <span><%= composition[0].name %></span>
+          <span class="date">
+            <%= composition[0].created.getDate() %>.
+            <%= composition[0].created.getMonth() %>.
+            <%= composition[0].created.getYear() +1900 %>
+          </span>
         </h4>
         <p class="compText"><%= composition[0].description %></p>
         <% comments.forEach(function(comment){ %>    
@@ -58,11 +52,11 @@
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
             Neuer Kommentar
           </button>
-            <button class="btn btn-primary" type="submit">
-              Eintrag löschen
-            </button>
-          </form>
+          <a href="/composition/<%= composition[0]._id %>/edit" class="btn btn-primary">
+            Bild bearbeiten
+          </a>
         </p>
+      </form>
         <div class="collapse" id="collapseComment">
           <div class="card card-body">
             <form method="post" action="/composition/<%= composition[0]._id  %>/comments">
@@ -74,53 +68,10 @@
     </div>
     
     <div class="col-md-2">
-        <h2>Historie</h2>
-        <a href="">Neues Bild hinzufügen</a>
-        <ul>
-          <li>Hier alle vorherigen Bilder anzeigen </li>
-
-        </ul>
-        <h2>Tutorials</h2>
-        <ul>
-          <% tutorials.forEach(function(tutorial){ %>
-          <li><a href="<%= tutorial.url %>"><%= tutorial.name %></a></li>
-          <%}) %>
-        </ul>
-        
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-          Launch demo modal
-        </button>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Tutorial hinzufügen</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <form method="post" action="/tutorials/new">
-              <div class="modal-body">
-                
-                  <input type="text" name="tutorials[name]" placeholder="Name">
-                  <input type="text" name="tutorials[url]" placeholder="Url">
-                  <input type="text" name="tutorials[format]" placeholder="Format">
-                  <input type="text" name="tutorials[category]" placeholder="Kategorie">
-                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-              </div>
-              </form>
-            </div>
-          </div>
-        </div>
+      <% include partials/history %>
+      <hr>
+      <% include partials/tutorialsNew %>  
     </div>
-  </div>
 
 
 <div class="footer">Trademark 2018 Groefics</div>

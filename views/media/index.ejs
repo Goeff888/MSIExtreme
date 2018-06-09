@@ -2,21 +2,58 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>To Do Liste</title>
+    <title>Quellensammlung</title>
 
     <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/task.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/media.css">
     
 </head>
 <body>
 <% include ../partials/navbarTop %>
 
-<h1>Index Seite zum CMS</h1>
+<h1>Alle interessanten Quellen</h1>
 <hr>
-  <div class="row">
-  <a href="cms/new">Seiten anlegen und bearbeiten</a>   
-  </div>
-<div class="footer">Trademark 2018 Groefics</div>
+  <button type="button" class="btn btn-primary">Links</button>
+  <button type="button" class="btn btn-secondary">Tutorials</button>
+  <button type="button" class="btn btn-success">Audio</button>
+  <button type="button" class="btn btn-danger">PDF</button>
 
-<% include ../partials/footer %>
+  <div class="row">
+    <div class="col-2 leftNav">
+      Neuer Link
+      <input type="text" name="linkName" placeholder="Name">
+      <input type="text" name="linkUrl" placeholder="URL">
+      <button type="submit" class="btn btn-primary">Speichern</button>
+      <hr>
+      Neues Tutorial
+      <input type="text" name="linkName" placeholder="Name">
+      <input type="text" name="linkUrl" placeholder="URL">
+      <button type="submit" class="btn btn-primary">Speichern</button>
+      <hr>
+      Neues Audio
+      <input type="text" name="linkName" placeholder="Name">
+      <input type="text" name="linkUrl" placeholder="URL">
+      <button type="submit" class="btn btn-primary">Speichern</button>
+      <hr>
+      Neues Pdf
+      <input type="text" name="linkName" placeholder="Name">
+      <input type="text" name="linkUrl" placeholder="URL">
+      <button type="submit" class="btn btn-primary">Speichern</button>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-10">
+      Hier steht der Mittelbereich
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="footer">Trademark 2018 Groefics</div>
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/media.js"></script>
+<script src="/javascript/bootstrap.js"></script>
+</body>
+</html>

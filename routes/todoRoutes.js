@@ -84,11 +84,13 @@ router.get("/todo/:id/edit", function(req, res){
 //UPDATE ROUTES###########################
 //Bearbeiten einer Aufgabe
 router.put("/todo/:id/edit", function(req, res){
-  dBTodo.findByIdAndUpdate(req.params.id, entries, function(err, updatedTodo){
+ console.log("Update Route ToDo ");
+  dBTodo.findByIdAndUpdate(req.params.id, req.body.todo, function(err, updatedTodo){
    if(err){
     res.render("error", {error: err});
    }else{
-    res.render("todo/edit", {todo: updatedTodo});
+    //console.log("todo/"+ req.params.id +"/edit");
+    res.redirect("/todo/"+ req.params.id +"/edit");
    }
  });
 });

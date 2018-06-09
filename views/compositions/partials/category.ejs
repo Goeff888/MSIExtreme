@@ -1,0 +1,10 @@
+<div class="taskEdit">
+  <h2>Kategorien</h2>
+  <hr>
+  <ul>
+    <% for (var i = 0; i < categories.length;i++){ %>
+      <li><%= categories[i].category %> </li>
+   <% } %>
+  </ul>
+  <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
+</div>

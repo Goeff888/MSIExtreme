@@ -61,6 +61,7 @@ router.post("/composition/:id/comments", function(req, res){
      res.redirect("/composition");
     }else{
      console.log("CompositionID gefunden");
+     //var comment = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
     dBCommments.create(req.body.comment,function(err, comment){
      if(err){
       console.log(err);

@@ -84,11 +84,6 @@ router.post("/composition/new",function(req,res){
      }
     });
    });
-   
-    //Datenbankeintrag erzeugen
-
-    //Show-Seite laden
-
  });
 
 /*router.post("/upload",function(req,res){
@@ -142,49 +137,46 @@ router.get("/composition/:id", function(req, res){
       console.log("comments:"+comments);
       res.render("compositions/show",{composition: results.composition, comments: comments,categories:results.categories,tutorials:results.tutorials });
      }
-   });     
-   //res.render("compositions/new", results);
+   });
  })
  .catch(function(err) {
    res.send(500); // oops - we're even handling errors!
    res.render("error", {error: err});
  });  
-  
-  
-  
-  /*
-    dBComposition.findById(req.params.id,function(err, entries){
-    if(err){
-     res.render("error", {error: err});
-    }else{
-     var compID = entries._id;
-     console.log("ID des Eintrags:" +entries._id);
-     dBComments.find({compositionID:compID}, function(err, comments){
+});
+//EDIT ROUTES###########################
+//Seite zum Bearbeiten von Bildern auf Blender-Seite
+router.get("/composition/:id/edit", function(req, res){
+   console.log("Edit Route Composition:" + req.params.id);
+
+   promise.props({
+    categories:  dbCategories.find().execAsync(),
+    tutorials:   dBTutorials.find().execAsync(),
+    composition: dBComposition.find({_id:req.params.id}).execAsync()
+  })
+  .then(function(results) {
+   console.log("results:" + results.composition[0]._id);
+   dBComments.find({compositionID:req.params.id}, function(err, comments){
       if(err){
        res.render("error", {error: err});
       }else{
-       console.log(comments);
-       res.render("compositions/show",{composition: entries, comments: comments});
+       console.log("comments:"+comments);
+       res.render("compositions/edit",{composition: results.composition, comments: comments,categories:results.categories,tutorials:results.tutorials });
       }
-     });     
-    }
-   });*/
- });
-//EDIT ROUTES###########################
-//Seite zum Bearbeiten von Bildern auf Blender-Seite
-router.get("Edit Route Composition", function(req, res){
-   console.log("Eintrag entfernt:" + req.params.id);
+    });
+  })
+  .catch(function(err) {
+    res.send(500); // oops - we're even handling errors!
+    res.render("error", {error: err});
+  }); 
+   /*
    dBComposition.findById(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{
-      
-      //console.log("Eintrag entfernt:" + req.params.id);
       res.redirect("/composition");
      }
-  });
- 
- //res.render ("compositions/edit");
+  });*/
 });
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
