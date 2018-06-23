@@ -1,0 +1,55 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To Do Liste</title>
+
+    <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/task.css">
+    
+</head>
+<body>
+<% include ../partials/navbarTop %>
+
+<h1>To-Do Liste anzeigen</h1>
+<hr>
+  <div class="row">
+      <div class="task">      
+          <h3><%= todo.project %></hr>
+          <hr>
+         <p><%= todo.description %></p>
+         <%= todo.result %>
+       </div>
+      <div class="task">      
+          <h3>Tasks</hr>
+          <hr>
+          <div class="taskList">
+          <ul>
+            <% for(var i=0; i < tasks.length; i++){ %>
+            <li>
+              <%= tasks[i].task %>
+            </li>              
+            <% } %>
+
+          </ul>
+          </div>
+      </div>
+    <form action="/todo" method="post">
+      <div class="task">      
+          <h3>Info</hr>
+          <hr>
+          <p class="date">fällig am:
+          <%= todo.deadline.getDate() %>.
+          <%= todo.deadline.getMonth() %>.
+           <%= todo.deadline.getYear() +1900 %>
+          </p>
+          <p class="date">erstellt am:
+          <%= todo.created.getDate() %>.
+          <%= todo.created.getMonth() %>.
+           <%= todo.created.getYear() +1900 %>
+          </p>
+      </div>
+  </div>
+  <a href="/todo/<%= todo._id %>/edit">Bearbeiten</a>
+<% include ../partials/footer %>

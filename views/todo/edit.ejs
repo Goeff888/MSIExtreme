@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>To Do Liste</title>
+    <title>Meine Aufgaben bearbeiten</title>
     <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/task.css">
@@ -49,7 +49,7 @@
               
             <% } %>
           </ul>
-          <input type="text" id="taskName" name="task" placeholder="Neue Aufgabe">
+          <input type="text" id="taskName" data-value="<%= todo._id %>" name="task" placeholder="Neue Aufgabe">
       </div>
     </div>
     <div class="col-3">    

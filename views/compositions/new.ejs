@@ -12,9 +12,6 @@
 </head>
 <body>
 <% include ../partials/navBarTop %>
-
-
-
   <div class="row">
     <div class="col-md-2">
       <div class="taskEdit">
@@ -40,8 +37,6 @@
     <div class="col-md-8">
       <div class="container">
         <h1> Neues Blender File</h1>
-        
-          
           <form action="/composition/new" method="post" encType="multipart/form-data" id="newForm">
             <div class="row">
               <div class="col formFields">
@@ -58,7 +53,7 @@
               <div class="col"> 
                 <div id="renderDropzone">
                   <input type="file" id="fileLoader" name="renderedImage" title="loadImage">
-                  Bild hier reinziehen oder klicken
+                  <span id="fileText">Bild hier reinziehen oder klicken</span>
                 </div> 
               </div>    
           </form>

@@ -48,36 +48,48 @@
         <a href="#" data-command='superscript'><i class='fa fa-superscript'></i></a>
         <a href="#" data-command='switchCode'><i class='fa fa-edit'></i></a>
     </div>
-    <form action="/cmsPost/<%= cmsPost[0]._id %>/edit?_method=PUT %>" method="POST" id="formContent">
-<div class="d-flex flex-row-reverse">
-<button type="button" class="btn btn-secondary" id="html" value="unchecked" disabled>HTML</button>
-<button type="button" class="btn btn-secondary" id="plain" value="checked" >PLAIN</button> 
+    <form action="/cmsPost/<%= selectedPost._id %>/edit?_method=PUT %>" method="POST" id="formContent">
+      <div class="d-flex flex-row-reverse">
+        <button type="button" class="btn btn-secondary" id="html" value="checked" >PLAIN</button>
+        <button type="button" class="btn btn-secondary" id="plain" value="unchecked" disabled>HTML</button> 
       </div>
       <div id="editor" contenteditable>
-          <%= cmsPost[0].content %>
+          
       </div>
-      <textarea name="post[content]"rows="5" cols="114" id="clipped"></textarea>
+      <textarea name="post[content]"rows="5" cols="114" id="clipped"><%= selectedPost.content %></textarea>
       
       <div class="row">
         <div class="col-md-4 date">
           Erstellt am: 
-          <%= cmsPost[0].created.getDate() %>.
-          <%= cmsPost[0].created.getMonth() %>.
-          <%= cmsPost[0].created.getYear() +1900 %>
-          <input type="text" value="<%= navigation[0].cms %>" name="post[cmsID]">
+          <%= selectedPost.created.getDate() %>.
+          <%= selectedPost.created.getMonth() %>.
+          <%= selectedPost.created.getYear() +1900 %>
+          <input type="text" value="<%= navigation[0].cms %>" name="post[cmsID]" class="hiddenID">
         </div>
         <div class="col-md-4 date">
            Zuletzt geändert am:
-          <%= cmsPost[0].updated.getDate() %>.
-          <%= cmsPost[0].updated.getMonth() %>.
-          <%= cmsPost[0].updated.getYear() +1900 %>
-           <input type="text" value="<%= navigation[0].cmsUnit %>" name="post[cmsUnitID]">
+          <%= selectedPost.updated.getDate() %>.
+          <%= selectedPost.updated.getMonth() %>.
+          <%= selectedPost.updated.getYear() +1900 %>
+           <input type="text" value="<%= navigation[0].cmsUnit %>" name="post[cmsUnitID]" class="hiddenID">
         </div>
         <div class="col-md-4">
           <select class="form-control form-control-lg" name="post[status]" >
+           <% if(JSON.stringify(selectedPost.status).indexOf("neu") >= 0){ %>
+           <option selected>neu</option>
+           <option>in Arbeit</option>
+           <option>veröffentlicht</option>          
+           <% }else if(JSON.stringify(selectedPost.status).indexOf("veröffentlicht") >= 0){ %>
            <option>neu</option>
-           <option selected>in Arbeit</option>
-           <option>veröffentlicht</option>
+           <option >in Arbeit</option>
+           <option>selectedveröffentlicht</option>  
+           <% }else if(JSON.stringify(selectedPost.status).indexOf("in Arbeit") >= 0){ %>
+           <option>neu</option>
+           <option selected >in Arbeit</option>
+           <option >veröffentlicht</option>
+           <% }else{ %>
+           <% console.log("Status des Posts in der Datenbank nicht erkannt"); %>
+           <% } %>
          </select>         
         </div>
       </div>

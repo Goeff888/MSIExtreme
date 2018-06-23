@@ -1,6 +1,7 @@
 body{
   background-image:  url(/images/winkenderPanda.jpg);
   background-size: 100%;/* fallback for old browsers */
+
   color: black;
   font-family: 'Arvo', serif;
 }
@@ -35,40 +36,6 @@ hr {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-.hiddenID{
-  display:none;
-}
-
-#fileLoader{
-  display:none;
-}
-#clipped{
-  display:none;
-  border: 1px solid blue;
-  box-shadow: 2px 2px;
-}
-#editor {
-  box-shadow: 2px 2 2px #CCC inset;
-  height: 250px;
-  overflow: auto;
-  margin-top: 0;
-  margin-left:1px;
-  outline: none;
-  background-color: white;
-  border: 3px solid red;
-  
-}
-.date{
-  padding-left: 5px;
-  margin-left:5px;
-  
-  background-color: white;
-  font-weight: bold; 
-}
-.btnUnitName{
-  width:50%;
-  color:white;
-}
 .sectionbtn{
   border: none;
   float: right;
@@ -110,90 +77,6 @@ hr {
   border-color: white;
 }
 
-.entryTools{
-  visibility: hidden;
-}
-
-span:hover{
-  visibility: visible;
-}
-
-.btnDropzone{
-  font-size: 10px;
-  display: none;
-}
-
-
-.btnDropzoneVisible{
-  background-color: white;
-  font-family: "Allerta";
-  width:90%;
-  border: 1px dotted black;
-  color: dimgrey;
-  padding: 0px 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  display: block;;
-}
-
-.btnPostName{
-  background-color: beige;
-  font-family: "Allerta";
-  width:90%;
-  border: none;
-  color: dimgrey;
-  padding: 0px 4px;
-  text-align: left;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;  
-}
-
-.btnUnitName{
-  background-color: teal;
-  font-family: "Allerta";
-  width:80%;
-  letter-spacing: 0.1em;
-  border: none;
-  color: white;
-  padding: 5px;
-  text-decoration: none;
-  text-align:left;
-  display: inline;
-  font-size: 15px;  
-}
-.btnModal{
-  background-color: teal;
-  font-family: "Allerta";
-  width:10%;
-  letter-spacing: 0.1em;
-  border: none;
-  color: white;
-  padding: 5px;
-  text-decoration: none;
-  display: inline;
-  font-size: 15px;  
-}
-.btnCMSMain{
-  background-color: white;
-  font-family: "Allerta";
-  width:80%;
-  letter-spacing: 0.1em;
-  border: none;
-  color: black;
-  padding: 0px 00px;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  font-weight: 600;
-}
-.btnCMSMain:hover .btnModal{
-	width:70px;
-	display: none;
-}
-
 #savePost{
   margin-top:10px;
 }
@@ -202,7 +85,16 @@ a {
   cursor: pointer;
 }
 
+#editor {
+  box-shadow: 0 0 2px #CCC;
+  height: 250px;
+  overflow: auto;
+  margin-top: 20px;
+  margin-left:1px;
 
+  outline: none;
+  background-color: white;
+}
 
 #postView{
   width: 100%;
@@ -270,11 +162,8 @@ a {
   margin-top:5px;
 }
 
-
 .toolbar {
   text-align: center;
-  border: 3px solid red;
-  width:100%;
 }
 
 .toolbar a,

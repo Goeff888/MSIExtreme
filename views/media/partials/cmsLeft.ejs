@@ -7,41 +7,14 @@
     <div class="card">
       <div class="card-header" id="headingOne">
         <h5 class="mb-0"> 
-         
          <button class="btn btn-link btnCMSMain" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
+          <span class="entryTools"><i class="fas fa-pencil-alt"></i></span>
           <%= cms[i].name %>
+          <span class="entryTools"><i class="fas fa-trash-alt"></i></span>
         </button>
-        <button class="btn btnModal" type="button" >
-          <span data-toggle="modal" data-target="#cmsModal<%=z %>"><i class="fas fa-pen-square"></i></span>
-        </button>
-
       </h5>
     </div>
-<!-- Modal CMS-->
-          <div class="modal fade" id="cmsModal<%=z %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= cms[i].name %></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                <form method="post" action="cms/<%= cms[i]._id %>/edit">
-                 Beschreibung:
-                 <textarea rows=3 cols=50 name="cms[description]"><%= cms[i].description %></textarea>
-                 
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                  <button type="button" class="btn btn-primary">Speichern</button>
-                </div>
-              </div>
-            </div>
-          </div>          
-  <!-- Modal CMS ENDE--> 
+
     <div id="collapse<%= z %>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">    
        
@@ -50,39 +23,11 @@
        </div>
        <% for (var j = 0; j< cmsUnit.length;j++){z++;  %>
          <% if (JSON.stringify(cms[i]._id) == JSON.stringify(cmsUnit[j].cmsID)){ %>
-          <span>
-            <button class="btn btnUnitName" type="button" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="false" aria-controls="collapse<%= z %>" draggable="true">
-             <i class="fas fa-sort-amount-down"></i><%= cmsUnit[j].name %>
-           </button>
-          <button class="btn btnModal" type="button" >
-            <span data-toggle="modal" data-target="#unitModal<%=z %>"><i class="fas fa-pen-square"></i></span>
+          
+          <button class="btn btn-primary btnUnitName" type="button" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="false" aria-controls="collapse<%= z %>" draggable="true">
+            <%= cmsUnit[j].name %>
           </button>
-          </span>
-<!-- Modal CMSUNIT-->
-          <div class="modal fade" id="unitModal<%=z %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= cmsUnit[j].name %></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                <form method="post" action="cmsUnit/<%= cmsUnit[j]._id %>/edit">
-                 Beschreibung:
-                 <textarea rows=3 cols=50 name="cmsUnit[description]"><%= cmsUnit[j].description %></textarea>
-                 <p><%= cmsUnit[j].created %></p>
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                  <button type="button" class="btn btn-primary">Speichern</button>
-                </div>
-              </div>
-            </div>
-          </div>          
-  <!-- Modal CMSUNIT ENDE-->        
+          
           <div class="btnDropzone">
             Dropzone Dummy
           </div> 
@@ -92,7 +37,7 @@
           <% for (var k=0;k< cmsPost.length;k++,z++){ %>
            <% if (JSON.stringify(cmsUnit[j]._id) == JSON.stringify(cmsPost[k].cmsUnitID)){ %>
           <a href="/cms/<%=cms[i]._id%>/cmsUnit/<%=cmsUnit[j]._id%>/<%=cmsPost[k]._id%>/edit" class="btn btn-primary btnPostName">
-            <i class="fas fa-pen-square"></i><%= cmsPost[k].name %>
+            <%= cmsPost[k].name %>
           </a>
            <% } %>      
           <% z++;} %>
@@ -118,7 +63,7 @@
        <%  z++;} %>
         <p>
           <button class="btn btn-primary btnUnitName" type="button" data-toggle="collapse" data-target="#collapseNewUnit<%= z %>" aria-expanded="false" aria-controls="collapseNewUnit<%= z %>">
-             <i class="fas fa-calendar-plus"></i>Neuer Abschnitt
+            Neuer Abschnitt
           </button>
         </p>
         <div class="collapse" id="collapseNewUnit<%= z %>">

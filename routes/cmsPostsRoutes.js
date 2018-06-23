@@ -60,11 +60,13 @@ router.post("/cms/:id/cmsUnit/:idUnit/cmsPost", function(req, res){
 //Seite zum Bearbeiten eines Posts
 router.get("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
  console.log("CMSPOST edit Seite");
+ console.log(req.params.idPost);
  promise.props({
-     cms:       dBCMS.find().execAsync(),
-     cmsUnit:   dBCMSUnit.find().execAsync(),
-     cmsPost:   dBCMSPosts.find().execAsync(),
-     categories:dBCategories.find().execAsync(),
+     cms:          dBCMS.find().execAsync(),
+     cmsUnit:      dBCMSUnit.find().execAsync(),
+     cmsPost:      dBCMSPosts.find().execAsync(),
+     selectedPost: dBCMSPosts.findById(req.params.idPost).execAsync(),
+     categories:   dBCategories.find().execAsync(),
      navigation: [{cms:req.params.id,cmsUnit:req.params.idUnit, cmsPost:req.params.idPost}]
    })
    .then(function(results) {
@@ -93,13 +95,13 @@ router.put("/cms/:id/cmsUnit/:idUnit/:idPost/edit", function(req, res){
 //Bearbeiten einer Posts ohne Navigation
 router.put("/cmsPost/:id/edit", function(req, res){
  console.log("Update Route cmsPost ohne");
- console.log("");
+
   dBCMSPosts.findByIdAndUpdate(req.params.id, req.body.post, function(err, updatedPost){
    if(err){
     res.render("error", {error: err});
    }else{
     console.log(updatedPost);
-    res.redirect("/cms/"+ req.body.post.cmsID +"/cmsUnit/"+ req.body.post.cmsUnitID +"/"+ req.body.post.cmsPostID +"/edit");
+    res.redirect("/cms/"+ req.body.post.cmsID +"/cmsUnit/"+ req.body.post.cmsUnitID +"/"+ req.params.id +"/edit");
    }
  });
 });

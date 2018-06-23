@@ -7,8 +7,8 @@ function addTaskbyEnter(e){
    if (e.which === 13){
     //Enter-Event
         var todotext = $(this).val();
-        var todoID = document.getElementById("todoID").innerHTML;
-        console.log(todoID);
+        var todoID = this.dataset.value;
+        console.log(this.dataset.value);
         $(this).val("");
         //$("ul").append("<li>"+ todotext +"<input type='text' name='tasks[task]' value='" +todotext+"' hidden='true'></li>");
         $("ul").append("<li><input type='checkbox' class='form-check-input' id='exampleCheck1' >" + todotext +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");         

@@ -26,42 +26,47 @@
         <a href="/composition" class="btn btn-primary">vorheriges Bild</a>
         <a href="/composition" class="btn btn-primary">nächstes Bild</a>
       </div>
-      <img class="img-responsive img-composition imgComp" src="/images/compositions/<%= composition[0].image %>">
+      <img class="img-responsive img-composition imgComp" src="/images/compositions/<%= composition.image %>">
       <div class="caption">
         <h4>
-          <span><%= composition[0].name %></span>
+          <span><%= composition.name %></span>
           <span class="date">
-            <%= composition[0].created.getDate() %>.
-            <%= composition[0].created.getMonth() %>.
-            <%= composition[0].created.getYear() +1900 %>
+            <%= composition.created.getDate() %>.
+            <%= composition.created.getMonth() %>.
+            <%= composition.created.getYear() +1900 %>
           </span>
         </h4>
-        <p class="compText"><%= composition[0].description %></p>
+        <p class="compText"><%= composition.description %></p>
         <% comments.forEach(function(comment){ %>    
         <div class ="row">
          <div class="col-md-8">
            <%= comment.author%>
-           <span class="pull-right">10 days ago</span>
+       
+            <span class="date ">
+              <%= /*comment.created.getDate()*/ %>.
+              <%= /*comment.created.getMonth()*/ %>.
+              <%= /*comment.created.getYear() +1900 */ %>
+            </span>
            <p class="compText"><%= comment.comment %></p>
          </div>
         </div>
         <% });%>
         </div>
-      <form method="post" action="/composition/<%= composition[0]._id %>?_method=DELETE""
+      <form method="post" action="/composition/<%= composition._id %>?_method=DELETE""
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
             Neuer Kommentar
           </button>
-          <a href="/composition/<%= composition[0]._id %>/edit" class="btn btn-primary">
+          <a href="/composition/<%= composition._id %>/edit" class="btn btn-primary">
             Bild bearbeiten
           </a>
         </p>
       </form>
         <div class="collapse" id="collapseComment">
           <div class="card card-body">
-            <form method="post" action="/composition/<%= composition[0]._id  %>/comments">
+            <form method="post" action="/composition/<%= composition._id  %>/comments">
               <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
-              <button class="btn btn-primary" name="comment[compositionID]" value="<%=composition[0]._id  %>" type="submit">Speichern</button>
+              <button class="btn btn-primary" name="comment[compositionID]" value="<%=composition._id  %>" type="submit">Speichern</button>
             </form>
           </div>
         </div>

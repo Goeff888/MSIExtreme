@@ -12,21 +12,14 @@
 </head>
 <body>
 
-<% include ../partials/navBarTop %>
+<% include ../partials/navbarTop %>
+
 
   <div class="row">
     <div class="col-md-2">
-      <h2>Kategorien</h2>
-      <ul>
-        <li>Hier entsteht eine Auflistung der Kategorien</li>
-
-      </ul>
-      <h2>über Blender</h2>
-      <ul>
-        <li>Post </li>
-        <li>aus der anotherberrydb</li>
-        <li>und Bildern aus PPT</li>
-       </ul>
+      <% include partials/category %>
+      <hr>
+      <% include partials/magazin %>
     </div>
     
     <div class="col-md-8">
@@ -63,21 +56,9 @@
     </div>
     
     <div class="col-md-2">
-        <h2>Links</h2>
-        <ul>
-          <li>Liste in der </li>
-          <li>Datebank erstellen</li>
-          <li>und mit</li>
-          <li>Projekt verknüpfen</li>
-        </ul>
-        <h2>externe Tutorials</h2>
-        <ul>
-          <% tutorials.forEach(function(tutorial){ %>
-          <li><a href="<%= tutorial.url %>" target="_blank"><%= tutorial.name %></a> </li>
-          <% }); %>
-
-
-        </ul>
+      <% include partials/history %>
+      <hr>
+      <% include partials/tutorialsNew %>  
     </div>
   </div>
 
@@ -85,8 +66,9 @@
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/composition.js"></script>
 
 <script src="/javascript/bootstrap.js"></script>
+<script src="/javascript/composition.js"></script>
+
 </body>
 </html>

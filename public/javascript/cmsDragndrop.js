@@ -3,12 +3,12 @@ console.log("editor Javascript mit Drag&Drop");
 window.onload= function(){
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
-  var originHTML = textarea.textContent;
+  //var originHTML = textarea.textContent;
   var originText = editor.innerHTML;
-  textarea.textContent = originText;
-  //editor.innerHTML = originHTML;
+  //textarea.textContent = originText;
+  editor.innerHTML = textarea.textContent;
   //console.log("originHTML:" + originHTML);
-  console.log("originText:" +originText);
+  console.log("originText:" +textarea.textContent);
   };
 
 //Drag and Drop Funktionen///////////////////////////////////////
@@ -71,8 +71,8 @@ function getStatus(){
   var statusHTML = document.getElementById("html");
   var statusPlain = document.getElementById("plain");
   var status = "plain";
-  //console.log(statusHTML.value);
-  
+  console.log(statusHTML.value);
+  console.log(statusPlain.value);
   if (statusHTML.value === "checked"){
     statusHTML.value = "unchecked";
     statusPlain.value = "checked";
@@ -89,7 +89,7 @@ function getStatus(){
 function switchView(){
   console.log("Function switchView");
   var status= getStatus();
-  console.log("Status nach Unterfunktion:"+status);
+  //console.log("Status nach Unterfunktion:"+status);
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
   //editor.style.display = "none";
@@ -104,7 +104,7 @@ function switchView(){
     document.getElementById("html").disabled = false;
     //textarea.style.visibility ="hidden";
     editor.innerHTML = textarea.textContent;
-    console.log("editor sichtbar: "+document.getElementById("plain").disabled);
+    //console.log("editor sichtbar: "+document.getElementById("plain").disabled);
   }else if(status ==="html"){
     editor.style.display = "none";
     textarea.style.display = "block";
@@ -114,10 +114,10 @@ function switchView(){
     document.getElementById("plain").disabled = false;
     //textarea.style.visibility ="visible";
     textarea.textContent = editor.innerHTML;
-    console.log("textarea sichtbar");
+    //console.log("textarea sichtbar");
   }else{
     //undefinierter Zustand
-     console.log("undefinierter Zustand:" + status);
+     //console.log("undefinierter Zustand:" + status);
   }
   
 }
@@ -161,7 +161,7 @@ var dropzone = document.querySelectorAll(".btnDropzone");
 var dragElement = document.querySelectorAll('.btnUnitName');
 var saveContent = document.getElementById("savePost");
 
-var plainView = document.getElementById("plain");
+var plainView = document.getElementById("html");
 plainView.addEventListener('click', switchView);
 
 ////////////////////DROPZONES//////////////

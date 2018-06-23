@@ -6,7 +6,7 @@ var path = require('path');
 const fileUpload = require('express-fileupload');
 //var formidable = require('formidable');
 var fs = require('fs');
-//var dBCorel = require("../models/corel");
+var dBCorel = require("../models/corel");
 var dBTutorials = require("../models/tutorials");
 var dBComments = require("../models/comments");
 var dbCategories = require("../models/categories");
@@ -21,7 +21,7 @@ router.use(express.static("public"));
 //Anzeige aller Aufgaben
 router.get("/corel", function(req, res){
    promise.props({
-     composition: dBComposition.find().execAsync(),
+     composition: dBCorel.find().execAsync(),
      tutorials:   dBTutorials.find().execAsync(),
    })
    .then(function(results) {
@@ -125,7 +125,7 @@ router.get("/corel/:id", function(req, res){
 //Seite zum Bearbeiten von Bildern auf corel-Seite
 router.get("Edit Route corel", function(req, res){
    console.log("Eintrag entfernt:" + req.params.id);
-   dBComposition.findById(req.params.id, function(err){
+   /*dBComposition.findById(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{
@@ -133,7 +133,7 @@ router.get("Edit Route corel", function(req, res){
       //console.log("Eintrag entfernt:" + req.params.id);
       res.redirect("/corel");
      }
-  });
+  });*/
 });
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
@@ -146,7 +146,7 @@ router.delete("/corel/:id", function(req, res){
   if (err) return handleError(err);
   console.log("Comments entfernt");
 });
-  dBComposition.findByIdAndRemove(req.params.id, function(err){
+  /*dBComposition.findByIdAndRemove(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{
@@ -154,7 +154,7 @@ router.delete("/corel/:id", function(req, res){
       console.log("Eintrag entfernt:" + req.params.id);
       res.redirect("/corel");
      }
-  });
+  });*/
 });
 
 module.exports = router;
