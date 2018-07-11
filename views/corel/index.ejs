@@ -3,22 +3,21 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blender Gallerie</title>
+    <title>CG ART - Digitale Kunst mit Gallerie, Tutorials und Tipps</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/corel.css">
 </head>
 <body>
-
 <% include ../partials/navbarTop %>
 
   <div class="row">
     <div class="col-md-2">
-      <h2>Kategorien</h2>
+      <h2>Bücher</h2>
       <ul>
-        <li>Hier entsteht eine Auflistung der Kategorien</li>
+        <li>Hier entsteht eine Auflistung aus der Medien Datenbank zu pdfs</li>
 
       </ul>
       <h2>über Corel</h2>
@@ -35,7 +34,7 @@
           <div class="container">
             <h1> Corel Gallerie</h1>
             <p>Meine persönliche Digital Art Gallery</p>
-            <a href="/composition/new" class="btn btn-large" >Neues Bild hinzufügen</a>
+            <a href="/corel/new" class="btn btn-large" >Neues Bild hinzufügen</a>
           </div>  
         </header>
         <div class="row text-center">
@@ -45,12 +44,12 @@
                 <div class="caption">
                   <%= entry.name %>
                 </div>
-                <p><a href="/composition/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
+                <p><a href="/corel/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
             </div>
            <% }); %>
             <div class="col-md-3 col-sm-6">
               <div id="dropzone">
-                <a href="/composition/new">
+                <a href="/corel/new">
                 <img src="images/winkenderPanda.jpg" class="img-thumbnail">
                 <div class="caption">
                   Neues Bild hinzufügen</a>
