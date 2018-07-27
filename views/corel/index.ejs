@@ -15,17 +15,9 @@
 
   <div class="row">
     <div class="col-md-2">
-      <h2>Bücher</h2>
-      <ul>
-        <li>Hier entsteht eine Auflistung aus der Medien Datenbank zu pdfs</li>
-
-      </ul>
-      <h2>über Corel</h2>
-      <ul>
-        <li>Post </li>
-        <li>aus der anotherberrydb</li>
-        <li>und Bildern aus PPT</li>
-       </ul>
+      <% include partials/magazin %>
+      <hr>
+      <% include partials/CMSPosts %>
     </div>
     
     <div class="col-md-8">
@@ -40,7 +32,7 @@
         <div class="row text-center">
           <% composition.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
-                <img src="/images/compositions/<%= entry.image %>" class="img-thumbnail">
+                <img src="/images/corel/<%= entry.image %>" class="img-thumbnail">
                 <div class="caption">
                   <%= entry.name %>
                 </div>
@@ -62,21 +54,9 @@
     </div>
     
     <div class="col-md-2">
-        <h2>Links</h2>
-        <ul>
-          <li>Liste in der </li>
-          <li>Datebank erstellen</li>
-          <li>und mit</li>
-          <li>Projekt verknüpfen</li>
-        </ul>
-        <h2>externe Tutorials</h2>
-        <ul>
-          <% tutorials.forEach(function(tutorial){ %>
-          <li><a href="<%= tutorial.url %>" target="_blank"><%= tutorial.name %></a> </li>
-          <% }); %>
-
-
-        </ul>
+      <% include partials/links %>
+      <hr>
+      <% include partials/tutorials %>
     </div>
   </div>
 

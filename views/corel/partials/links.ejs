@@ -1,0 +1,48 @@
+<h2>Interessante Links über digitale Kunst</h2>
+<div class="gallery">
+ <ul>
+  <li>Links über digitale Kunst Liste</li>
+ </ul>
+</div>
+<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#linkModal">
+ <i class="fa fa-plus faPartial"></i>Neuen Link hinzufügen</button>
+
+<!-- Modal zum hinzufügen eines neuen History-Eintrags-->
+<div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neuen Link hinzufügen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="/links/new">
+      <div class="modal-body">
+        <div>Inhalt:</div>
+        <input type="text" name="links[content]" value="digital Art" disabled>
+        <div>Titel:</div>
+        <input type="text" name="links[name]">
+        <div>Quelle:</div>
+        <input type="text" name="links[url]">
+        <div>Beschreibung:</div>
+        <textarea rows="4" cols="50" name="links[description]"></textarea>
+        <div class="form-group">   
+          <label for="workfieldSelect">Bereich</label>
+          <select class="form-control" id="workfieldSelect" name="links[workfield]">
+            <option>Werkzeuge</option>
+            <option>Composing</option>
+            <option>Concept art</option>
+            <option>Lighting</option>
+            <option>Texturing</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<h2>Interessante Tutorials zur digitalen Kunst</h2>
+<div class="gallery">
+ <ul>
+  <li>Links über digitale Kunst Liste</li>
+ </ul>
+</div>
+<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#tutorialModal">
+ <i class="fa fa-plus faPartial"></i>Neuen Link hinzufügen</button>
+
+<!-- Modal zum hinzufügen eines neuen History-Eintrags-->
+<div class="modal fade" id="tutorialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neues Tutorial hinzufügen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="/links/new" encType="multipart/form-data">
+      <div class="modal-body">
+        <div>Inhalt:</div>
+        <input type="text" name="linkContent" value="digital Art" disabled>
+        <div>Titel:</div>
+        <input type="text" name="linkName">
+        <div>Quelle:</div>
+        <input type="text" name="linkSource">
+        <div>Beschreibung:</div>
+        <textarea rows="4" cols="50" name="description"></textarea>
+        <div>Bereich:</div>
+        <input type="text" name="linkContent" value="Tutorial" disabled>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

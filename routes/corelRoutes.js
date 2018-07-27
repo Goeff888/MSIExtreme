@@ -1,22 +1,21 @@
+//var bodyParser = require("body-parser"); //Request Data from Form in HTML-Body
 var express = require ("express");
 var router = express.Router();
 var http = require('http');
 var promise = require('bluebird');
 var path = require('path');
-const fileUpload = require('express-fileupload');
+var fileUpload = require('express-fileupload');
 //var formidable = require('formidable');
 var fs = require('fs');
 var dBCorel = require("../models/corel");
-var dBTutorials = require("../models/tutorials");
+var dBTutorials = require("../models/links");
 var dBComments = require("../models/comments");
 var dbCategories = require("../models/categories");
-//var dBTasks = require("../models/tasks");
 var mongoose = require("mongoose");
-//promise.promisifyAll(mongoose);
 router.use(fileUpload());
 router.use(express.static(path.join(__dirname, 'public')));
 router.use(express.static("public"));
-
+//router.use(bodyParser.urlencoded({extended: true}));
 //INDEX ROUTES###########################
 //Anzeige aller Aufgaben
 router.get("/corel", function(req, res){
@@ -57,25 +56,29 @@ router.get("/corel/new", function(req, res){
 //CREATE ROUTES###########################
 //Hinzufügen eines neuen Bildes
 router.post("/corel/new",function(req,res){
-   console.log("Create Route  corel");
-   /*var now = new Date();
-   var entries = new Object;
-   entries.content = req.body.composition.name;*/
-   //entries.created = now;
-   //entries.updated = now;   
-    var corel = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
+   console.log("Create Route  corel"); 
+    console.log(req.body.name);
+    console.log(req.files);
     // Datei hochladen
     if (!req.files)
       return res.status(400).send('No files were uploaded.');
+     
+    var corel = [{
+         name:req.body.name,
+         image:req.files.cgArt.name,
+         description:req.body.description,
+         created:Date(),
+         updated:Date()
+                }];
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.renderedImage;
+    let sampleFile = req.files.cgArt;
     //console.log(req.body.name);
     //console.log(sampleFile.name);
     // Use the mv() method to place the file somewhere on your server
     sampleFile.mv('public/images/corel/' + sampleFile.name, function(err) {
     if (err)
       return res.status(500).send(err);
-    dBComposition.create(corel, function(err, newEntry){
+    dBCorel.create(corel, function(err, newEntry){
      if(err){
       res.render("error", {error: err});
      }else{
@@ -84,10 +87,6 @@ router.post("/corel/new",function(req,res){
      }
     });
    });
-   
-    //Datenbankeintrag erzeugen
-
-    //Show-Seite laden
 
  });
 
@@ -100,11 +99,11 @@ router.get("/corel/:id", function(req, res){
   promise.props({
    categories:  dbCategories.find().execAsync(),
    tutorials:   dBTutorials.find().execAsync(),
-   corel:       dBComposition.find({_id:req.params.id}).execAsync()
+   corel:       dBCorel.find({_id:req.params.id}).execAsync()
  })
  .then(function(results) {
   console.log("results:" + results.composition[0]._id);
-  dBComments.find({compositionID:req.params.id}, function(err, comments){
+  dBComments.find({corelID:req.params.id}, function(err, comments){
      if(err){
       res.render("error", {error: err});
      }else{

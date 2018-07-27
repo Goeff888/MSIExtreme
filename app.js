@@ -10,11 +10,12 @@ var cmsRoutes = require("./routes/cmsRoutes");
 var cmsUnitRoutes = require("./routes/cmsUnitRoutes");
 var cmsPostRoutes = require("./routes/cmsPostsRoutes");
 var compositionRoutes = require ("./routes/compositionRoutes");
-var tutorialRoutes = require ("./routes/tutorialRoutes");
+var linkRoutes = require ("./routes/linkRoutes");
 var commentRoutes = require ("./routes/commentRoutes");
 var corelRoutes = require ("./routes/corelRoutes");
 var mediaRoutes = require ("./routes/mediaRoutes");
 var pythonRoutes = require ("./routes/pythonRoutes");
+var bookRoutes = require ("./routes/bookRoutes");
 //////MONGO-DATABASE-SCHEMES////////
 
 var app = express();
@@ -39,10 +40,11 @@ app.use(cmsUnitRoutes);
 app.use(cmsPostRoutes);
 app.use(compositionRoutes);
 app.use(commentRoutes);
-app.use(tutorialRoutes);
+app.use(linkRoutes);
 app.use(mediaRoutes);
 app.use(corelRoutes);
 app.use(pythonRoutes);
+app.use(bookRoutes);
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index");

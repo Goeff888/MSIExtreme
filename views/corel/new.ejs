@@ -42,21 +42,20 @@
             <div class="row">
               <div class="col formFields">
                 <p>
-                  <input type="text" name="name" placeholder="Name">                
+                  <input type="text" name="name" placeholder="Name" value="">                
                 </p>
                 <p>
                   <textarea name="description" placeholder="Beschreibung" rows="3" cols="60"></textarea>  
-               </p> 
-                  <button class="btn btn-lg btn-primary" type="submit" id="sendBtn">Speichern</button>          
+                </p>            
               </div> 
-              </div>
-              
-              <div class="col"> 
-                <div id="renderDropzone">
-                  <input type="file" id="fileLoader" name="renderedImage" title="loadImage">
-                  Bild hier reinziehen oder klicken
-                </div> 
-              </div>    
+            </div>
+            <div class="col"> 
+              <div id="renderDropzone">
+                <input type="file" id="fileLoader" name="cgArt" title="Bild suchen">
+                <span id="fileText">Bild hier reinziehen oder klicken</span>
+              </div> 
+            </div>
+            <button class="btn btn-lg btn-primary" type="submit" id="sendBtn">Speichern</button> 
           </form>
       </div>
     </div>
@@ -84,7 +83,7 @@
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/composition.js"></script>
+<script src="/javascript/corel.js"></script>
 
 <script src="/javascript/bootstrap.js"></script>
 </body>
