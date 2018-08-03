@@ -1,19 +1,22 @@
-<h2>vorherige Versionen</h2>
+<h2>Vorlagen</h2>
 <div class="gallery">
- <ul>
-  <li>Bilder</li>
- </ul>
+ <% for (var i = 0;   i < corel.templates.length; i++){ %>
+  <img src="/images/corel/templates/<%= corel.templates[i].image %>" class="galleryThumb">
+  <% if (i >= 4){ %>
+   <a href="">...</a>
+  <% i = corel.templates.length;
+   } %>
+ <% } %>
+ 
 </div>
-<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#historyModal">
- <i class="fa fa-plus faPartial"></i>Bild aktualisieren
-</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#templateModal"><i class="fa fa-plus"></i>Neue Vorlage</button>
 
 <!-- Modal zum hinzufügen eines neuen History-Eintrags-->
-<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="templateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Neues Bild</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Neue Vorlage</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -21,8 +24,8 @@
       <form method="post" action="/corel/<%= corel._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
-        <textarea rows="4" cols="50" name="description"></textarea>
-        <input type="file" name="newFile">
+        <textarea rows="4" cols="50" name="templateDescription"></textarea>
+        <input type="file" name="templateFile">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

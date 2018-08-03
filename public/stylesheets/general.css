@@ -7,37 +7,25 @@ h1{
     text-align:center;
 }
 .todoBody{
-    background-image:url('/images/todo_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;   
+  
 }
 .corelBody{
-    background-image:url('/images/corel_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;   
+  
 }
 .cgBody{
-    background-image:url('/images/composition_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;   
+ 
 }
 
 .cmsBody{
-    background-image:url('/images/cms_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;   
+  
 }
 
 .mediaBody{
-    background-image:url('/images/media_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;   
+  
 }
 
 .officeBody{
-    background-image:url('/images/office_logo_jamaica.png');
-    background-repeat:no-repeat;
-    background-position:right center;  
+ 
 }
 
 .bgrdText{

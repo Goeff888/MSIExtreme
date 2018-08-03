@@ -3,12 +3,12 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blender Gallerie</title>
+    <title>Digital Art Gallerie</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/corel.css">
 </head>
 <body>
 <% include ../partials/navbarTop %>
@@ -17,35 +17,31 @@
 
   <div class="row">
     <div class="col-md-2">
-      <h2>Kategorien</h2>
-      <ul>
-        <li>Liste in der </li>
-        <li>Datenbank erstellen</li>
-        <li>und mit</li>
-        <li>Posts verknüpfen</li>
-      </ul>
-      <h2>Tutorials</h2>
-      <ul>
-        <li>Post </li>
-        <li>aus der anotherberrydb</li>
-        <li>und Bildern aus PPT</li>
-       </ul>
+      <% include partials/todos %>
+      <hr>
+      <% include partials/CMSPosts %>
     </div>
     
     <div class="col-md-8">
       <div class="container">
        
           <h1>Eintrag bearbeiten</h1>
+          <img class="img-responsive img-composition" src="/images/corel/<%= corel.image %>">
+          <h4>
+            <%= corel.name %>
+            <span class="date ">
+            <%= corel.created.getDate() %>.
+            <%= corel.created.getMonth() %>.
+            <%= corel.created.getYear() +1900  %>
+            </span>
+          </h4>
           <div style="width :30%; margin: 50px auto;">
-            <form action="/composition/" method="post">
+            <form action="/corel/<%= corel._id %>" method="post">
               <div class="form-group">
-                <input class="form-control" type="text" name="composition[name]" >                
+                <input class="form-control" type="text" name="corel[name]" value="<%= corel.name %>">                
               </div>
               <div class="form-group">
-                <input class="form-control" type="text" name="composition[image]" >  
-              </div>
-              <div class="form-group">
-                <input class="form-control" type="text" name="composition[description]">  
+                <input class="form-control" type="text" name="corel[description]" value="<%= corel.description %>">  
               </div>
               <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
@@ -55,30 +51,16 @@
       </div>
     </div>
     <div class="col-md-2">
-        <h2>Links</h2>
-        <a href="/composition">zurück</a>
-        <ul>
-          <li>Liste in der </li>
-          <li>Datebank erstellen</li>
-          <li>und mit</li>
-          <li>Projekt verknüpfen</li>
-        </ul>
-        <h2>externe Tutorials</h2>
-        <ul>
-          <form method="post" action="/tutorials/new">
-            <input type="text" name=tutorials[name] placeholder="Name">
-            <input type="text" name=tutorials[url] placeholder="URL">
-            <input type="text" name=tutorials[category] placeholder="Kategorie">
-            <input type="submit">
-          </form>
-        </ul>
+      <% include partials/history %>
+      <hr>
+      <% include partials/template %>
     </div>
   </div>
 
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/composition.js"></script>
+<script src="/javascript/corelEdit.js"></script>
 
 <script src="/javascript/bootstrap.js"></script>
 </body>

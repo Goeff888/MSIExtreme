@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blender Gallerie</title>
+    <title>Digital Art Gallerie</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -20,13 +20,17 @@
     </div>
 
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="/images/compositions/<%= composition[0].image %>">
+      <img class="img-responsive img-composition" src="/images/corel/<%= corel.image %>">
       <div class="caption">
         <h4>
-          <%= corel[0].name %>
-          <span><%= corel[0].created %></span>
+          <%= corel.name %>
+          <span class="date ">
+          <%= corel.created.getDate() %>.
+          <%= corel.created.getMonth() %>.
+          <%= corel.created.getYear() +1900  %>
+          </span>
         </h4>
-        <p class="compText"><%= corel[0].description %></p>
+        <p class="compText"><%= corel.description %></p>
         <% comments.forEach(function(comment){ %>    
         <div class ="row">
          <div class="col-md-8">
@@ -37,7 +41,7 @@
         </div>
         <% });%>
         </div>
-      <form method="post" action="/corel/<%= corel[0]._id %>?_method=DELETE""
+      <form method="post" action="/corel/<%= corel._id %>?_method=DELETE""
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
             Neuer Kommentar
@@ -45,13 +49,16 @@
             <button class="btn btn-primary" type="submit">
               Eintrag löschen
             </button>
+            <a href="/corel/<%= corel._id %>/edit" class="btn btn-primary" type="button">
+              Eintrag bearbeiten
+            </a>
           </form>
         </p>
         <div class="collapse" id="collapseComment">
           <div class="card card-body">
-            <form method="post" action="/corel/<%= corel[0]._id  %>/comments">
+            <form method="post" action="/corel/<%= corel._id  %>/comments">
               <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
-              <button class="btn btn-primary" name="comment[corelID]" value="<%=corel[0]._id  %>" type="submit">Speichern</button>
+              <button class="btn btn-primary" name="comment[corelID]" value="<%=corel._id  %>" type="submit">Speichern</button>
             </form>
           </div>
         </div>

@@ -8,7 +8,7 @@ var fileUpload = require('express-fileupload');
 //var formidable = require('formidable');
 var fs = require('fs');
 var dBCorel = require("../models/corel");
-var dBTutorials = require("../models/links");
+var dBLinks = require("../models/links");
 var dBComments = require("../models/comments");
 var dbCategories = require("../models/categories");
 var mongoose = require("mongoose");
@@ -16,12 +16,22 @@ router.use(fileUpload());
 router.use(express.static(path.join(__dirname, 'public')));
 router.use(express.static("public"));
 //router.use(bodyParser.urlencoded({extended: true}));
+
+function copyFile(sampleFile,folder){ 
+  console.log("copyFile:" + sampleFile.name);
+  sampleFile.mv('public/images/corel/'+ folder +'/' + sampleFile.name, function(err) {
+    if (err) return console.log(err);
+    
+   });
+  return sampleFile.name;
+}
+
 //INDEX ROUTES###########################
 //Anzeige aller Aufgaben
 router.get("/corel", function(req, res){
    promise.props({
      composition: dBCorel.find().execAsync(),
-     tutorials:   dBTutorials.find().execAsync(),
+     tutorials:   dBLinks.find().execAsync(),
    })
    .then(function(results) {
     //console.log(results);
@@ -40,7 +50,7 @@ router.get("/corel/new", function(req, res){
  //Inhalte laden: Kategorien ,Tutorials
    promise.props({
      categories:  dbCategories.find().execAsync(),
-     tutorials:   dBTutorials.find().execAsync(),
+     tutorials:   dBLinks.find().execAsync(),
    })
    .then(function(results) {
     //console.log(results);
@@ -93,50 +103,80 @@ router.post("/corel/new",function(req,res){
 
 
 //SHOW ROUTES###########################
-//Anzeige eines Composition-Eintrags
+//Anzeige eines Eintrags
 router.get("/corel/:id", function(req, res){
-  console.log("Route:  corel Show ");
+  console.log("Route:  corel Show von " + req.params.id);
   promise.props({
    categories:  dbCategories.find().execAsync(),
-   tutorials:   dBTutorials.find().execAsync(),
-   corel:       dBCorel.find({_id:req.params.id}).execAsync()
+   links:       dBLinks.find().execAsync(),
+   corel:       dBCorel.findById(req.params.id).execAsync(),
  })
  .then(function(results) {
-  console.log("results:" + results.composition[0]._id);
-  dBComments.find({corelID:req.params.id}, function(err, comments){
+  console.log("results:" + results.corel);
+  dBComments.find({compositionID:req.params.id}, function(err, comments){
      if(err){
-      res.render("error", {error: err});
+      res.render("error");
      }else{
       console.log("comments:"+comments);
-      res.render("corel/show",{corel: results.composition, comments: comments,categories:results.categories,tutorials:results.tutorials });
+      res.render("corel/show",{corel: results.corel, comments: comments,categories:results.categories,tutorials:results.tutorials });
      }
    });     
-   //res.render("compositions/new", results);
- })
- .catch(function(err) {
-   res.send(500); // oops - we're even handling errors!
-   res.render("error", {error: err});
- });  
-  
-
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.render("error");
+  });  
  });
 //EDIT ROUTES###########################
 //Seite zum Bearbeiten von Bildern auf corel-Seite
-router.get("Edit Route corel", function(req, res){
-   console.log("Eintrag entfernt:" + req.params.id);
-   /*dBComposition.findById(req.params.id, function(err){
+router.get("/corel/:id/edit", function(req, res){
+  console.log("Corel Edit Route für "+ req.params.id );
+  promise.props({
+   todos:       dbCategories.find().execAsync(),
+   corel:       dBCorel.findById(req.params.id).execAsync(),
+ })
+ .then(function(results) {
+  console.log("results:" + results.corel);
+  dBComments.find({compositionID:req.params.id}, function(err, comments){
      if(err){
-      res.render("error", {error: err});
+      res.render("error");
      }else{
-      
-      //console.log("Eintrag entfernt:" + req.params.id);
-      res.redirect("/corel");
+      console.log("comments:"+comments);
+      res.render("corel/edit",{corel: results.corel, comments: comments });
      }
-  });*/
+   });     
+  })
+  .catch(function(err) {
+    console.log(err);
+    res.render("error");
+  }); 
 });
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
-
+router.put("/corel/:id/edit", function(req, res){
+ console.log("Update Route Corel:" + req.params.id);
+ 
+ if (req.files.templateFile.name.length  > 0){
+  fileName= copyFile (req.files.templateFile,"templates");
+ }else if(req.files.newFile.name.length  > 0){
+ console.log("neue Datei ausgewählt");
+  //let sampleFile = req.files.newFile;
+  //copyFile (req.files.newFile,""history);
+ }else{
+  return res.status(400).send('No files selected');
+ }
+ console.log("fileName:" +fileName);
+ var template =  {description:req.body.templateDescription,  image:fileName};
+ console.log("template:"+template);
+ dBCorel.findByIdAndUpdate(req.params.id,{"$push":{templates: template}}, function(err, updatedPost){
+     if(err){
+      console.log(err);
+     }else{
+      console.log("updatedPost:"+updatedPost);
+      res.redirect("/corel/"+ req.params.id +"/edit");
+     }
+    });
+});
 //DESTROY ROUTES###########################
 //Löschen von Bildern auf Blender-Seite
 router.delete("/corel/:id", function(req, res){

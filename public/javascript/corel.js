@@ -63,6 +63,18 @@ function chkFormular() {
   //return false;
 }
 
+//Überprüfen, ob "neues Template" korrekt ausgefüllt ist
+function chkFormular() {
+  if (document.getElementsByName("templateDescription")[0].value == "") {
+    alert("Bitte eine Beschreibung eingeben!");
+    event.preventDefault();
+  }else if(document.getElementsByName("templateFile")[0].value == ""){
+    alert("Bitte eine Datei auswählen!!");
+    event.preventDefault();    
+  }
+  //return false;
+}
+
 //Überprüfen, ob "neues Tutorial" korrekt ausgefüllt
 function chkModal() {
   console.log(document.getElementsByName("tutorial")[0].value);

@@ -1,12 +1,17 @@
-<h2>vorherige Versionen</h2>
+<h2>Vorlagen</h2>
 <div class="gallery">
- <ul>
-  <li>Bilder</li>
- </ul>
+ <input type="file" id="fileLoader" name="historyImage" title="loadImage">
+ <% if (composition.history.length > 1){
+     for (var i = 0; i < composition.history.length;i++){ console.log("i= " +i + ":" +composition.history[i].image);%>
+      <img src="/images/compositions/<%= composition.history[i].image %>" class="img-thumbnail historyImg">
+     <% } %> 
+ <% }else{ %>
+  Noch keine Bilder vorhanden
+ 
+ <% }%>
+
 </div>
-<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#historyModal">
- <i class="fa fa-plus faPartial"></i>Bild aktualisieren
-</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historyModal"><i class="fa fa-plus"></i>Aktuelles Bild ersetzen</button>
 
 <!-- Modal zum hinzufügen eines neuen History-Eintrags-->
 <div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -18,11 +23,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="/corel/<%= corel._id %>/edit?_method=PUT" encType="multipart/form-data">
+      <form method="post" action="/composition/<%= composition._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
         <textarea rows="4" cols="50" name="description"></textarea>
-        <input type="file" name="newFile">
+        <input type="file" name="image">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
