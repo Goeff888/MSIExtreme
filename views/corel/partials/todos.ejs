@@ -1,9 +1,17 @@
 <h2>nächste Schritte</h2>
 <div class="gallery">
- <ul>
-  <li>Arbeitspunkt aus Datenbank</li>
+ <% if (typeof todos == "undefined"){ %>
+  <ul id="todoList" >
+ <% }else{ %>
+ <ul id="todoList" data-value="<%= todos._id %>">
+ <% } %>
  </ul>
- <input type="text" id="taskName" data-value="<%= corel._id %>" name="task" placeholder="Neue Aufgabe">
+ <% if (typeof tasks == undefined  ){ %>
+   <% console.log("tasks vorhanden"); %> 
+ <% }else{ %>
+  <input type="text" id="todo"  data-value="<%= corel._id.toString() %>" name="task" placeholder="Neue Aufgabe"> 
+ <%  } %>
+ 
 </div>
 
 

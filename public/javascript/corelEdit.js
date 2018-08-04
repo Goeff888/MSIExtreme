@@ -14,6 +14,34 @@ function handleDragOverZone(e){
   console.log("Über Dropzone gezogen");
 }
 
+function addTaskbyEnter(e){
+   if (e.which === 13){//Enter-Event
+        var name = document.getElementById("pictureName").value;
+        var corelID = this.dataset.value;
+        
+        var todotext = $(this).val();
+        console.log("corelID:" +corelID);
+        if (!document.getElementById("todoList").value){
+          console.log("Todo nicht vorhanden");
+          createTodo(name, corelID,todotext);//Hier werte setzen
+          console.log("id:" + id );
+        }else{
+          console.log("Todo vorhanden" + todoID );
+          
+        }
+        var todoID = document.getElementById("todoList").value;
+         console.log("Todo:" + todoID );
+         $("ul#todoList").append(
+"<li><input type='checkbox' class='form-check-input' id='corelTask' >" + todotext +
+"<span class='iconRight' data-value='"+ todoID +"'><i class='fas fa-trash'></i></span>");
+          sendText(todotext, todoID);
+        $(this).val("");
+        //var tasks = document.querySelector("ul");
+            
+         //console.log($("ul#todoList"));              
+        //sendText(todotext, todoID);
+   }
+}
 
 function handleDragLeaveZone(e){
   e.preventDefault();
@@ -24,19 +52,7 @@ function handleDragLeaveZone(e){
 
 function handleDrop(e){
   e.preventDefault();
- // e.dataTransfer.effectAllowed ='move';
-  //this.classList.remove('dropzoneOver');
-  this.classList.add('renderDropzoneOverDrop');
-  console.log(e.target);
-  console.log("daten in e:" + e.dataTransfer.getData("text"));
-  //e.target.appendChild("HAllo");
-  //this.innerHTML = e.dataTransfer.getData('text');
-  this.style.background="white";
-  //this.style.background-image=e.dataTransfer.getData('text');
-   var file = e.dataTransfer.items[0].getAsFile();
-  //console.log("File:" + e.dataTransfer.files[0].path);
-  console.log("Item:" + file);
-  console.log("Abgelegt");
+
 }
 //Formulareinträge prüfen*****************************
 
@@ -52,21 +68,25 @@ function chkFormular() {
   //return false;
 }
 
-function addCategorybyEnter(e){
-  console.log("Kategorie hinzufügen");
-  //this.focus();e.preventDefault();
-   if (e.which === 13){
-    //Enter-Event
-        var categoryText = $(this).val();
-        //var todoID = document.getElementById("todoID").innerHTML;
-        //console.log(todoID);
-        $(this).val("");
-        $("ul").append("<li>"+ categoryText +"<input type='text' name='tasks[ui]' value='" +categoryText+"' hidden='true'></li>");
-        saveEntry(categoryText);
-   }
+
+/////////////////AJAX Aufrufe
+function createTodo(name,id,text){
+    console.log("Javascript createTodo: " +id);
+    $.post("/createTask",
+    {
+        project: name,//Hier Werte aus task model festlegen
+        description: "Dies ist eine Todo-Liste aus der Corel Seite",
+        result:id
+    },
+    function(data){
+        console.log("Data: " + data);
+        console.log("Callback");
+        //ulllsdatavalueh.appendoder=(, data);//hier todoid setzen!!!!!!!!!!!!!!!!!
+    });
 }
 /////////////////EVENT LISTENER
-
+var todoInput = document.getElementById("todo");
+todoInput.addEventListener("keypress",addTaskbyEnter);
 
 
 

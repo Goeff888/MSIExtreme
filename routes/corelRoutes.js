@@ -10,6 +10,8 @@ var fs = require('fs');
 var dBCorel = require("../models/corel");
 var dBLinks = require("../models/links");
 var dBComments = require("../models/comments");
+var dBTodo = require("../models/todo");
+var dBTasks = require("../models/tasks");
 var dbCategories = require("../models/categories");
 var mongoose = require("mongoose");
 router.use(fileUpload());
@@ -132,11 +134,14 @@ router.get("/corel/:id", function(req, res){
 router.get("/corel/:id/edit", function(req, res){
   console.log("Corel Edit Route für "+ req.params.id );
   promise.props({
-   todos:       dbCategories.find().execAsync(),
-   corel:       dBCorel.findById(req.params.id).execAsync(),
+   tasks:       dBTasks.findOne({ 'result': req.body.corelTasksId }, 'task todoID').execAsync(),
+   todos:       dBTodo.findById(req.body.corelTodoId).execAsync(),
+   corel:       dBCorel.findById(req.params.id).execAsync()
  })
  .then(function(results) {
-  console.log("results:" + results.corel);
+  console.log("results:" + results.todos);
+  //console.log("results:" + results.tasks);
+  //console.log("results:" + results.todos);
   dBComments.find({compositionID:req.params.id}, function(err, comments){
      if(err){
       res.render("error");

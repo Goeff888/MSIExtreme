@@ -13,6 +13,7 @@ var compositionRoutes = require ("./routes/compositionRoutes");
 var linkRoutes = require ("./routes/linkRoutes");
 var commentRoutes = require ("./routes/commentRoutes");
 var corelRoutes = require ("./routes/corelRoutes");
+var corelAjaxRoutes = require ("./routes/corelAjaxRoutes");
 var mediaRoutes = require ("./routes/mediaRoutes");
 var pythonRoutes = require ("./routes/pythonRoutes");
 var bookRoutes = require ("./routes/bookRoutes");
@@ -43,6 +44,7 @@ app.use(commentRoutes);
 app.use(linkRoutes);
 app.use(mediaRoutes);
 app.use(corelRoutes);
+app.use(corelAjaxRoutes);
 app.use(pythonRoutes);
 app.use(bookRoutes);
 //LANDING PAGE
