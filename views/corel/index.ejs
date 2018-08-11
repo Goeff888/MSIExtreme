@@ -32,7 +32,8 @@
         <div class="row text-center">
           <% composition.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
-                <img src="/images/corel/<%= entry.image %>" class="img-thumbnail">
+              <% console.log(entry); %>
+                <img src="/images/corel/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
                 <div class="caption">
                   <%= entry.name %>
                 </div>

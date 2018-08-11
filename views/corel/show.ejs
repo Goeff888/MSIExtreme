@@ -20,7 +20,11 @@
     </div>
 
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="/images/corel/<%= corel.image %>">
+      <% if (typeof corel.image == "undefined"){ %>
+        <img class="img-responsive img-composition" src="/images/winkenderPanda.jpg">
+      <% }else{ %>
+        <img class="img-responsive img-composition" src="/images/corel/<%= corel._id %>/<%= corel.image %>">
+      <% } %>
       <div class="caption">
         <h4>
           <%= corel.name %>

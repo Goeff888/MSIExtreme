@@ -54,14 +54,26 @@ function handleDrop(e){
 //Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
 function chkFormular() {
   if (document.getElementsByName("cgArt")[0].value == "") {
-    alert("Bitte ein Bild auswählen!");
-    event.preventDefault();
+    alert("Bitte das Bild später laden!"); 
+    //event.preventDefault();
   }else if(document.getElementsByName("name")[0].value == ""){
     alert("Bitte einen Namen eingeben!");
     event.preventDefault();    
   }
   //return false;
 }
+
+//Überprüfen, ob Modal für "neues Bild" korrekt ausgefüllt ist
+/*function chkFormular() {
+  if (document.getElementsByName("cgArt")[0].value == "") {
+    alert("Bitte das Bild später laden!"); 
+    //event.preventDefault();
+  }else if(document.getElementsByName("name")[0].value == ""){
+    alert("Bitte einen Namen eingeben!");
+    event.preventDefault();    
+  }
+  //return false;
+}*/
 
 //Überprüfen, ob "neues Template" korrekt ausgefüllt ist
 function chkFormular() {
@@ -94,7 +106,7 @@ function chkModal() {
   //return false;
 }
 
-//Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
+//Überprüfen, ob " Bild löschen" korrekt ausgefüllt ist
 function verifyDelete() {
   alert("Wollen Sie das Bild wirklich löschen?");
   var txt;

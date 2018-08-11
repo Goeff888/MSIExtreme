@@ -26,7 +26,13 @@
       <div class="container">
        
           <h1>Eintrag bearbeiten</h1>
-          <img class="img-responsive img-composition" src="/images/corel/<%= corel.image %>">
+          <% console.log(corel.image); %>
+          <% if(typeof corel.image === "/images/winkenderPanda.jpg"){ %>
+            <img class="img-responsive img-composition" src="images/corel/<%= corel._id %>">
+          <% }else{ %>
+            <img class="img-responsive img-composition" src="/images/corel/<%= corel._id %>/<%= corel.image %>">
+          <% } %>
+          
           <h4>
             <%= corel.name %>
             <span class="date ">

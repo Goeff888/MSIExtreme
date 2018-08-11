@@ -11,12 +11,12 @@ var templateSchema = new mongoose.Schema({
 });
 var corelSchema = new mongoose.Schema({
   name:         String,
-  image:        {type: String, default: '/images/compositions/winkenderPanda.jpg'},
+  image:        {type: String, default: '/images/winkenderPanda.jpg'},
   description:  {type: String, default: 'n.a'},
   rating:       Number,
   created:      {type:Date, default: Date.now},
   updated:      {type:Date, default: Date.now},
-  history:      [historySchema],
+  history:      [historySchema],//alt.alle Bilder werden hier geladen, der Array hat immer eine feste Reihenfolge lt Manual
   templates:    [templateSchema]
 });
 

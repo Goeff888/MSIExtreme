@@ -24,10 +24,9 @@ function addTaskbyEnter(e){
         if (!document.getElementById("todoList").value){
           console.log("Todo nicht vorhanden");
           createTodo(name, corelID,todotext);//Hier werte setzen
-          console.log("id:" + id );
+          console.log("id:" + corelID );
         }else{
-          console.log("Todo vorhanden" + todoID );
-          
+          console.log("Todo vorhanden" + todoID ); 
         }
         var todoID = document.getElementById("todoList").value;
          console.log("Todo:" + todoID );
@@ -77,6 +76,20 @@ function createTodo(name,id,text){
         project: name,//Hier Werte aus task model festlegen
         description: "Dies ist eine Todo-Liste aus der Corel Seite",
         result:id
+    },
+    function(data){
+        console.log("Data: " + data);
+        console.log("Callback");
+        //ulllsdatavalueh.appendoder=(, data);//hier todoid setzen!!!!!!!!!!!!!!!!!
+    });
+}
+
+function sendText(id,text){
+    console.log("Javascript createTodo: " +id);
+    $.post("/createTask",
+    {
+        project: text,
+        id:id
     },
     function(data){
         console.log("Data: " + data);
