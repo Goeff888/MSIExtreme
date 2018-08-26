@@ -16,7 +16,7 @@ var corelRoutes = require ("./routes/corelRoutes");
 var corelAjaxRoutes = require ("./routes/corelAjaxRoutes");
 var mediaRoutes = require ("./routes/mediaRoutes");
 var pythonRoutes = require ("./routes/pythonRoutes");
-var bookRoutes = require ("./routes/bookRoutes");
+var cmsAjaxRoutes = require ("./routes/cmsAjaxRoutes");
 //////MONGO-DATABASE-SCHEMES////////
 
 var app = express();
@@ -45,8 +45,9 @@ app.use(linkRoutes);
 app.use(mediaRoutes);
 app.use(corelRoutes);
 app.use(corelAjaxRoutes);
+app.use(cmsAjaxRoutes);
 app.use(pythonRoutes);
-app.use(bookRoutes);
+
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index");

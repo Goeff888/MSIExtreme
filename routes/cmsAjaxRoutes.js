@@ -5,33 +5,18 @@ var http = require('http');
 var router = express.Router();
 
 promise.promisifyAll(mongoose);;
-var dBTodo = require("../models/todo");
-var dBTasks = require("../models/tasks");
+var dBCMS = require("../models/cms");
+var dBCMSUnit = require("../models/cmsUnit");
 
-
-//Erstellen einer neuen Taskgruppe (aus anderer Awendung)
-router.post("/createTask", function(req, res){
-   console.log("Ajax Route für Task aufgerufen" );
-   var todoCorel = [{task:req.body.task, todoID:req.body.todoID}];
-   //console.log("todoCorel:"+req.body.project );
-   dBTasks.create(todoCorel, function(err, newEntry){
-   if(err){
-    res.render("error", {error: err});
-   }else{
-    //console.log("Task Eintrag" +newEntry[0]);
-    res.send(newEntry[0]._id);
-   }
-  }); 
-});
-
-router.get("/readTaskData/:id", function(req, res){
-  console.log("Ajax Route für Einlesen der Taskdata aufgerufen" );
+//Datenlesen
+router.get("/readCMSData/:id", function(req, res){
+  console.log("Ajax Route für Einlesen der CMSdata aufgerufen" );
    console.log("id:"+req.params.id );
-   dBTasks.findById(req.params.id , function(err, entry){
+   dBCMS.findById(req.params.id , function(err, entry){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log("Task Eintrag" +entry);
+    console.log("CMS Eintrag" +entry);
     res.send(entry);
    }
   }); 

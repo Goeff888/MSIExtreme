@@ -22,8 +22,8 @@
         <hr>
         <ul class="addedTask">
           <% for (var j = 0; j < 5; j++){ %>
-          <% console.log(JSON.stringify(tasks[j])); %>
-          <% console.log(JSON.stringify(todo[i])); %>
+          <% //console.log(JSON.stringify(tasks[j])); %>
+          <% //console.log(JSON.stringify(todo[i])); %>
             <% if(tasks[j] != undefined && (JSON.stringify(tasks[j].todoID) == JSON.stringify(todo[i]._id)) ){ %>
               <li><%= tasks[j].task %></li>
             <% } %>            

@@ -7,6 +7,8 @@ var router = express.Router();
 var dBCMS = require("../models/cms");
 var dBCMSUnit = require("../models/cmsUnit");
 var dBCMPosts = require("../models/cmsPosts");
+var dBTasks = require("../models/tasks");
+var dBTodos = require("../models/todo");
 var dBCategories = require("../models/categories");
 promise.promisifyAll(mongoose);
 
@@ -40,12 +42,17 @@ router.get("/cms/new", function(req, res){
      cms:       dBCMS.find({},'name').execAsync(),
      cmsUnit:   dBCMSUnit.find({},'name cmsID').execAsync(),
      cmsPost:   dBCMPosts.find({},'name cmsUnitID').execAsync(),
+     tasks:     dBTasks.find({},'name cmsID').execAsync(),
+     todo:      dBTodos.find({},'name cmsID').execAsync(),
      categories:dBCategories.find().execAsync()
    })
    .then(function(results) {
-    console.log("CMS:"+results.cms);
-    console.log("CMSUnit:"+results.cmsUnit);
-     res.render("cms/new", results);
+    //console.log("CMS:"+results.cms);
+    //console.log("CMSUnit:"+results.cmsUnit);
+    //var navigation = {cmsID: req.params.cms};
+    var navigation = {cmsID:req.query.cms};
+    res.render("cms/new", {cms: results.cms, cmsUnit: results.cmsUnit,cmsPost:results.cmsPost,navigation:navigation});
+    
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -62,8 +69,8 @@ router.post("/cms", function(req, res){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log(newEntry);
-    res.redirect ("cms/new");
+    //console.log(newEntry);
+    res.redirect ("cms/new/?cms="+ newEntry._id);
    }
   });
 });

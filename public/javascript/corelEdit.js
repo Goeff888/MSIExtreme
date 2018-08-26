@@ -18,27 +18,16 @@ function addTaskbyEnter(e){
    if (e.which === 13){//Enter-Event
         var name = document.getElementById("pictureName").value;
         var corelID = this.dataset.value;
-        
+        var todoID = document.getElementById("todoList").dataset.value;
         var todotext = $(this).val();
-        console.log("corelID:" +corelID);
-        if (!document.getElementById("todoList").value){
+        console.log(document.getElementById("todoList").dataset.value);
+        if (!document.getElementById("todoList").dataset.value){
           console.log("Todo nicht vorhanden");
-          createTodo(name, corelID,todotext);//Hier werte setzen
-          console.log("id:" + corelID );
+          createTodo(name, corelID,todotext);
         }else{
-          console.log("Todo vorhanden" + todoID ); 
+          sendText(todoID,todotext);
+          console.log("fertig" ); 
         }
-        var todoID = document.getElementById("todoList").value;
-         console.log("Todo:" + todoID );
-         $("ul#todoList").append(
-"<li><input type='checkbox' class='form-check-input' id='corelTask' >" + todotext +
-"<span class='iconRight' data-value='"+ todoID +"'><i class='fas fa-trash'></i></span>");
-          sendText(todotext, todoID);
-        $(this).val("");
-        //var tasks = document.querySelector("ul");
-            
-         //console.log($("ul#todoList"));              
-        //sendText(todotext, todoID);
    }
 }
 
@@ -70,39 +59,91 @@ function chkFormular() {
 
 /////////////////AJAX Aufrufe
 function createTodo(name,id,text){
-    console.log("Javascript createTodo: " +id);
-    $.post("/createTask",
+    console.log("Javascript createTodo ID des Bildes: " +id);
+    //console.log("Javascript createTodo neuer Task: " +text);
+    //console.log("Javascript createTodo Bildname für Todo: " +name);
+    $.post("/createTodo",
     {
         project: name,//Hier Werte aus task model festlegen
         description: "Dies ist eine Todo-Liste aus der Corel Seite",
         result:id
     },
     function(data){
-        console.log("Data: " + data);
-        console.log("Callback");
-        //ulllsdatavalueh.appendoder=(, data);//hier todoid setzen!!!!!!!!!!!!!!!!!
+        console.log("Datenbank erzeugt");
+        sendText(data,text);
     });
 }
 
 function sendText(id,text){
-    console.log("Javascript createTodo: " +id);
+    console.log("Javascript sendText: " +id);
+    //console.log("Javascript sendText ID des Bildes: " +id);
+    //console.log("Javascript sendText neuer Task: " +text);
     $.post("/createTask",
     {
-        project: text,
-        id:id
+        task: text,
+        todoID:id
     },
     function(data){
-        console.log("Data: " + data);
-        console.log("Callback");
-        //ulllsdatavalueh.appendoder=(, data);//hier todoid setzen!!!!!!!!!!!!!!!!!
+        console.log("neuer Task angelegt");
+        //console.log("Data: " + data);
+        $("ul#todoList").append(
+"<li><input type='checkbox' class='form-check-input' id='corelTask' >" + text +
+"<button type='button' class='btn btnEditTask' data-toggle='modal' data-target='#editTaskModal'><i class='fa fa-edit editTask'></i></button>");
+        //console.log("Callback");
     });
+}
+
+function changeTaskStatus(){
+  console.log("ID:" + this.checked);
+  console.log("ID:" + this.dataset.id);
+  $.post("/changeStatus/"+this.dataset.id ,
+    {
+        status: this.checked,
+    },
+    function(data){
+      if (this.checked === true){
+       console.log("Task offen:" +data);
+       //Hier Text durchstreichen
+      }else{
+        console.log("Task erledigt"); 
+      }
+    });
+  
+
 }
 /////////////////EVENT LISTENER
 var todoInput = document.getElementById("todo");
 todoInput.addEventListener("keypress",addTaskbyEnter);
 
+//Öffnen des Task-Modal
+$('#editTaskModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var taskId = button.data('id');
+     console.log("Aufruf von readTaskData");
+    $.get("/readTaskData/" +taskId ,
+    function(data){
+        console.log("data:"+data.task);
+        var modal = $(this);
+        //console.log("modal:"+button.dataset.id);
+        document.getElementById("modalTaskTitle").value=data.task;
+        
+        //document.getElementById("formEditTask").action="saveTaskData/"+data._id;
+        console.log("modal:"+document.getElementById("formEditTask").action);
+    });  
+
+});
+
+//Status eines Tasks setzen
+var ckTasks = document.getElementsByClassName("ckTasks");
+for (var i = 0; i < ckTasks.length; i++){
+  ckTasks[i].addEventListener("click",changeTaskStatus);
+}
 
 
+/*$('#editTaskModal').click('show.bs.modal', function (event) {
+
+
+});*/
 
 
 

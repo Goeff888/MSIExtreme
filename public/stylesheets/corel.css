@@ -89,9 +89,27 @@ hr {
 .comment{
   color:black;
 }
+.btnEditTask{
+  float: right;
+  width: 10px;
+  height:10px;
+}
+
+.gallery {
+    border: 1px solid black;
+    border-radius: 25px;
+    background-position: left top;
+    background-repeat: repeat;
+    padding: 10px;
+}
+
+.modalInput{
+  margin-left: 10px;
+  padding-left: 10px;
+}
 
 //Hintergrund für partials
-.gallery{
+.galle{
   width: 100%;
   height:200px;
   background-color: grey;

@@ -1,54 +1,51 @@
-<h2>Tutorials</h2>
-    <ul>
-      <% tutorials.forEach(function(tutorial){ %>
-      <li><a href="<%= tutorial.url %>"><%= tutorial.name %></a></li>
-      <%}) %>
-    </ul>
-    
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-      Neues Tutorial
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title compositionModal" id="exampleModalLongTitle">Tutorial hinzufügen</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form method="post" action="/tutorials/new">
-          <div class="modal-body">
-            <div class="form-group">
-              <input class="form-control" type="text" placeholder="Name" name="tutorials[name]">
-            </div>            
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="URL" name="tutorials[url]">
-            </div>              
-            <div class="form-group">
-               <select class="form-control" name="tutorials[format]">
-                   <option>pdf</option>
-                   <option>video</option>
-               </select>
-            </div>
-            <div class="form-group">
-               <select class="form-control" name="tutorials[category]">
-                   <option>Kurs</option>
-                   <option>Tutorial</option>
-                   <option>Texturen</option>
-                   <option>Modelle</option>
-               </select>
-            </div>                         
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalSubmit2">Close</button>
-            <button type="submit" class="btn btn-primary" id="modalSubmit">Save changes</button>
-          </div>
-          </form>
+<h2 >Interessante Links über Blender</h2>
+<div class="gallery">
+ <ul>
+  <% for(var i=0; i < links.length;i++){ %>
+   <li><a href="<%= links[i].url %>"><%= links[i].name %></a></li>
+  <% } %>
+ </ul>
+</div>
+<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#linkModal">
+ <i class="fa fa-plus faPartial"></i>Neuen Link hinzufügen</button>
+
+<!-- Modal zum hinzufügen eines neuen History-Eintrags-->
+<div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neuen Link hinzufügen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="/links/new">
+      <div class="modal-body">
+       <input type="text" name="navigation" id="navigationLinks" value="" style="display:none;">
+        <div>Inhalt:</div>
+        <input type="text" name="links[content]" value="digital Art" style="display:none;">
+        <div>Titel:</div>
+        <input type="text" name="links[name]">
+        <div>Quelle:</div>
+        <input type="text" name="links[url]">
+        <div>Beschreibung:</div>
+        <textarea rows="4" cols="50" name="links[description]"></textarea>
+        <div class="form-group">   
+          <label for="workfieldSelect">Bereich</label>
+          <select class="form-control" id="workfieldSelect" name="links[workfield]">
+            <option>Werkzeuge</option>
+            <option>Composing</option>
+            <option>Concept art</option>
+            <option>Lighting</option>
+            <option>Texturing</option>
+          </select>
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
     </div>
+  </div>
 </div>

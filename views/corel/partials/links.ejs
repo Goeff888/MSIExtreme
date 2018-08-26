@@ -1,7 +1,9 @@
-<h2>Interessante Links über digitale Kunst</h2>
+<h2 >Interessante Links über digitale Kunst</h2>
 <div class="gallery">
  <ul>
-  <li>Links über digitale Kunst Liste</li>
+  <% for(var i=0; i < links.length;i++){ %>
+   <li><a href="<%= links[i].url %>"><%= links[i].name %></a></li>
+  <% } %>
  </ul>
 </div>
 <button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#linkModal">
@@ -19,8 +21,9 @@
       </div>
       <form method="post" action="/links/new">
       <div class="modal-body">
+       <input type="text" name="navigation" id="navigationLinks" value="" style="display:none;">
         <div>Inhalt:</div>
-        <input type="text" name="links[content]" value="digital Art" disabled>
+        <input type="text" name="links[content]" value="digital Art" style="display:none;">
         <div>Titel:</div>
         <input type="text" name="links[name]">
         <div>Quelle:</div>

@@ -32,7 +32,6 @@
         <div class="row text-center">
           <% composition.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
-              <% console.log(entry); %>
                 <img src="/images/corel/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
                 <div class="caption">
                   <%= entry.name %>
@@ -65,7 +64,8 @@
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/composition.js"></script>
+<script src="/javascript/corel.js"></script>
+<script src="/javascript/links.js"></script>
 
 <script src="/javascript/bootstrap.js"></script>
 </body>

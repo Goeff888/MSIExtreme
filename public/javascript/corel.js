@@ -1,4 +1,5 @@
 console.log("Hallo vom Corel.js");
+console.log("window.location:"+window.location);
 //Drag n Drop*****************************
 //File Dialog mit Klick auf Dropzone öffnen
 function openFileDialog(e){

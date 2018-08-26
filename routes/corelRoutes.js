@@ -33,10 +33,11 @@ function copyFile(sampleFile,folder){
 router.get("/corel", function(req, res){
    promise.props({
      composition: dBCorel.find().execAsync(),
-     tutorials:   dBLinks.find().execAsync(),
+     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     tutorials:   dBLinks.find().execAsync()
    })
    .then(function(results) {
-    //console.log(results);
+    console.log(results.links);
      res.render("corel/index", results);
    })
    .catch(function(err) {
@@ -116,17 +117,16 @@ router.post("/corel/new",function(req,res){
 router.get("/corel/:id", function(req, res){
   console.log("Route:  corel Show von " + req.params.id);
   promise.props({
-   categories:  dbCategories.find().execAsync(),
-   links:       dBLinks.find().execAsync(),
+   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
    corel:       dBCorel.findById(req.params.id).execAsync(),
  })
  .then(function(results) {
-  console.log("results:" + results.corel);
+  console.log("results:" + results.links);
   dBComments.find({compositionID:req.params.id}, function(err, comments){
      if(err){
       res.render("error");
      }else{
-      res.render("corel/show",{corel: results.corel, comments: comments,categories:results.categories,tutorials:results.tutorials });
+      res.render("corel/show",{corel: results.corel, comments: comments,links:results.links,tutorials:results.tutorials });
      }
    });     
   })
@@ -139,21 +139,33 @@ router.get("/corel/:id", function(req, res){
 //Seite zum Bearbeiten von Bildern auf corel-Seite
 router.get("/corel/:id/edit", function(req, res){
   console.log("Corel Edit Route für "+ req.params.id );
+  //console.log("ID für Todos "+ req.body.corelTodoId );
   promise.props({
-   tasks:       dBTasks.findOne({ 'result': req.body.corelTasksId }, 'task todoID').execAsync(),
-   todos:       dBTodo.findById(req.body.corelTodoId).execAsync(),
+   todo:        dBTodo.findOne({ 'result': req.params.id }).execAsync(),
    corel:       dBCorel.findById(req.params.id).execAsync()
  })
  .then(function(results) {
-  //console.log("results:" + results.corel);
-  dBComments.find({compositionID:req.params.id}, function(err, comments){
-     if(err){
+  console.log("results todo:" + results.todo);
+  var taskID =JSON.stringify(0);
+  if(results.todo == null){
+   taskID = "5b6f5b924fa94e3e8c282e85";//Hier wert prüfen und setzen
+   console.log("todo nicht vorhanden");
+  }else{
+   taskID = results.todo._id;
+   console.log("todo vorhanden");
+  }
+  promise.props({
+     tasks:       dBTasks.find({ 'todoID': taskID }).execAsync(),//hier soll ein Wert stehen falls keine Datenbank vorhanden ist
+     comments:    dBComments.findOne({compositionID:req.params.id }).execAsync()
+   })
+   .then(function(results_ID) {
+     console.log("results tasks:" + results_ID.tasks);
+     res.render("corel/edit",{corel: results.corel, todo:results.todo, tasks: results_ID.tasks }); 
+    })
+    .catch(function(err) {
+      console.log(err);
       res.render("error");
-     }else{
-      //console.log("comments:"+comments);
-      res.render("corel/edit",{corel: results.corel, comments: comments });
-     }
-   });     
+    });      
   })
   .catch(function(err) {
     console.log(err);

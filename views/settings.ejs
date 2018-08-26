@@ -1,0 +1,161 @@
+<% include partials/header %>
+<% include partials/navbarTop %>
+<h1>Startseite</h1>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+         <div class="card-header">
+           Kategorien für Links in Corel
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < corelLinks.length; i++){ %>
+            <%= corelLinks[i].category %>
+           <% } %>
+          </ul>
+         </div>
+       </div>                
+    </div>
+   <div class="col-sm-3">
+        <div class="card">
+         <div class="card-header">
+            Die Bereiche der Seite
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < contents.length; i++){ %>
+            <%= contents[i].content %>
+           <% } %>
+          </ul>
+         </div>
+       </div>    </div>
+</div>
+ 
+ <div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+         <div class="card-header">
+           Kategorien für Links in Corel
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < corelLinks.length; i++){ %>
+            <%= corelLinks[i].category %>
+           <% } %>
+          </ul>
+         </div>
+       </div>                
+    </div>
+   <div class="col-sm-6">
+        <div class="card">
+         <div class="card-header">
+           Kategorien für Links in Corel
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < corelLinks.length; i++){ %>
+            <%= corelLinks[i].category %>
+           <% } %>
+          </ul>
+         </div>
+       </div>
+    </div>
+</div>
+ 
+ <div class="row">
+    <div class="col-sm-3">
+        <div class="card">
+         <div class="card-header ">
+           Kategorien für Links in Corel
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < corelLinks.length; i++){ %>
+            <%= corelLinks[i].category %>
+           <% } %>
+          </ul>
+         </div>
+       </div>                
+    </div>
+   <div class="col-sm-6">
+        <div class="card">
+         <div class="card-header">
+           Kategorien für Links in Corel
+         </div>
+         <div class="card-body corelBody">
+          <ul>
+           <% for (var i=0; i < corelLinks.length; i++){ %>
+            <%= corelLinks[i].category %>
+           <% } %>
+          </ul>
+         </div>
+       </div>
+    </div>
+</div>
+
+<div class="row"> 
+  <div class="col-sm-12"> 
+     <div class="card secRow">
+       <div class="card-body card-media">
+        <h5 class="card-title">HMTL-Bereich</h5>
+        <p class="card-text">Nur Javascript/CSS/HTML</p>
+        <a href="html/index.html" class="btn btn-primary">zum Bereich</a>
+       </div>
+     </div>
+  </div>
+ </div>
+<div class="row"> 
+  <div class="col-sm-12"> 
+     <div class="card secRow">
+       <div class="card-body card-media">
+        <h5 class="card-title">Python</h5>
+        <p class="card-text">Die Programmiersprache Python</p>
+        <a href="python/" class="btn btn-primary">zum Bereich</a>
+       </div>
+     </div>
+  </div>
+ </div>
+</div>
+
+<!-- Modal zum hinzufügen eines neuen Bereichs-->
+<div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neuen Link hinzufügen</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" action="/links/new">
+      <div class="modal-body">
+       <input type="text" name="navigation" id="navigationLinks" value="" style="display:none;">
+        <div>Inhalt:</div>
+        <input type="text" name="links[content]" value="digital Art" disabled>
+        <div>Titel:</div>
+        <input type="text" name="links[name]">
+        <div>Quelle:</div>
+        <input type="text" name="links[url]">
+        <div>Beschreibung:</div>
+        <textarea rows="4" cols="50" name="links[description]"></textarea>
+        <div class="form-group">   
+          <label for="workfieldSelect">Bereich</label>
+          <select class="form-control" id="workfieldSelect" name="links[workfield]">
+            <option>Werkzeuge</option>
+            <option>Composing</option>
+            <option>Concept art</option>
+            <option>Lighting</option>
+            <option>Texturing</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<% include partials/footer %>

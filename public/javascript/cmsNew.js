@@ -1,6 +1,6 @@
 //Javascript für den Editor
 console.log("editor Javascript mit Drag&Drop");
-window.onload= function(){
+/*window.onload= function(){
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
   //var originHTML = textarea.textContent;
@@ -10,7 +10,7 @@ window.onload= function(){
   //console.log("originHTML:" + originHTML);
   console.log("originText:" +textarea.textContent);
   };
-
+*/
 //Drag and Drop Funktionen///////////////////////////////////////
 function handleDragStart(e){
   var hiddenElements = document.querySelectorAll('.btnDropzone');
@@ -154,15 +154,43 @@ function chkFormular() {
       switchView();
     }
   });
-  
+
 ////////////////////////Editor Funktionen Ende/////////////////////////////////////////////
+//AJAX-Aufrufe
+$('#editCMSModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var CMSId = button.data('id');
+     console.log("Aufruf von readCMSData");
+    $.get("/readCMSData/" +CMSId ,
+    function(data){
+        //console.log("data:"+data.task);
+        document.getElementById("modalCMSTitle").value=data.name;
+        document.getElementById("modalFormCMS").action="saveCMSData/"+data._id;
+    });  
+
+});
+
+$('#editCMSUnitModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  var cmsUnitId = button.data('id');
+     console.log("Aufruf von cmsUnitData");
+    $.get("/cmsUnitData/" +cmsUnitId ,
+    function(data){
+        //console.log("data:"+data.task);
+        document.getElementById("modalCMSUnitTitle").value=data.name;
+        document.getElementById("modalFormCMSUnit").action="saveCMSUnitData/"+data._id;
+    });  
+
+});
+
+
 //////////////////////Event-Listener definieren/////////////////////////////
 var dropzone = document.querySelectorAll(".btnDropzone");
 var dragElement = document.querySelectorAll('.btnUnitName');
 var saveContent = document.getElementById("savePost");
 
 var plainView = document.getElementById("html");
-plainView.addEventListener('click', switchView);
+//plainView.addEventListener('click', switchView);
 
 ////////////////////DROPZONES//////////////
 for (var i = 0;i < dropzone.length;i++){

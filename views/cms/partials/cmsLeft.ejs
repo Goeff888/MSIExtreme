@@ -6,45 +6,25 @@
 
     <div class="card">
       <div class="card-header" id="headingOne">
-        <h5 class="mb-0"> 
+        <h5 class="mb-0">
+         <% if(JSON.stringify(navigation.cmsID) == JSON.stringify(cms[i]._id)){ %>
+         <% console.log("ID gefunden" + navigation.cmsID); %>
+          <button class="btn btn-link btnCMSMain " data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
+         <%}else{ %>
+         <% console.log("ID nicht gefunden" + navigation.cmsID); %>
+          <button class="btn btn-link btnCMSMain" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
+         <% } %>
          
-         <button class="btn btn-link btnCMSMain" data-toggle="collapse" data-target="#collapse<%= z %>" aria-expanded="true" aria-controls="collapse<%= z %>">
           <%= cms[i].name %>
         </button>
         <button class="btn btnModal" type="button" >
-          <span data-toggle="modal" data-target="#cmsModal<%=z %>"><i class="fas fa-pen-square"></i></span>
+          <span data-toggle="modal" data-target="#editCMSModal" data-id="<%= cms[i]._id %>"><i class="fas fa-pen-square"></i></span>
         </button>
-
       </h5>
     </div>
-<!-- Modal CMS-->
-          <div class="modal fade" id="cmsModal<%=z %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= cms[i].name %></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                <form method="post" action="cms/<%= cms[i]._id %>/edit">
-                 Beschreibung:
-                 <textarea rows=3 cols=50 name="cms[description]"><%= cms[i].description %></textarea>
-                 
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                  <button type="button" class="btn btn-primary">Speichern</button>
-                </div>
-              </div>
-            </div>
-          </div>          
-  <!-- Modal CMS ENDE--> 
+
     <div id="collapse<%= z %>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">    
-       
        <div class="btnDropzone">
          Dropzone Dummy
        </div>
@@ -55,34 +35,10 @@
              <i class="fas fa-sort-amount-down"></i><%= cmsUnit[j].name %>
            </button>
           <button class="btn btnModal" type="button" >
-            <span data-toggle="modal" data-target="#unitModal<%=z %>"><i class="fas fa-pen-square"></i></span>
+            <span data-toggle="modal" data-target="#editCMSUnitModal"><i class="fas fa-pen-square"></i></span>
           </button>
           </span>
-<!-- Modal CMSUNIT-->
-          <div class="modal fade" id="unitModal<%=z %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= cmsUnit[j].name %></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                <form method="post" action="cmsUnit/<%= cmsUnit[j]._id %>/edit">
-                 Beschreibung:
-                 <textarea rows=3 cols=50 name="cmsUnit[description]"><%= cmsUnit[j].description %></textarea>
-                 <p><%= cmsUnit[j].created %></p>
-                </form>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
-                  <button type="button" class="btn btn-primary">Speichern</button>
-                </div>
-              </div>
-            </div>
-          </div>          
-  <!-- Modal CMSUNIT ENDE-->        
+      
           <div class="btnDropzone">
             Dropzone Dummy
           </div> 
@@ -110,8 +66,6 @@
             </form>
           </div>
         </div>
-
-
           </div>
         </div> 
        <% } %>
@@ -159,3 +113,57 @@
   </div>
  </div>
 </div> 
+
+<!-- Modal CMS-->
+          <div class="modal fade" id="editCMSModal" tabindex="-1" role="dialog" aria-labelledby="editCMSModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Title
+                  <input type="text" id="modalCMSTitle" name="cms[name]">
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form method="post" action="cms/id/edit" id="modalFormCMS">
+                 Beschreibung:
+                 <textarea rows=3 cols=50 name="cms[description]"></textarea>
+                 
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+                  <button type="button" class="btn btn-primary" >Speichern</button>
+                </div>
+              </div>
+            </div>
+          </div>          
+  <!-- Modal CMS ENDE-->
+  
+  <!-- Modal CMSUNIT-->
+          <div class="modal fade" id="editCMSUnitModal" tabindex="-1" role="dialog" aria-labelledby="editCMSUnitModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Header</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                <form method="post" action="cmsUnit/id/edit">
+                 Beschreibung:
+                 <textarea rows=3 cols=50 name="cmsUnit[description]"></textarea>
+                 
+                </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+                  <button type="button" class="btn btn-primary">Speichern</button>
+                </div>
+              </div>
+            </div>
+          </div>          
+  <!-- Modal CMSUNIT ENDE-->  
