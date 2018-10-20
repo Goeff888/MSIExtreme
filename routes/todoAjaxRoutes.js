@@ -4,23 +4,32 @@ var promise = require('bluebird');
 var mongoose = require("mongoose");
 var http = require('http');
 var router = express.Router();
-
-promise.promisifyAll(mongoose);
-//var dBCMS = require(".../models/cms");
 var dBTasks = require("../models/tasks");
-//var dBCMPosts = require("../models/cmsPosts");
-var dBCategory = require("../models/categories");
+promise.promisifyAll(mongoose);
 
+
+router.get("/readTaskData/:id",function(req,res){
+  console.log("Funktion: readTaskData");
+  dBTasks.findById(req.params.id,function(err,result){
+    if(err){
+      res.render("error", {error: err});
+     }else{
+      console.log("result:"+result);
+      res.send(result);
+     }
+    });
+});
 //Speichern eines Tasks###########################
 router.post("/saveTask",function(req,res){
   console.log("Ajax Route: SaveTask");
   console.log("Task:" + req.body.task);
+  console.log("todoID:" + req.body.todoID);
   var task = [{task:req.body.task,todoID:req.body.todoID}];
   dBTasks.create(task, function(err, newEntry){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log(newEntry);
+    console.log("newEntry:"+newEntry);
     //res.redirect("/todo/"+ newEntry._id+"/edit");
    }  
   });
@@ -38,21 +47,6 @@ router.post("/updateStatus",function(req,res){
 });
 
 /////////////////////////////////////////////////////////////////////////
-//////////Composition Routes
-//Speichern einer Kategorie###########################
-router.post("/saveCategory",function(req,res){
-  console.log("Ajax Route: saveCategory");
-  console.log("saveCategory:" + req.body.category);
-  var saveCategory = [{category:req.body.category}];
-  dBCategory.create(saveCategory, function(err, newEntry){
-   if(err){
-    res.render("error", {error: err});
-   }else{
-    console.log(newEntry);
-    //res.redirect("/todo/"+ newEntry._id+"/edit");
-   }  
-  });
-});
 
 
 module.exports = router;

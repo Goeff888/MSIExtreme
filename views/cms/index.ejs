@@ -6,7 +6,7 @@
 
     <link href="/stylesheets/fontawesome-all.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/task.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/cms.css">
     
 </head>
 <body>
@@ -14,9 +14,63 @@
 
 <h1>Index Seite zum CMS</h1>
 <hr>
-  <div class="row">
-  <a href="cms/new">Seiten anlegen und bearbeiten</a>   
+<a href="cms/new">zum Editor</a>
+<div class="row">
+  <div class="col-md-2">
+    <h2>Ressourcen im Netz</h2>
+  </div> 
+  <div class="col-md-8">
+    <h2>Aktuelle Projekte</h2>
+    <hr>    
+    <% for (var i = 0; i < cms.length; i++){ %>
+    <% console.log(i % 3) %>
+      <% if (i % 3 == 0){ %>
+      <div class="row">
+        <div class="col-md-4">
+        <div class="jumbotron">
+          <h1 class="display-4"><%= cms[i].name %></h1>
+          <p class="lead"><%= cms[i].description %></p>
+          <hr class="my-4">
+          <p>hier ein paar Posts</p>
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+        </div>
+      <% }else if(i % 3 == 2){ %>
+        <div class="col-md-4">
+        <div class="jumbotron">
+          <h1 class="display-4"><%= cms[i].name %></h1>
+          <p class="lead"><%= cms[i].description %></p>
+          <hr class="my-4">
+          <p>hier ein paar Posts</p>
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+        </div>
+      </div>
+      <% }else{ %>
+        <div class="col-md-4">
+        <div class="jumbotron">
+          <h1 class="display-4"><%= cms[i].name %></h1>
+          <p class="lead"><%= cms[i].description%></p>
+          <hr class="my-4">
+          <p>hier ein paar Posts</p>
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </div>
+        </div>
+       <% } %>
+      <% } %>
   </div>
+  <div class="col-md-2">
+    <h2>Todos</h2>
+  </div> 
+</div>
+
+<a href="/">Start</a>
 <div class="footer">Trademark 2018 Groefics</div>
 
-<% include ../partials/footer %>
+<script src="/javascript/jQuery_3_2_1.js"></script>
+<script src="/javascript/bootstrap.js"></script>
+<script src="/javascript/cmsNew.js"></script>
+
+
+</body>
+</html>

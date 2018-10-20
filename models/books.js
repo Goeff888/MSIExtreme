@@ -2,6 +2,7 @@ var mongoose =require("mongoose");
 //Alle lokalen pdfs und Dokumente (word, ppt und tbd)
 var booksSchema = new mongoose.Schema({
   name:           String,
+  fileName:       String,
   description:    {type: String, default: 'About...'},
   format:         {type: String, default: 'not set'}, //pdf, ...
   content:        {type: String, default: 'not set'},//wird automatisch gesetzt

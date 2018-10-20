@@ -9,7 +9,10 @@ var fs = require('fs');
 var dBComposition = require("../models/composition");
 var dBTutorials = require("../models/links");
 var dBComments = require("../models/comments");
-var dbCategories = require("../models/categories");
+var dbTasks = require("../models/tasks");
+var dbBooks = require("../models/books");
+var dbTodo = require("../models/todo");
+var dBLinks = require("../models/links");
 var mongoose = require("mongoose");
 //promise.promisifyAll(mongoose);
 //router.use(fileUpload());
@@ -34,17 +37,52 @@ function getSites(siteList, id){
 
 
 //INDEX ROUTES###########################
-//Anzeige aller Aufgaben
 router.get("/composition", function(req, res){
+   console.log("Route:"+ req.url);
    promise.props({
-    //dbcmsUnit für Überschriften im Magazinbereich
-     categories:  dbCategories.find().execAsync(),
      composition: dBComposition.find().execAsync(),
-     tutorials:   dBTutorials.find().execAsync(),
+     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-    //console.log(results);
-     res.render("compositions/index", results);
+   console.log("Results.id:"+results.todo._id);
+   if (results.todo != null){
+    dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
+        if(err){
+         res.render("error", {error: err});
+        }else{
+         console.log("tasksResults:"+ tasksResults);
+         console.log("todo:"+ results.todo);
+         res.render("compositions/index",{
+                    composition:results.composition,
+                    todo:results.todo,
+                    tasks:tasksResults,
+                    links:results.links,
+                    magazine:results.magazine});
+        }
+    });   
+    ///////////////////////////////Schauen, ob die neue datenbank angelegt wird
+   }else{
+    var newTodo = {
+       project:"Blender (General) Todos",
+       description:"Inhalte: Alles was mit der Arbeit mit Blender zu tun hat (Arbeitsplatz, Webauftritt, Computer,...)",
+     };
+    dbTodo.create(newTodo, function(err, newEntry){
+     if(err){
+      res.render("error", {error: err});
+     }else{
+      console.log(newEntry);
+      res.render("compositions/index",{
+                 composition:results.composition,
+                 tasks:{},
+                 todo:newEntry,
+                 links:results.links,
+                 magazine:results.magazine});
+     }
+    });
+   }
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -75,20 +113,13 @@ router.get("/composition/new", function(req, res){
 //CREATE ROUTES###########################
 //Hinzufügen eines neuen Bildes
 router.post("/composition/new",function(req,res){
-   console.log("Create Route  composition");
-   /*var now = new Date();
-   var entries = new Object;
-   entries.content = req.body.composition.name;*/
-   //entries.created = now;
-   //entries.updated = now;   
+   console.log("Create Route  composition");  
     var composition = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
     // Datei hochladen
     if (!req.files)
       return res.status(400).send('No files were uploaded.');
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.renderedImage;
-    //console.log(req.body.name);
-    //console.log(sampleFile.name);
     // Use the mv() method to place the file somewhere on your server
     sampleFile.mv('public/images/compositions/' + sampleFile.name, function(err) {
     if (err)
@@ -110,8 +141,8 @@ router.post("/composition/new",function(req,res){
 router.get("/composition/:id", function(req, res){
   console.log("Route:  Composition Show ");
   promise.props({
-   categories:  dbCategories.find().execAsync(),
-   tutorials:   dBTutorials.find().execAsync(),
+   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+   todo:        dBTodo.findOne({ 'result': 'blender' }).execAsync(),
    composition: dBComposition.findById(req.params.id).execAsync(),
    navigation:  dBComposition.find({}, "_id").execAsync()
  })
@@ -124,7 +155,13 @@ router.get("/composition/:id", function(req, res){
       res.render("error", {error: err});
      }else{
       console.log("compositions:"+results.composition);
-      res.render("compositions/show",{composition: results.composition, comments: comments,categories:results.categories,tutorials:results.tutorials, navigation:sites });
+      res.render("compositions/show",{
+       composition: results.composition,
+       comments: comments,
+       links:results.links,
+       tutorials:results.tutorials,
+       todo:results.todo,
+       navigation:sites });
      }
    });
  })
@@ -138,23 +175,31 @@ router.get("/composition/:id", function(req, res){
 router.get("/composition/:id/edit", function(req, res){
    console.log("Edit Route Composition:" + req.params.id);
    promise.props({
-    categories:  dbCategories.find().execAsync(),
-    tutorials:   dBTutorials.find().execAsync(),
-    composition: dBComposition.findById(req.params.id).execAsync()
+   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+   todo:        dBTodo.findOne({ 'result': 'blender' }).execAsync(),
+   composition: dBComposition.findById(req.params.id).execAsync(),
+   navigation:  dBComposition.find({}, "_id").execAsync()
   })
   .then(function(results) {
-   console.log("results:" + results.composition[0]._id);
+   console.log("results:" + results.composition._id);
    dBComments.find({compositionID:req.params.id}, function(err, comments){
       if(err){
        res.render("error", {error: err});
       }else{
        console.log("comments:"+comments);
-       res.render("compositions/edit",{composition: results.composition, comments: comments,categories:results.categories,tutorials:results.tutorials });
+       res.render("compositions/edit",{
+        comments:comments,
+        magazine:"Buch1",
+        composition: results.composition,
+        links:results.links,
+        todo:results.todo,
+        tutorials:results.tutorials });
       }
     });
   })
   .catch(function(err) {
-    res.send(500); // oops - we're even handling errors!
+   console.log(err);
+    //res.send(500); // oops - we're even handling errors!
     res.render("error", {error: err});
   }); 
    /*
@@ -166,6 +211,7 @@ router.get("/composition/:id/edit", function(req, res){
      }
   });*/
 });
+
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
 router.put("/composition/:id/edit", function(req, res){
@@ -179,10 +225,6 @@ router.put("/composition/:id/edit", function(req, res){
   var history =  {description:req.body.description,  image:sampleFile.name};
   sampleFile.mv('public/images/compositions/' + sampleFile.name, function(err) {
     if (err) return res.status(500).send(err);
-     //console.log("Bild hochgeladen:" + req.files.image.name);
-     
-     //console.log("history:"+req.body.description);
-     //console.log("history variable:"+ history);
      dBComposition.findByIdAndUpdate(req.params.id,{"$push":{history: history}}, function(err, updatedPost){
         if(err){
          console.log(err);
@@ -194,7 +236,6 @@ router.put("/composition/:id/edit", function(req, res){
      res.redirect("/composition/"+ req.params.id +"/edit");
    });
   
-//Bildbeschreibung bearbeiten
 });
 //DESTROY ROUTES###########################
 //Löschen von Bildern auf Blender-Seite

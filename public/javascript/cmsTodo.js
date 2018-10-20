@@ -24,8 +24,6 @@ function addTaskbyEnter(e){
 ////////////////////////Ajax-Funktionen/////////////////////////////////////////////
 function sendText(id,text){
     console.log("Javascript sendText: " +id);
-    //console.log("Javascript sendText ID des Bildes: " +id);
-    //console.log("Javascript sendText neuer Task: " +text);
     $.post("/createTask",
     {
         task: text,

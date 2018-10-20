@@ -7,8 +7,8 @@ var router = express.Router();
 promise.promisifyAll(mongoose);;
 var dBTodo = require("../models/todo");
 var dBTasks = require("../models/tasks");
-
-
+//Alle Todos über TodoAjayRoutes
+/*
 //Erstellen einer neuen Taskgruppe (aus anderer Awendung)
 router.post("/createTask", function(req, res){
    console.log("Ajax Route für Task aufgerufen" );
@@ -24,7 +24,7 @@ router.post("/createTask", function(req, res){
   }); 
 });
 
-router.get("/readTaskData/:id", function(req, res){
+/*router.get("/readTaskData/:id", function(req, res){
   console.log("Ajax Route für Einlesen der Taskdata aufgerufen" );
    console.log("id:"+req.params.id );
    dBTasks.findById(req.params.id , function(err, entry){
@@ -35,8 +35,8 @@ router.get("/readTaskData/:id", function(req, res){
     res.send(entry);
    }
   }); 
-});
-
+});*/
+/*
 router.post("/changeStatus/:id", function(req, res){
   console.log("Ajax Route zum Aendern des Task Status aufgerufen" );
   var data = ["closed","open"];
@@ -82,5 +82,5 @@ router.post("/createTodo", function(req, res){
    }
   }); 
 });
-
+*/
 module.exports = router;

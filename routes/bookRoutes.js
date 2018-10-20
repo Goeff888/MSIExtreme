@@ -35,20 +35,21 @@ router.get("/book", function(req, res){
 });*/
 
 router.post("/book/new",function(req,res){
-   console.log("Create Route  corel"); 
-    console.log(req.body.bookName);
-    console.log(req.files);
+   console.log("Create Route  Book");
+    console.log(req.headers.referer);//Wie kann man headers.referer auslesen 
     // Datei hochladen
     if (!req.files)
       return res.status(400).send('No files were uploaded.');
      
     var book = [{
          name:req.body.bookName,
+         fileName:req.files.bookFile.name,
+         content:req.body.bookContent,
          book:req.files.bookFile.name,
          description:req.body.description,
                 }];
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.book;
+    let sampleFile = req.files.bookFile;
     //console.log(req.body.name);
     //console.log(sampleFile.name);
     // Use the mv() method to place the file somewhere on your server
@@ -60,7 +61,7 @@ router.post("/book/new",function(req,res){
       res.render("error", {error: err});
      }else{
       //console.log(newEntry);
-      res.redirect("/corel/new");
+      res.redirect(req.headers.referer);
      }
     });
    });

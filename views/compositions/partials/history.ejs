@@ -1,33 +1,34 @@
-<h2>Historie</h2>
+<h2>Neue Bildversion</h2>
 <div class="gallery">
- <input type="file" id="fileLoader" name="historyImage" title="loadImage">
- <% if (composition.history.length > 1){
-     for (var i = 0; i < composition.history.length;i++){ console.log("i= " +i + ":" +composition.history[i].image);%>
-      <img src="/images/compositions/<%= composition.history[i].image %>" class="img-thumbnail historyImg">
-     <% } %> 
- <% }else{ %>
-  Noch keine Bilder vorhanden
+ <% for (var i = 0;   i < composition.history.length; i++){ %>
+  <img src="/images/composition/<%= composition._id %>/history/<%= composition.history[i].image %>" class="galleryThumb">
+  <% if (i >= 4){ %>
+   <a href="">...</a>
+  <% i = composition.history.length;
+   } %>
+ <% } %>
  
- <% }%>
-
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#historyModal"><i class="fa fa-plus"></i>Aktuelles Bild ersetzen</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPicModal">
+  <i class="fa fa-plus"></i>Neue Bildversion
+</button>
 
 <!-- Modal zum hinzufügen eines neuen History-Eintrags-->
-<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addPicModal" tabindex="-1" role="dialog" aria-labelledby="addPicModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Neues Bild</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Neue Bildversion</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="/composition/<%= composition._id %>/edit?_method=PUT" encType="multipart/form-data">
+      <form method="post" action="/corel/<%= corel._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
-        <textarea rows="4" cols="50" name="description"></textarea>
-        <input type="file" name="image">
+        <textarea rows="4" cols="50" name="newDescription"></textarea>
+        <input type="file" name="newFile" accept="image/*">
+        <input type="text" name="srcFile" value ="<%= corel.image %>" style="display: none;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

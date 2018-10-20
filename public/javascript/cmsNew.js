@@ -1,6 +1,6 @@
 //Javascript für den Editor
 console.log("editor Javascript mit Drag&Drop");
-/*window.onload= function(){
+window.onload= function(){
   var editor= document.getElementById("editor");
   var textarea= document.getElementById("clipped");
   //var originHTML = textarea.textContent;
@@ -8,9 +8,9 @@ console.log("editor Javascript mit Drag&Drop");
   //textarea.textContent = originText;
   editor.innerHTML = textarea.textContent;
   //console.log("originHTML:" + originHTML);
-  console.log("originText:" +textarea.textContent);
+  console.log("originText:" + textarea.textContent);
   };
-*/
+
 //Drag and Drop Funktionen///////////////////////////////////////
 function handleDragStart(e){
   var hiddenElements = document.querySelectorAll('.btnDropzone');
@@ -190,7 +190,7 @@ var dragElement = document.querySelectorAll('.btnUnitName');
 var saveContent = document.getElementById("savePost");
 
 var plainView = document.getElementById("html");
-//plainView.addEventListener('click', switchView);
+plainView.addEventListener('click', switchView);
 
 ////////////////////DROPZONES//////////////
 for (var i = 0;i < dropzone.length;i++){

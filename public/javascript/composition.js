@@ -1,6 +1,15 @@
 console.log("Hallo vom Blender.js");
 //Drag n Drop*****************************
 //File Dialog mit Klick auf Dropzone öffnen
+
+function setModals(){
+  event.preventDefault(); 
+  var bookNavigation = document.getElementById("bookNavigation");
+  bookNavigation.value = "Hallo";
+  console.log("setModals:" +window.location);
+  
+}
+
 function openFileDialog(e){
   console.log("Dateidialog öffnen");
 }
@@ -96,48 +105,16 @@ function verifyDelete() {
   }
 }
 
-//neuen Eintrag erzeugen*****************************
-//Funktionen:
-function saveEntry(category){
-  $.post("/saveCategory",
-  {
-      category: category,
-  },
-  function(data, status){
-      //console.log("Data: " + data + "\nStatus: " + status);
-      console.log("Callback");
-  });
-}
 
-function addCategorybyEnter(e){
-  console.log("Kategorie hinzufügen");
-  //this.focus();e.preventDefault();
-   if (e.which === 13){
-    //Enter-Event
-        var categoryText = $(this).val();
-        //var todoID = document.getElementById("todoID").innerHTML;
-        //console.log(todoID);
-        $(this).val("");
-        $("ul").append("<li>"+ categoryText +"<input type='text' name='tasks[ui]' value='" +categoryText+"' hidden='true'></li>");
-        saveEntry(categoryText);
-   }
-}
+
 /////////////////EVENT LISTENER
-//Speichern Button
-var sendBtn = document.getElementById("sendBtn");
-sendBtn.addEventListener("click", chkModal);
-//Kategorie
-var addCategory = document.getElementById("newCategory");//Hier die Klasse Anpassen, auf die das Tastenelement hören soll
-addCategory.addEventListener("keypress", addCategorybyEnter);
-//Tutorials
-//var modalSave = document.getElementById("modalSubmit2");
-//modalSave.addEventListener("click", chkFormular);
+
 //Dropzone 
-var dropzone = document.getElementById("renderDropzone");
+/*var dropzone = document.getElementById("renderDropzone");
 dropzone.addEventListener("click", openfileDialog);
 dropzone.addEventListener("dragover", handleDragOverZone);
 dropzone.addEventListener('dragleave', handleDragLeaveZone, false);
-dropzone.addEventListener('drop', handleDrop, false);
+dropzone.addEventListener('drop', handleDrop, false);*/
 
 //Datei öffnen Dialog
 //Views: New, Edit
@@ -145,11 +122,13 @@ function openfileDialog() {
     $("#fileLoader").click();
     
 }
-var fileDialog = document.getElementById("fileLoader");
+/*var fileDialog = document.getElementById("fileLoader");
 fileDialog.addEventListener('change', showSelectedImage);
-
+*/
 //Button Bild löschen
 //Views: Index, Edit
-var deleteBtn = document.getElementById("btnDelete");
+/*var deleteBtn = document.getElementById("btnDelete");
 deleteBtn.addEventListener("click", verifyDelete);
+
+var bookNavigation = document.getElementById("saveBook");*/
 

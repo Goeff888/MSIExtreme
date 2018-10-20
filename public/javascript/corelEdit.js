@@ -124,13 +124,10 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
     function(data){
         console.log("data:"+data.task);
         var modal = $(this);
-        //console.log("modal:"+button.dataset.id);
         document.getElementById("modalTaskTitle").value=data.task;
-        
         //document.getElementById("formEditTask").action="saveTaskData/"+data._id;
         console.log("modal:"+document.getElementById("formEditTask").action);
     });  
-
 });
 
 //Status eines Tasks setzen

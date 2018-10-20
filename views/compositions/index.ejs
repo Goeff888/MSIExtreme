@@ -10,16 +10,16 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
 </head>
-<body>
+<body onload="setModals();">
 
 <% include ../partials/navbarTop %>
 
 
   <div class="row">
     <div class="col-md-2">
-      <% include partials/category %>
-      <hr>
       <% include partials/magazin %>
+      <hr>
+      <% include partials/todos %>
     </div>
     
     <div class="col-md-8">
@@ -38,7 +38,7 @@
                 <div class="caption">
                   <%= entry.name %>
                 </div>
-                <p><a href="/composition/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
+                <p><a href="/composition/<%= entry._id %>" class="btn btn-primary" >Details</a></p>
             </div>
            <% }); %>
             <div class="col-md-3 col-sm-6">
@@ -56,9 +56,9 @@
     </div>
     
     <div class="col-md-2">
-      <% include partials/history %>
+      <% include partials/links %>
       <hr>
-      <% include partials/tutorialsNew %>  
+      <% include partials/tutorials %>  
     </div>
   </div>
 
@@ -69,6 +69,6 @@
 
 <script src="/javascript/bootstrap.js"></script>
 <script src="/javascript/composition.js"></script>
-
+<script src="/javascript/taskGeneral.js"></script>
 </body>
 </html>

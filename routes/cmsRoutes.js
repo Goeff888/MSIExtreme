@@ -26,13 +26,20 @@ function createDate(entriesDateless){
 //INDEX ROUTES###########################
 //Anzeige aller Haupteinträge
 router.get("/cms", function(req, res){
- dBCMS.find({}, function(err, entries){
-  if(err){
-   res.render("error", {error: err});
-  }else{
-    res.render ("cms/index", {todo: entries});
-  }
- }); 
+ console.log("CMS Index Seite");
+ promise.props({
+     cms:       dBCMS.find({},'name').execAsync(),
+     cmsUnit:   dBCMSUnit.find({},'name cmsID').execAsync(),
+     cmsPost:   dBCMPosts.find({},'name cmsUnitID').execAsync(),
+   })
+   .then(function(results) {
+    res.render("cms/index", {cms: results.cms, cmsUnit: results.cmsUnit,cmsPost:results.cmsPost});
+    
+   })
+   .catch(function(err) {
+     res.send(500); // oops - we're even handling errors!
+     console.log(err);
+   });
 });
 //NEW ROUTES###########################
 //Anzeige der Seite für neuen Eintrag 
