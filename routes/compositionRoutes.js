@@ -38,7 +38,7 @@ function getSites(siteList, id){
 
 //INDEX ROUTES###########################
 router.get("/composition", function(req, res){
-   console.log("Route:"+ req.url);
+   console.log("Composition Route:"+ req.url);
    promise.props({
      composition: dBComposition.find().execAsync(),
      links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
@@ -47,14 +47,14 @@ router.get("/composition", function(req, res){
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-   console.log("Results.id:"+results.todo._id);
+   //console.log("Results.id:"+results.todo._id);
    if (results.todo != null){
     dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
         if(err){
          res.render("error", {error: err});
         }else{
-         console.log("tasksResults:"+ tasksResults);
-         console.log("todo:"+ results.todo);
+         console.log("Anzahl der ermittelten Tasks:"+ tasksResults.length);
+         //console.log("todo:"+ results.todo);
          res.render("compositions/index",{
                     composition:results.composition,
                     todo:results.todo,

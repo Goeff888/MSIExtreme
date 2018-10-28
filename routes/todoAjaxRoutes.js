@@ -35,6 +35,19 @@ router.post("/saveTask",function(req,res){
   });
 });
 
+router.post("/addLink/:id",function(req,res){
+  console.log("Ajax Route: addLink");
+  console.log("ID des Tasks:"+req.params.id);
+  console.log("Wert der übergebenen Daten:"+req.body.link);
+  dBTasks.findOneAndUpdate({_id: req.params.id},{$push:{links: req.body.link}}, function(err, updatedPost){
+    if(err){
+      //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
+       console.log("Something wrong when updating data!");
+    }
+      console.log("updatedPost Template:"+updatedPost);
+  });  
+});
+
 //Löschen eines Tasks###########################
 router.post("/deleteTask",function(req,res){
   console.log("Ajax Route: deleteTask");

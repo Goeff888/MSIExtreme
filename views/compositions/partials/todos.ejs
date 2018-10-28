@@ -8,10 +8,10 @@
   <% for (var i = 0; i < tasks.length;i++){ %>
    <li>
     <% if (tasks[i].status=="open"){ %>
-    <% console.log("open"); %>
+    <% /*console.log("open");*/ %>
      <input type='checkbox' class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
     <% }else{ %>
-    <% console.log("closed"); %>
+    <% /*console.log("closed");*/ %>
      <input type='checkbox' checked class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
     <% } %>
     
@@ -45,14 +45,18 @@
       
       <div class="modal-body">
        <form action="saveTaskData/id" method="post" id="formEditTask">
-        
+        <input type="text" name="taskLink"  id="taskID">
         Beschreibung:
         <textarea rows="2" cols="55" name="taskDescription"></textarea>
         
         Links:
-        <input type="text" name="taskLink" placeholder="URL einfügen">
+        <input type="text" name="taskLink" placeholder="URL einfügen" id="taskLink">
               <button type="button" onclick=addLink() id="addTodoLink"><i class="fa fa-plus-circle"></i></button>
-       
+        <hr>
+        Sub-Tasks:
+        <input type="text" name="taskSubTask" placeholder="Aufgabe">
+              <button type="button" onclick=addSubTask() id="addTodoSubtask"><i class="fa fa-plus-circle"></i></button>
+              
       </form>
       </div>
       

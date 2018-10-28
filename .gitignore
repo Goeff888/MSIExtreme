@@ -2,3 +2,5 @@
 node_modules/*
 public/images/*
 *.jpg
+package-lock.json
+package.json

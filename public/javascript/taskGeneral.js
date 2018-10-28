@@ -26,15 +26,21 @@ function showElements(e){
 function addLink(e){
   console.log("Funktion: addLink");
   //Hier Daten zum Hinzufügen eines Links senden
-    /*$.post("/addlink/" + id ,
+    //var button = $(event.relatedTarget); // Button that triggered the modal
+    //var taskId = button.data('taskId');
+    var taskId = document.getElementById('taskID').value;
+    console.log("TaskID in addLink:"+taskId);
+    console.log(document.getElementById("taskLink").value);
+    $.post("/addlink/" + taskId ,
     {
-        data: id   
+        link: document.getElementById("taskLink").value
+        
     },
     function(daten, status){
       console.log("Callback");
       location.reload(true);
     });
-}*/
+
 }
 
 function deleteTask(e){
@@ -44,7 +50,8 @@ function deleteTask(e){
   $.post("/task/" + id+  "?_method=DELETE" ,
   //$.post("/deleteTask/",
     {
-        data: id   
+        todoSubtask: taskLink,
+        todoId: id   
     },
     function(daten, status){
       console.log("Callback");
@@ -87,12 +94,16 @@ function setStatusReady(e){
 $('#editTaskModal').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget); // Button that triggered the modal
   var taskId = button.data('id');
-     console.log("Aufruf von readTaskData");
+    console.log("Aufruf von Darstellung des Modals von Task (ID):"+ taskId);
     $.get("/readTaskData/" + taskId ,
     function(data){
         console.log("data:"+data.task);
         var modal = $(this);
         document.getElementById("modalTaskTitle").value=data.task;
+        //console.log("ID des Tasks:"+data._id);
+        document.getElementById("taskID").value=data._id;
+        //document.getElementById("taskID").value=taskId;
+        //$('#addTodoLink').data('taskID',taskId);//hier id des task setzen
         console.log("modal:"+document.getElementById("formEditTask").action);
     });  
 });
