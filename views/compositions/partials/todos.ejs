@@ -2,9 +2,9 @@
 <div class="gallery">
  <% /*Setzen der TODO ID vn Blender oder ID neu holen*/ %>
  <% if ( todo == null){ %>
-  <ul id="todoList">
+  <ul id="taskList">
  <% }else{ %>
- <ul id="todoList">
+ <ul id="taskList">
   <% for (var i = 0; i < tasks.length;i++){ %>
    <li>
     <% if (tasks[i].status=="open"){ %>
@@ -16,13 +16,16 @@
     <% } %>
     
     <span id="spTask<%= i %>"><%= tasks[i].task %></span>
+    <button type="button" class="btn btnEditTask" data-id="<%= tasks[i]._id %>" onclick="deleteTask(this.getAttribute('data-id'))">
+     <i class='fa fa-trash editTask'></i>
+    </button> 
     <button type="button" class="btn btnEditTask"
             data-id="<%= tasks[i]._id %>"
             data-toggle="modal"
             data-target="#editTaskModal">
      <i class='fa fa-edit editTask'></i>
     </button>
-    
+  
   <% } %>
  <% } %>
  </ul>
@@ -40,22 +43,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5>Task</h5><input type="text" id="modalTaskTitle" >
+        <h5>Task<input type="text" id="modalTaskTitle"></h5>
       </div>
       
       <div class="modal-body">
        <form action="saveTaskData/id" method="post" id="formEditTask">
-        <input type="text" name="taskLink"  id="taskID">
+        <input type="text" name="taskLink"  id="taskID" style="display:none">
         Beschreibung:
         <textarea rows="2" cols="55" name="taskDescription"></textarea>
         
         Links:
+        <ul id="taskLinks">
+
+        </ul>
         <input type="text" name="taskLink" placeholder="URL einfügen" id="taskLink">
               <button type="button" onclick=addLink() id="addTodoLink"><i class="fa fa-plus-circle"></i></button>
         <hr>
         Sub-Tasks:
-        <input type="text" name="taskSubTask" placeholder="Aufgabe">
-              <button type="button" onclick=addSubTask() id="addTodoSubtask"><i class="fa fa-plus-circle"></i></button>
+        <ul id="taskSubTasks">
+
+        </ul>
+        <input type="text" name="taskSubTask" id="taskSubTask" placeholder="Aufgabe">
+              <button  type="button" onclick=addSubTask() id="addTodoSubtask"><i class="fa fa-plus-circle"></i></button>
               
       </form>
       </div>

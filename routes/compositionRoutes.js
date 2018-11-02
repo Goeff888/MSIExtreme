@@ -28,13 +28,47 @@ function getSites(siteList, id){
   console.log(id);
   if(JSON.stringify(siteList[i]) === JSON.stringify(id)){
     navigation[0] = siteList[i];
-    navigation[1] = "Hallo";
-    
+    navigation[1] = "Hallo";    
   }
  }
  return navigation;
 }
 
+function getTasks(results,res,site){
+ if (results.todo != null){
+  dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
+      if(err){
+       return err;
+      }else{
+       console.log("Anzahl der ermittelten Tasks:"+ tasksResults.length);
+       res.render(site,{
+                  composition:results.composition,
+                  todo:results.todo,
+                  tasks:tasksResults,
+                  links:results.links,
+                  magazine:results.magazine});
+      }
+  }); 
+ }else{
+    var newTodo = {
+       project:"Blender (General) Todos",
+       description:"Inhalte: Alles was mit der Arbeit mit Blender zu tun hat (Arbeitsplatz, Webauftritt, Computer,...)",
+     };
+    dbTodo.create(newTodo, function(err, newEntry){
+     if(err){
+      return err;
+     }else{
+      console.log("Neuer Eintrag erzeugt:"+newEntry);
+      res.render(site,{
+                 composition:results.composition,
+                 tasks:{},
+                 todo:newEntry,
+                 links:results.links,
+                 magazine:results.magazine});
+     }
+    });
+   }
+}
 
 //INDEX ROUTES###########################
 router.get("/composition", function(req, res){
@@ -47,61 +81,30 @@ router.get("/composition", function(req, res){
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-   //console.log("Results.id:"+results.todo._id);
-   if (results.todo != null){
-    dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
-        if(err){
-         res.render("error", {error: err});
-        }else{
-         console.log("Anzahl der ermittelten Tasks:"+ tasksResults.length);
-         //console.log("todo:"+ results.todo);
-         res.render("compositions/index",{
-                    composition:results.composition,
-                    todo:results.todo,
-                    tasks:tasksResults,
-                    links:results.links,
-                    magazine:results.magazine});
-        }
-    });   
-    ///////////////////////////////Schauen, ob die neue datenbank angelegt wird
-   }else{
-    var newTodo = {
-       project:"Blender (General) Todos",
-       description:"Inhalte: Alles was mit der Arbeit mit Blender zu tun hat (Arbeitsplatz, Webauftritt, Computer,...)",
-     };
-    dbTodo.create(newTodo, function(err, newEntry){
-     if(err){
-      res.render("error", {error: err});
-     }else{
-      console.log(newEntry);
-      res.render("compositions/index",{
-                 composition:results.composition,
-                 tasks:{},
-                 todo:newEntry,
-                 links:results.links,
-                 magazine:results.magazine});
-     }
-    });
-   }
+    getTasks(results,res,"compositions/index");
+    //console.log("Anzahl der Tasks vor Rendern:"+ data);
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
      console.log(err);
    });
 });
-//NEW ROUTES###########################
 
+//NEW ROUTES###########################
 //Anzeige der Blender-Seite zum Hinzufügen von Bildern
 router.get("/composition/new", function(req, res){
  console.log("Route: Compositions new");
  //Inhalte laden: Kategorien ,Tutorials
    promise.props({
-     categories:  dbCategories.find().execAsync(),
-     tutorials:   dBTutorials.find().execAsync(),
+     composition: dBComposition.find().execAsync(),
+     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-    //console.log(results);
-     res.render("compositions/new", results);
+   //console.log("Results.id:"+results.todo._id);
+   getTasks(results.todo._id,res,results,"compositions/new");
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -120,7 +123,6 @@ router.post("/composition/new",function(req,res){
       return res.status(400).send('No files were uploaded.');
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.renderedImage;
-    // Use the mv() method to place the file somewhere on your server
     sampleFile.mv('public/images/compositions/' + sampleFile.name, function(err) {
     if (err)
       return res.status(500).send(err);
@@ -146,8 +148,7 @@ router.get("/composition/:id", function(req, res){
    composition: dBComposition.findById(req.params.id).execAsync(),
    navigation:  dBComposition.find({}, "_id").execAsync()
  })
- .then(function(results) {
-  
+ .then(function(results) { 
   var sites = getSites(results.navigation,req.params.id );
   console.log("sites:" + sites);
   dBComments.find({compositionID:req.params.id}, function(err, comments){
@@ -202,14 +203,7 @@ router.get("/composition/:id/edit", function(req, res){
     //res.send(500); // oops - we're even handling errors!
     res.render("error", {error: err});
   }); 
-   /*
-   dBComposition.findById(req.params.id, function(err){
-     if(err){
-      res.render("error", {error: err});
-     }else{
-      res.redirect("/composition");
-     }
-  });*/
+  //});
 });
 
 //UPDATE ROUTES###########################
@@ -221,7 +215,6 @@ router.put("/composition/:id/edit", function(req, res){
       return res.status(400).send('No files were uploaded.');
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   let sampleFile = req.files.image;
-  //console.log("sampleFile:"+sampleFile.name);
   var history =  {description:req.body.description,  image:sampleFile.name};
   sampleFile.mv('public/images/compositions/' + sampleFile.name, function(err) {
     if (err) return res.status(500).send(err);
@@ -234,27 +227,26 @@ router.put("/composition/:id/edit", function(req, res){
         }
        });
      res.redirect("/composition/"+ req.params.id +"/edit");
-   });
-  
+   });  
 });
+/*
 //DESTROY ROUTES###########################
 //Löschen von Bildern auf Blender-Seite
 router.delete("/composition/:id", function(req, res){
   console.log("Delete Route Composition");
   dBComments.deleteMany({ compositionID: req.params.id }, function (err) {
-  if (err) return handleError(err);
-  console.log("Comments entfernt");
-});
+   if (err) return handleError(err);
+   console.log("Comments entfernt");
+  });
   dBComposition.findByIdAndRemove(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{
-      
       console.log("Eintrag entfernt:" + req.params.id);
       res.redirect("/composition");
      }
   });
  //res.render ("compositions/index");
 });
-
+*/
 module.exports = router;

@@ -7,6 +7,7 @@ var tasksSchema = new mongoose.Schema({
   description:  {type: String, default: 'n.a.'},
   status:       {type: String, default: 'open'},
   links:        Array,
+  subTasks:        Array,
   created:      {type:Date, default: Date.now},
   deadline:     {type:Date, default: Date.now}
 });

@@ -68,15 +68,28 @@ router.put("/todo/:id/edit", function(req, res){
    }
  });
 });
+/*Element entfernen
+ *var array = [2, 5, 9];
+console.log(array)
+var index = array.indexOf(5);
+if (index > -1) {
+  array.splice(index, 1);
+}
+// array = [2, 9]
+console.log(array);
+*/
+
 //DESTROY ROUTES###########################
 //Löschen einer Aufgabe
 router.delete("/task/:id", function(req, res){
+ console.log("Delete Task:"+ req.params.id);
   dBTasks.findByIdAndRemove(req.params.id, function(err){
      if(err){
       res.render("error", {error: err});
      }else{
       console.log("Eintrag entfernt");
-      res.redirect("/todo");
+      //res.redirect("/todo");
+      res.send("success");
      }
   }); 
 });

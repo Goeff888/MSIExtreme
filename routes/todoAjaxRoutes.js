@@ -22,8 +22,6 @@ router.get("/readTaskData/:id",function(req,res){
 //Speichern eines Tasks###########################
 router.post("/saveTask",function(req,res){
   console.log("Ajax Route: SaveTask");
-  console.log("Task:" + req.body.task);
-  console.log("todoID:" + req.body.todoID);
   var task = [{task:req.body.task,todoID:req.body.todoID}];
   dBTasks.create(task, function(err, newEntry){
    if(err){
@@ -33,6 +31,19 @@ router.post("/saveTask",function(req,res){
     //res.redirect("/todo/"+ newEntry._id+"/edit");
    }  
   });
+});
+
+router.post("/addArrayElement/:id",function(req,res){
+  console.log("Ajax Route: addArrayElement");
+  console.log("ID des Tasks:"+req.params.id);
+  console.log("Wert der übergebenen Daten:"+req.body.link);
+  dBTasks.findOneAndUpdate({_id: req.params.id},{$push:{param: req.body.link}}, function(err, updatedPost){
+    if(err){
+      //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
+       console.log("Something wrong when updating data!");
+    }
+      console.log("updatedPost Template:"+updatedPost);
+  });  
 });
 
 router.post("/addLink/:id",function(req,res){
@@ -48,6 +59,18 @@ router.post("/addLink/:id",function(req,res){
   });  
 });
 
+router.post("/addSubTask/:id",function(req,res){
+  console.log("Ajax Route: addSubTask");
+  console.log("ID des Tasks:"+req.params.id);
+  console.log("Wert der übergebenen Daten:"+req.body.subTasks);//oder subTasks
+  dBTasks.findOneAndUpdate({_id: req.params.id},{$push:{subTasks: req.body.subTasks}}, function(err, updatedPost){
+    if(err){
+      //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
+       console.log("Something wrong when updating data!");
+    }
+      console.log("updatedPost Template:"+updatedPost);
+  });  
+});
 //Löschen eines Tasks###########################
 router.post("/deleteTask",function(req,res){
   console.log("Ajax Route: deleteTask");

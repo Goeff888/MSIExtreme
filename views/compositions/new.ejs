@@ -14,24 +14,9 @@
 <% include ../partials/navBarTop %>
   <div class="row">
     <div class="col-md-2">
-      <div class="taskEdit">
-        <h2>Kategorien</h2>
-        <hr>
-        <ul>
-          <% for (var i = 0; i < categories.length;i++){ %>
-            <li><%= categories[i].category %> </li>
-         <% } %>
-        </ul>
-        <input type="text" id="newCategory" name="category" placeholder="Neue Kategorie">
-      </div>
+      <% include partials/magazin %>
       <hr>
-      
-      <h2>Tutorials</h2>
-      <ul>
-        <li>Post </li>
-        <li>aus der anotherberrydb</li>
-        <li>und Bildern aus PPT</li>
-       </ul>
+      <% include partials/todos %>
     </div>
     
     <div class="col-md-8">

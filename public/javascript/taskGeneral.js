@@ -2,16 +2,17 @@ console.log("taskGeneral.js wird jetzt ausgeführt");
 
 //neuen Eintrag im Aufgabenbereich hinzufügen
 function addTaskbyEnter(e){
-  //console.log("Aufgabe hinzufügen");
+  
   //this.focus();e.preventDefault();
    if (e.which === 13){
+    console.log("Aufgabe hinzufügen");
     //Enter-Event
         var todotext = $(this).val();
         var todoID = this.dataset.value;
         console.log(this.dataset.value);
         $(this).val("");
         //$("ul").append("<li>"+ todotext +"<input type='text' name='tasks[task]' value='" +todotext+"' hidden='true'></li>");
-        $("ul").append("<li><input type='checkbox' class='form-check-input' id='exampleCheck1' >" + todotext +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");              
+        $("#taskList").append("<li><input type='checkbox' class='form-check-input' id='exampleCheck1' >" + todotext +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");              
         sendText(todotext, todoID);
         //var addTaskForm = document.getElementById("addTaskForm");
         //addTaskForm.addEventListener("keypress", removeDefault);
@@ -38,24 +39,51 @@ function addLink(e){
     },
     function(daten, status){
       console.log("Callback");
+      //Hier Task in Modal schreiben
       location.reload(true);
     });
-
 }
 
-function deleteTask(e){
-  console.log("Funktion: deleteTask");
-  console.log("this.data-value "+this.getAttribute("data-value"));
-  var id = this.getAttribute("data-value");
-  $.post("/task/" + id+  "?_method=DELETE" ,
-  //$.post("/deleteTask/",
+function addSubTask(e){
+  console.log("Funktion: addSubTask");
+  //Hier Daten zum Hinzufügen eines Links senden
+    //var button = $(event.relatedTarget); // Button that triggered the modal
+    //var taskId = button.data('taskId');
+    var taskId = document.getElementById('taskID').value;
+    console.log("TaskID in addSubTask:"+taskId);
+    console.log("VALU"+document.getElementById("taskSubTask").value);
+    $.post("/addSubTask/" + taskId ,
     {
-        todoSubtask: taskLink,
-        todoId: id   
+        
+        subTasks: document.getElementById("taskSubTask").value        
     },
     function(daten, status){
       console.log("Callback");
+      //Hier Task in Modal schreiben
       location.reload(true);
+    });
+}
+
+function deleteTask(taskID){
+  console.log("Funktion: deleteTask");
+  //console.log("this.data-value "+this.getAttribute("data-id"));
+  var button = $(event.relatedTarget); // Button that triggered the modal
+  //var taskId = button.data('id');
+  //window.alert("Es ist ein Ereignis vom Typ " + event.type + " passiert.");
+  //console.log("this:"+ this.getAttribute("id"));
+  console.log("taskId:"+ taskID);
+  $.post("/task/" + taskID+  "?_method=DELETE" ,
+  //$.post("/deleteTask/",
+    {
+        //todoSubtask: taskLink,
+        todoId: taskID   
+    },
+    function(data, status){
+      console.log("data:"+data);
+      if (data == "success"){
+        //Eintrag entfernen
+      }
+      //location.reload(true);
     });
 }
 
@@ -97,14 +125,29 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
     console.log("Aufruf von Darstellung des Modals von Task (ID):"+ taskId);
     $.get("/readTaskData/" + taskId ,
     function(data){
-        console.log("data:"+data.task);
-        var modal = $(this);
-        document.getElementById("modalTaskTitle").value=data.task;
+        //console.log("data:"+data.task);
+        //var modal = $(this);      
         //console.log("ID des Tasks:"+data._id);
+        //console.log("Anzahl des Links:"+data.links.length);
+        //Name des Tasks in Textfeld schreiben
+        document.getElementById("modalTaskTitle").value=data.task;
         document.getElementById("taskID").value=data._id;
-        //document.getElementById("taskID").value=taskId;
-        //$('#addTodoLink').data('taskID',taskId);//hier id des task setzen
-        console.log("modal:"+document.getElementById("formEditTask").action);
+        var taskLinks = document.getElementById("taskLinks");
+        var taskSubTasks = document.getElementById("taskSubTasks");
+        //vorherige Listenelemente löschen, um nur Elemente des Tasks anzuzeigen
+        while (taskLinks.firstChild) {
+            taskLinks.removeChild(taskLinks.firstChild);
+            taskSubTasks.removeChild(taskLinks.firstChild);//Falls sih Browser aufhängt ID prüfen
+        }
+        //Links des Tasks ins Modal schreiben
+        for (var i = 0; i < data.links.length;i++){
+          $("#taskLinks").append("<li>"+data.links[i] +"<button type='button' class='btn btnEditTask' data-id="+tasks[i]._id + " onclick=deleteTask()><i class='fa fa-trash editTask'></i></button> </li>");
+        }
+        //SubTasks einbinden 
+        for (var j = 0; j < data.subTasks.length;j++){
+          $("#taskSubTasks").append("<li>" + data.subTasks[j] +"</li>");
+        }
+        //console.log("modal:"+document.getElementById("formEditTask").action);
     });  
 });
 
