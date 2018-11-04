@@ -60,7 +60,7 @@ router.get("/todo/:id/task/:id/edit", function(req, res){
 //UPDATE ROUTES###########################
 //Bearbeiten einer Aufgabe
 router.put("/todo/:id/edit", function(req, res){
-  dBCodingPost.findByIdAndUpdate(req.params.id, entries, function(err, updatedPost){
+  dBTasks.findByIdAndUpdate(req.params.id, entries, function(err, updatedPost){
    if(err){
     res.render("error", {error: err});
    }else{

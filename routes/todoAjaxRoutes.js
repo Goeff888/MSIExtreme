@@ -54,8 +54,10 @@ router.post("/addLink/:id",function(req,res){
     if(err){
       //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
        console.log("Something wrong when updating data!");
+       res.send (err);
     }
       console.log("updatedPost Template:"+updatedPost);
+      res.send(updatedPost);
   });  
 });
 
@@ -67,8 +69,11 @@ router.post("/addSubTask/:id",function(req,res){
     if(err){
       //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
        console.log("Something wrong when updating data!");
+       res.send (err);
     }
+      
       console.log("updatedPost Template:"+updatedPost);
+      res.send(updatedPost);
   });  
 });
 //Löschen eines Tasks###########################
@@ -78,8 +83,18 @@ router.post("/deleteTask",function(req,res){
 });
 
 //Aktualisieren des Status eines Tasks###########################
-router.post("/updateStatus",function(req,res){
-  console.log("Funktion: UpdateStatus");
+router.post("/updateStatus/:id",function(req,res){
+  console.log("Funktion: UpdateStatus:" + req.params.id);
+  console.log("Status:" + req.body.data.status);
+    dBTasks.findOneAndUpdate(req.params.id,{status:req.body.data.status}, function(err, updatedTask){
+    if(err){
+      //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
+      console.log("Something wrong when updating data!");
+      res.send (err);
+    }
+      console.log("updatedTask Status:"+ updatedTask);
+      res.send (updatedTask);
+  }); 
 });
 
 /////////////////////////////////////////////////////////////////////////

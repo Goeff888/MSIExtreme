@@ -1,8 +1,7 @@
 console.log("taskGeneral.js wird jetzt ausgeführt");
 
 //neuen Eintrag im Aufgabenbereich hinzufügen
-function addTaskbyEnter(e){
-  
+function addTaskbyEnter(e){  
   //this.focus();e.preventDefault();
    if (e.which === 13){
     console.log("Aufgabe hinzufügen");
@@ -14,14 +13,7 @@ function addTaskbyEnter(e){
         //$("ul").append("<li>"+ todotext +"<input type='text' name='tasks[task]' value='" +todotext+"' hidden='true'></li>");
         $("#taskList").append("<li><input type='checkbox' class='form-check-input' id='exampleCheck1' >" + todotext +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");              
         sendText(todotext, todoID);
-        //var addTaskForm = document.getElementById("addTaskForm");
-        //addTaskForm.addEventListener("keypress", removeDefault);
    }
-}
-//Maus über TAsk (nur zum Test)
-function showElements(e){
-  console.log("Function: showElements");
-  //document.getElementByClassName
 }
 
 function addLink(e){
@@ -38,9 +30,10 @@ function addLink(e){
         
     },
     function(daten, status){
-      console.log("Callback");
-      //Hier Task in Modal schreiben
-      location.reload(true);
+      if (daten){
+        console.log(daten);
+        $("#taskLinks").append("<li>" + daten.links +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");
+      }
     });
 }
 
@@ -58,9 +51,12 @@ function addSubTask(e){
         subTasks: document.getElementById("taskSubTask").value        
     },
     function(daten, status){
-      console.log("Callback");
       //Hier Task in Modal schreiben
-      location.reload(true);
+      if (daten){
+        console.log(daten);
+        $("#taskSubTasks").append("<li>" + daten.subTasks +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");
+      }
+      //location.reload(true);
     });
 }
 
@@ -91,31 +87,34 @@ function deleteTask(taskID){
 function setStatusReady(e){
   console.log("CheckBox Ausgewählt");
   var status;
-  var ckID = this.getAttribute("id");
-  var liID = "li" + ckID.slice(2, ckID.length-1);
-  var liElement = document.getElementById(liID);
-  console.log(liID);
+  var ckID = this.getAttribute("data-id");
+  //var liID = "li" + ckID.slice(2, ckID.length-1);
+  //var liElement = document.getElementById(liID);
+  console.log("ckID:"+ckID);
+  
   if (this.checked == true){
     //console.log("ausgewählt");
     status = "finished";
-    console.log("this:"+ this.getAttribute("id"));
-    liElement.style.textDecoration = "line-through";
+    
+    //liElement.style.textDecoration = "line-through";
     //liElement.style.text-decoration = "line-through",  
   }else{
-    console.log("leer");
+    //console.log("leer");
     status = "open";
-    console.log("this:"+ this.getAttribute("id"));
-    liElement.style.textDecoration = "none";
+    //console.log("this:"+ this.getAttribute("id"));
+    //liElement.style.textDecoration = "none";
   }
-  console.log(status);
- /* $.post("/updateStatus/"+ id,
+  
+  var data = {status: status};
+  console.log("Status:"+ data.status);
+ $.post("/updateStatus/"+ ckID,
     {
-        data: id   
+        data: data   
     },
     function(daten, status){
-      console.log("Callback");
+      console.log("Callback mit daten:" +daten);
       //location.reload(true);
-    });*/
+    });
 }
 
 //Öffnen des Task-Modal
