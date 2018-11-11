@@ -24,8 +24,8 @@ function getSites(siteList, id){
  console.log("Seiten ermitteln");
  var navigation = [];
  for(var i = 0; i < siteList.length; i++){
-  console.log("site" +siteList[i]);
-  console.log(id);
+  //console.log("site" +siteList[i]);
+  //console.log(id);
   if(JSON.stringify(siteList[i]) === JSON.stringify(id)){
     navigation[0] = siteList[i];
     navigation[1] = "Hallo";    
@@ -34,7 +34,10 @@ function getSites(siteList, id){
  return navigation;
 }
 
+//Zum Partial gehörigen tasks ermittleln oder neue Datenbank anlegen
+//Anschließend rendern der Seite
 function getTasks(results,res,site){
+ console.log("Länge des übergebenen Parameters:"+results.todo._id);
  if (results.todo != null){
   dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
       if(err){
@@ -104,7 +107,7 @@ router.get("/composition/new", function(req, res){
    })
    .then(function(results) {
    //console.log("Results.id:"+results.todo._id);
-   getTasks(results.todo._id,res,results,"compositions/new");
+    getTasks(results,res,"compositions/new");
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -122,8 +125,9 @@ router.post("/composition/new",function(req,res){
     if (!req.files)
       return res.status(400).send('No files were uploaded.');
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    console.log("hochgeladene Datei:"+req.files.renderedImage.name);
     let sampleFile = req.files.renderedImage;
-    sampleFile.mv('public/images/compositions/' + sampleFile.name, function(err) {
+    sampleFile.mv('./public/images/composition/' + sampleFile.name, function(err) {
     if (err)
       return res.status(500).send(err);
     dBComposition.create(composition, function(err, newEntry){

@@ -86,6 +86,7 @@ router.post("/deleteTask",function(req,res){
 router.post("/updateStatus/:id",function(req,res){
   console.log("Funktion: UpdateStatus:" + req.params.id);
   console.log("Status:" + req.body.data.status);
+  //console.log("ID:" + req.params.id);
     dBTasks.findOneAndUpdate(req.params.id,{status:req.body.data.status}, function(err, updatedTask){
     if(err){
       //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)

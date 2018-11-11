@@ -1,4 +1,4 @@
-console.log("Hallo vom Blender.js");
+ console.log("Hallo vom Blender.js");
 //Drag n Drop*****************************
 //File Dialog mit Klick auf Dropzone öffnen
 
@@ -110,21 +110,25 @@ function verifyDelete() {
 /////////////////EVENT LISTENER
 
 //Dropzone 
-/*var dropzone = document.getElementById("renderDropzone");
+var dropzone = document.getElementById("renderDropzone");
 dropzone.addEventListener("click", openfileDialog);
 dropzone.addEventListener("dragover", handleDragOverZone);
 dropzone.addEventListener('dragleave', handleDragLeaveZone, false);
-dropzone.addEventListener('drop', handleDrop, false);*/
+dropzone.addEventListener('drop', handleDrop, false);
+
+var templateDropZone = document.getElementById("dropZoneTemplate");
+templateDropZone.addEventListener("click", openfileDialog);
 
 //Datei öffnen Dialog
 //Views: New, Edit
 function openfileDialog() {
     $("#fileLoader").click();
+    console.log("Funktion Open File Dialpog");
     
 }
-/*var fileDialog = document.getElementById("fileLoader");
+var fileDialog = document.getElementById("fileLoader");
 fileDialog.addEventListener('change', showSelectedImage);
-*/
+
 //Button Bild löschen
 //Views: Index, Edit
 /*var deleteBtn = document.getElementById("btnDelete");

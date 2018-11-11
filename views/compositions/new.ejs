@@ -34,13 +34,22 @@
                   <button class="btn btn-lg btn-primary" type="submit" id="sendBtn">Speichern</button>          
               </div> 
               </div>
-              
-              <div class="col"> 
-                <div id="renderDropzone">
-                  <input type="file" id="fileLoader" name="renderedImage" title="loadImage">
-                  <span id="fileText">Bild hier reinziehen oder klicken</span>
+              <div class="row">
+            <!-- Drop-Bereiche für Vorlagen -->
+               <div class="col"> 
+                <div id="dropZoneTemplate" class="dropZoneInitial">
+                  <input class="fileLoaderButton" type="file" id="templateLoader" name="templateImage" title="selectTemplate">
+                  <span id="fileTextTemplate">Vorlage hier reinziehen oder klicken</span>
                 </div> 
-              </div>    
+              </div>
+              <!-- Drop-Bereiche für neues Bild --> 
+              <div class="col"> 
+                <div id="renderDropzone" class="dropZoneInitial">
+                  <input class="fileLoaderButton" type="file" id="fileLoader" name="renderedImage" title="loadImage">
+                  <span id="fileText">Bild hier reinziehen oder klicken</span>
+                </div>
+              </div>
+            </div>    
           </form>
       </div>
     </div>

@@ -107,10 +107,15 @@ hr {
   padding: 0 0;
 }
 
-#fileLoader{
-  display:none;
-}
 
+.dropZoneInitial{
+  width:80%;
+  height:200px;
+  border:dashed 2px grey;
+  color: white;
+  text-align: center;
+}
+//kann gelöscht werden wird als Klasse behandelt, da mehrere Felder
 #renderDropzone{
   width:80%;
   height:200px;
@@ -125,6 +130,12 @@ hr {
   border:solid 1px grey;
   color: white;
   text-align: center;
+}
+#fileLoader{
+  display:none;
+}
+.fileLoaderButton{
+  display:none;
 }
 #renderDropzoneDrop{
   width:80%;

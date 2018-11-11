@@ -7,11 +7,11 @@
  <ul id="taskList">
   <% for (var i = 0; i < tasks.length;i++){ %>
    <li>
-    <% if (tasks[i].status=="open"){ %>
-    <% /*console.log("open");*/ %>
+    <% if (tasks[i].status==0){ %>
+    <% console.log("open"); %>
      <input type='checkbox' class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
     <% }else{ %>
-    <% /*console.log("closed");*/ %>
+    <% console.log("closed"); %>
      <input type='checkbox' checked class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
     <% } %>
     

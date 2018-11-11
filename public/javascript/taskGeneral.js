@@ -32,7 +32,7 @@ function addLink(e){
     function(daten, status){
       if (daten){
         console.log(daten);
-        $("#taskLinks").append("<li>" + daten.links +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");
+        $("#taskLinks").append("<li>" + daten.links +"<span class='iconRight' data-value=''><i class='fa fa-trash'></i></span>");
       }
     });
 }
@@ -66,7 +66,7 @@ function deleteTask(taskID){
   var button = $(event.relatedTarget); // Button that triggered the modal
   //var taskId = button.data('id');
   //window.alert("Es ist ein Ereignis vom Typ " + event.type + " passiert.");
-  //console.log("this:"+ this.getAttribute("id"));
+ 
   console.log("taskId:"+ taskID);
   $.post("/task/" + taskID+  "?_method=DELETE" ,
   //$.post("/deleteTask/",
@@ -78,6 +78,8 @@ function deleteTask(taskID){
       console.log("data:"+data);
       if (data == "success"){
         //Eintrag entfernen
+        //console.log("this:"+ this.getAttribute("id"));
+        console.log(button);
       }
       //location.reload(true);
     });
@@ -94,13 +96,13 @@ function setStatusReady(e){
   
   if (this.checked == true){
     //console.log("ausgewählt");
-    status = "finished";
+    status = 9;
     
     //liElement.style.textDecoration = "line-through";
     //liElement.style.text-decoration = "line-through",  
   }else{
     //console.log("leer");
-    status = "open";
+    status = 0;
     //console.log("this:"+ this.getAttribute("id"));
     //liElement.style.textDecoration = "none";
   }
@@ -113,6 +115,7 @@ function setStatusReady(e){
     },
     function(daten, status){
       console.log("Callback mit daten:" +daten);
+      console.log("Callback mit Status:" +daten.status);
       //location.reload(true);
     });
 }
@@ -176,11 +179,11 @@ for (var i = 0; i < tasks.length; i++){
   tasks[i].addEventListener("mouseover", showElements);
 }
 
-//Delete Task Icon
-var deleteBtns = document.getElementsByClassName("iconRight");
+//Delete Task Icon ist die Funktion nötig???
+/*var deleteBtns = document.getElementsByClassName("iconRight");
 for (var j = 0; j < deleteBtns.length; j++){
   deleteBtns[j].addEventListener("mouseup",deleteTask);
-}
+}*/
 
 //Listeneintrag mit enter hinzufügen
 var addTask = document.getElementById("todo");//Hier die Klasse Anpassen, auf die das Tastenelement hören soll
