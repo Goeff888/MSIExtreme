@@ -19,8 +19,8 @@ var mongoose = require("mongoose");
 router.use(express.static(path.join(__dirname, 'public')));
 router.use(express.static("public"));
 
-//Funktionen
-function getSites(siteList, id){
+//////////////////////////////////Funktionen
+/*function getSites(siteList, id){
  console.log("Seiten ermitteln");
  var navigation = [];
  for(var i = 0; i < siteList.length; i++){
@@ -32,8 +32,84 @@ function getSites(siteList, id){
   }
  }
  return navigation;
+}*/
+
+
+//Datei oder Template hochladen und Datenbakeintrag anlegen mit rendern der Show Seite//content =Dateiordne
+/*function copyFileAndRender(file,entries,content){ 
+ dBComposition.create(entries, function(err1, newEntry){
+  if(err1){
+    res.render("error", {error: err});
+  }else{
+    //Hier neue Ordner anlegen für Projekt mit history und Template
+    sampleFile.mv('./public/images/compositions/' + content + sampleFile.name, function(err2) {
+     if(err2){
+      return res.status(500).send(err);
+     }else{
+       res.redirect("/composition");
+     }
+    });    
+  }});
+}*/
+
+//Neuen Projektordner anlegen und Status zurückgeben
+function createNewProjectFolder(dir){
+ //var dir = './public/images/corel/'+ newEntry[0]._id;
+ if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);        
+  fs.mkdirSync(dir + "/templates");
+  fs.mkdirSync(dir + "/history");
+ }else{
+  console.log("Ordner exisitert bereits");
+ }
+  /*
+  if(req.files.cgArt){
+    copyFile(req.files.cgArt,newEntry[0]._id +"/");
+   }else{
+    console.log("Verzeichnis muss wieder gelöscht werden");
+   }
+ }*/
+}
+function copyFile(sampleFile,folder){ 
+  console.log("copyFile:" + sampleFile.name);
+  sampleFile.mv('./public/images/compositions/'+ folder +'/' + sampleFile.name, function(err) {
+    if (err) return console.log(err);
+    
+   });
+  return sampleFile.name;
 }
 
+/*sampleFile.mv('./public/images/compositions/' + sampleFile.name, function(err) {
+    if (err)
+      return res.status(500).send(err);
+    dBComposition.create(composition, function(err, newEntry){
+     if(err){
+      res.render("error", {error: err});
+     }else{
+      //console.log(newEntry);
+      res.redirect("/composition");
+     }
+    });
+   });
+}
+//Alle Daten der Partials ermitteln
+/*function getPartialData(){
+   promise.props({
+     composition: dBComposition.find().execAsync(),
+     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
+   })
+   .then(function(results) {
+    return (results);
+    //console.log("Anzahl der Tasks vor Rendern:"+ data);
+   })
+   .catch(function(err) {
+     res.send(500); // oops - we're even handling errors!
+     console.log(err);
+   });
+}*/
 //Zum Partial gehörigen tasks ermittleln oder neue Datenbank anlegen
 //Anschließend rendern der Seite
 function getTasks(results,res,site){
@@ -120,14 +196,43 @@ router.get("/composition/new", function(req, res){
 //Hinzufügen eines neuen Bildes
 router.post("/composition/new",function(req,res){
    console.log("Create Route  composition");  
-    var composition = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
-    // Datei hochladen
-    if (!req.files)
-      return res.status(400).send('No files were uploaded.');
+   var composition = [];
+   let sampleFile ; 
+   //Prüfen, ob Datei, Template oder beides ausgewählt wurde
+   if (!req.files){
+    console.log("Keine Datei zum Hochladen");
+   }else{
+    if(req.files.renderedImage){
+     console.log("Bilddatei ausgewählt!:"+req.files.renderedImage.name);
+     sampleFile = req.files.renderedImage; 
+     composition = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
+     copyFileAndRender(sampleFile,composition,0);
+     
+    }else if(req.files.templateImage){
+     console.log("Template ausgewählt!:");
+     sampleFile = req.files.templateImage;
+     composition = [{name:req.body.name, image:req.files.templateImage.name,description:req.body.description,created:Date(),updated:Date()}];
+     dBComposition.create(composition, function(err, newEntry){
+     if(err){
+      console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+     }else{
+      console.log("Neuer Eintrag nur mit Template erzeugt:"+ newEntry);
+      createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
+      //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+      copyFile(sampleFile,newEntry[0]._id+"/templates/");
+      res.redirect("/composition/show/" + newEntry._id);
+     }
+    });
+    }else{
+     console.log("Datei vorhanden zum Hochladen, aber kein Datenbankwert");
+    }
+   }
+   
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    console.log("hochgeladene Datei:"+req.files.renderedImage.name);
-    let sampleFile = req.files.renderedImage;
-    sampleFile.mv('./public/images/composition/' + sampleFile.name, function(err) {
+    //console.log("hochgeladene Datei:"+req.files.renderedImage.name);
+    //console.log("hochgeladenes Template:"+req.files.templateImage.name);
+    //let sampleFile = req.files.renderedImage;
+    /*sampleFile.mv('./public/images/compositions/' + sampleFile.name, function(err) {
     if (err)
       return res.status(500).send(err);
     dBComposition.create(composition, function(err, newEntry){
@@ -138,7 +243,7 @@ router.post("/composition/new",function(req,res){
       res.redirect("/composition");
      }
     });
-   });
+   });*/
  });
 
 
@@ -146,15 +251,15 @@ router.post("/composition/new",function(req,res){
 //Anzeige eines Composition-Eintrags
 router.get("/composition/:id", function(req, res){
   console.log("Route:  Composition Show ");
+  //console.log("getPartialData:" + getPartialData());
   promise.props({
-   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-   todo:        dBTodo.findOne({ 'result': 'blender' }).execAsync(),
-   composition: dBComposition.findById(req.params.id).execAsync(),
-   navigation:  dBComposition.find({}, "_id").execAsync()
- })
+    composition: dBComposition.findOne({ '_id': req.params.id}).execAsync(),
+    links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+    magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
+  })
  .then(function(results) { 
-  var sites = getSites(results.navigation,req.params.id );
-  console.log("sites:" + sites);
   dBComments.find({compositionID:req.params.id}, function(err, comments){
      if(err){
       res.render("error", {error: err});
@@ -166,13 +271,14 @@ router.get("/composition/:id", function(req, res){
        links:results.links,
        tutorials:results.tutorials,
        todo:results.todo,
-       navigation:sites });
+       magazine:results.magazine,
+       tasks:[]});
      }
    });
  })
  .catch(function(err) {
    res.send(500); // oops - we're even handling errors!
-   res.render("error", {error: err});
+   //res.render("error", {error: err});
  });  
 });
 //EDIT ROUTES###########################
@@ -180,10 +286,11 @@ router.get("/composition/:id", function(req, res){
 router.get("/composition/:id/edit", function(req, res){
    console.log("Edit Route Composition:" + req.params.id);
    promise.props({
-   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-   todo:        dBTodo.findOne({ 'result': 'blender' }).execAsync(),
-   composition: dBComposition.findById(req.params.id).execAsync(),
-   navigation:  dBComposition.find({}, "_id").execAsync()
+    composition: dBComposition.findOne({ '_id': req.params.id}).execAsync(),
+    links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+    magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
   })
   .then(function(results) {
    console.log("results:" + results.composition._id);

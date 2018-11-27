@@ -14,11 +14,21 @@ function openFileDialog(e){
   console.log("Dateidialog öffnen");
 }
 
+//Setzen des ausgewählten Dateinamen in der Seite
 function showSelectedImage(){
   console.log("Funktion Bild anzeigen");
-  var fileText = document.getElementById("fileText");
-  var file = document.getElementById("fileLoader").files[0];
-  
+  console.log("ID:"+ this.getAttribute("id"));
+  var fileText;
+  if(this.getAttribute("id")==="newPicLoader"){
+   fileText=document.getElementById("fileText");
+  }else if(this.getAttribute("id")==="templateLoader"){
+   fileText=document.getElementById("fileTextTemplate");
+  }else{
+   console.log("Fehler beim Auswerten der ID desFileDialogs!");
+  }
+  //var fileText = document.getElementById("fileText");  
+  //var file = document.getElementById("newPicLoader").files[0];
+  var file = this.files[0];
   console.log("Datei:" + file.name);
   //bgrd.classList.remove('renderDropzone');
   fileText.innerHTML = file.name;
@@ -91,7 +101,7 @@ function chkModal() {
   //return false;
 }
 
-//Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
+//Überprüfen, ob "Bild löschen" korrekt ausgefüllt ist
 function verifyDelete() {
   alert("Wollen Sie das Bild wirklich löschen?");
   var txt;
@@ -109,26 +119,32 @@ function verifyDelete() {
 
 /////////////////EVENT LISTENER
 
-//Dropzone 
+//Dropzone für Bilder
 var dropzone = document.getElementById("renderDropzone");
-dropzone.addEventListener("click", openfileDialog);
+dropzone.addEventListener("click", openNewPicDialog);
 dropzone.addEventListener("dragover", handleDragOverZone);
 dropzone.addEventListener('dragleave', handleDragLeaveZone, false);
 dropzone.addEventListener('drop', handleDrop, false);
-
+//Dropzone für Templates
 var templateDropZone = document.getElementById("dropZoneTemplate");
-templateDropZone.addEventListener("click", openfileDialog);
+templateDropZone.addEventListener("click", openTemplateDialog);
 
 //Datei öffnen Dialog
 //Views: New, Edit
-function openfileDialog() {
-    $("#fileLoader").click();
-    console.log("Funktion Open File Dialpog");
-    
+function openNewPicDialog() {
+    $("#newPicLoader").click();
+    console.log("Funktion Open New Pic Dialog");    
 }
-var fileDialog = document.getElementById("fileLoader");
+
+function openTemplateDialog() {
+    $("#templateLoader").click();
+    console.log("Funktion Open Template Dialog");    
+}
+var fileDialog = document.getElementById("newPicLoader");
 fileDialog.addEventListener('change', showSelectedImage);
 
+var fileTemplateDialog = document.getElementById("templateLoader");
+fileTemplateDialog.addEventListener('change', showSelectedImage);
 //Button Bild löschen
 //Views: Index, Edit
 /*var deleteBtn = document.getElementById("btnDelete");

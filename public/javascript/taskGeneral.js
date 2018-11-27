@@ -24,15 +24,15 @@ function addLink(e){
     var taskId = document.getElementById('taskID').value;
     console.log("TaskID in addLink:"+taskId);
     console.log(document.getElementById("taskLink").value);
-    $.post("/addlink/" + taskId ,
+    $.post("/addArrayElement/" + taskId ,
     {
         link: document.getElementById("taskLink").value
         
     },
     function(daten, status){
       if (daten){
-        console.log(daten);
-        $("#taskLinks").append("<li>" + daten.links +"<span class='iconRight' data-value=''><i class='fa fa-trash'></i></span>");
+        console.log("erhaltene Daten:"+daten);
+        $("#taskLinks").append("<li>" + document.getElementById("taskLink").value +"<span class='iconRight' data-value=''><i class='fa fa-trash'></i></span>");
       }
     });
 }
@@ -45,7 +45,7 @@ function addSubTask(e){
     var taskId = document.getElementById('taskID').value;
     console.log("TaskID in addSubTask:"+taskId);
     console.log("VALU"+document.getElementById("taskSubTask").value);
-    $.post("/addSubTask/" + taskId ,
+    $.post("/addArrayElement/" + taskId ,
     {
         
         subTasks: document.getElementById("taskSubTask").value        
@@ -64,9 +64,6 @@ function deleteTask(taskID){
   console.log("Funktion: deleteTask");
   //console.log("this.data-value "+this.getAttribute("data-id"));
   var button = $(event.relatedTarget); // Button that triggered the modal
-  //var taskId = button.data('id');
-  //window.alert("Es ist ein Ereignis vom Typ " + event.type + " passiert.");
- 
   console.log("taskId:"+ taskID);
   $.post("/task/" + taskID+  "?_method=DELETE" ,
   //$.post("/deleteTask/",
@@ -79,11 +76,23 @@ function deleteTask(taskID){
       if (data == "success"){
         //Eintrag entfernen
         //console.log("this:"+ this.getAttribute("id"));
-        console.log(button);
+        
+        var listEntry = document.getElementById(taskID);
+        var removed = listEntry.parentNode.removeChild(listEntry);
+        console.log("removed:"+removed);
+        console.log("removed:"+listEntry);
       }
       //location.reload(true);
     });
 }
+
+/*
+ *    function wegMitEintrag () {
+      var knoten = document.getElementsByTagName('ol')[0];
+      var verschwunden = knoten.removeChild(knoten.firstChild);
+      ausgabe(verschwunden.firstChild.nodeValue + ' wurde gelöscht!')
+    }
+    */
 
 //Funktion zum Durchstreichen des Textes und Ändern des Status
 function setStatusReady(e){
@@ -137,13 +146,13 @@ $('#editTaskModal').on('show.bs.modal', function (event) {
         var taskLinks = document.getElementById("taskLinks");
         var taskSubTasks = document.getElementById("taskSubTasks");
         //vorherige Listenelemente löschen, um nur Elemente des Tasks anzuzeigen
-        while (taskLinks.firstChild) {
+        /*while (taskLinks.firstChild) {
             taskLinks.removeChild(taskLinks.firstChild);
             taskSubTasks.removeChild(taskLinks.firstChild);//Falls sih Browser aufhängt ID prüfen
-        }
+        }*/
         //Links des Tasks ins Modal schreiben
         for (var i = 0; i < data.links.length;i++){
-          $("#taskLinks").append("<li>"+data.links[i] +"<button type='button' class='btn btnEditTask' data-id="+tasks[i]._id + " onclick=deleteTask()><i class='fa fa-trash editTask'></i></button> </li>");
+          $("#taskLinks").append("<li>"+data.links[i] +"<button type='button' class='btn btnEditTask' data-id=li"+ i + " onclick=deleteTask()><i class='fa fa-trash editTask'></i></button> </li>");
         }
         //SubTasks einbinden 
         for (var j = 0; j < data.subTasks.length;j++){

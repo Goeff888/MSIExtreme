@@ -37,15 +37,29 @@ router.post("/addArrayElement/:id",function(req,res){
   console.log("Ajax Route: addArrayElement");
   console.log("ID des Tasks:"+req.params.id);
   console.log("Wert der übergebenen Daten:"+req.body.link);
-  dBTasks.findOneAndUpdate({_id: req.params.id},{$push:{param: req.body.link}}, function(err, updatedPost){
+  var query={};
+  var element;
+  if(req.body.link && !req.body.subTasks){
+    query={links:req.body.link};
+    element=req.body.link;
+    console.log(query);
+  }else if(!req.body.link && req.body.subTasks){
+    param="subtasks";
+    element=req.body.subTasks;    
+  }else{
+    console.log("Fehler in der Parameterliste des Formulars");
+  }
+  
+  dBTasks.findOneAndUpdate({_id: req.params.id},{$push:query}, function(err, updatedPost){
     if(err){
       //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
        console.log("Something wrong when updating data!");
     }
       console.log("updatedPost Template:"+updatedPost);
+      res.send(updatedPost);
   });  
 });
-
+/*
 router.post("/addLink/:id",function(req,res){
   console.log("Ajax Route: addLink");
   console.log("ID des Tasks:"+req.params.id);
@@ -76,11 +90,12 @@ router.post("/addSubTask/:id",function(req,res){
       res.send(updatedPost);
   });  
 });
+*/
 //Löschen eines Tasks###########################
-router.post("/deleteTask",function(req,res){
+/*router.post("/deleteTask",function(req,res){
   console.log("Ajax Route: deleteTask");
   console.log("ID:" + req.body.data);
-});
+});*/
 
 //Aktualisieren des Status eines Tasks###########################
 router.post("/updateStatus/:id",function(req,res){

@@ -6,7 +6,7 @@
  <% }else{ %>
  <ul id="taskList">
   <% for (var i = 0; i < tasks.length;i++){ %>
-   <li>
+   <li id="<%= tasks[i]._id %>">
     <% if (tasks[i].status==0){ %>
     <% console.log("open"); %>
      <input type='checkbox' class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
@@ -16,7 +16,7 @@
     <% } %>
     
     <span id="spTask<%= i %>"><%= tasks[i].task %></span>
-    <button type="button" class="btn btnEditTask" data-id="<%= tasks[i]._id %>" onclick="deleteTask(this.getAttribute('data-id'))">
+    <button type="button" class="btn btnEditTask" data-id="<%= tasks[i]._id %>" onclick=deleteTask(this.getAttribute('data-id'))>
      <i class='fa fa-trash editTask'></i>
     </button> 
     <button type="button" class="btn btnEditTask"
