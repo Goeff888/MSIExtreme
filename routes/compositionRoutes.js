@@ -34,24 +34,6 @@ router.use(express.static("public"));
  return navigation;
 }*/
 
-
-//Datei oder Template hochladen und Datenbakeintrag anlegen mit rendern der Show Seite//content =Dateiordne
-/*function copyFileAndRender(file,entries,content){ 
- dBComposition.create(entries, function(err1, newEntry){
-  if(err1){
-    res.render("error", {error: err});
-  }else{
-    //Hier neue Ordner anlegen für Projekt mit history und Template
-    sampleFile.mv('./public/images/compositions/' + content + sampleFile.name, function(err2) {
-     if(err2){
-      return res.status(500).send(err);
-     }else{
-       res.redirect("/composition");
-     }
-    });    
-  }});
-}*/
-
 //Neuen Projektordner anlegen und Status zurückgeben
 function createNewProjectFolder(dir){
  //var dir = './public/images/corel/'+ newEntry[0]._id;
@@ -79,19 +61,6 @@ function copyFile(sampleFile,folder){
   return sampleFile.name;
 }
 
-/*sampleFile.mv('./public/images/compositions/' + sampleFile.name, function(err) {
-    if (err)
-      return res.status(500).send(err);
-    dBComposition.create(composition, function(err, newEntry){
-     if(err){
-      res.render("error", {error: err});
-     }else{
-      //console.log(newEntry);
-      res.redirect("/composition");
-     }
-    });
-   });
-}
 //Alle Daten der Partials ermitteln
 /*function getPartialData(){
    promise.props({
@@ -113,7 +82,7 @@ function copyFile(sampleFile,folder){
 //Zum Partial gehörigen tasks ermittleln oder neue Datenbank anlegen
 //Anschließend rendern der Seite
 function getTasks(results,res,site){
- console.log("Länge des übergebenen Parameters:"+results.todo._id);
+ //console.log("Länge des übergebenen Parameters:"+results.todo._id);
  if (results.todo != null){
   dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
       if(err){
@@ -125,7 +94,8 @@ function getTasks(results,res,site){
                   todo:results.todo,
                   tasks:tasksResults,
                   links:results.links,
-                  magazine:results.magazine});
+                  magazine:results.magazine,
+                  comments:results.comments});
       }
   }); 
  }else{
@@ -143,7 +113,8 @@ function getTasks(results,res,site){
                  tasks:{},
                  todo:newEntry,
                  links:results.links,
-                 magazine:results.magazine});
+                 magazine:results.magazine,
+                 comments:results.comments});
      }
     });
    }
@@ -206,44 +177,37 @@ router.post("/composition/new",function(req,res){
      console.log("Bilddatei ausgewählt!:"+req.files.renderedImage.name);
      sampleFile = req.files.renderedImage; 
      composition = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
-     copyFileAndRender(sampleFile,composition,0);
+     dBComposition.create(composition, function(err, newEntry){
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag nur mit Bildergebnis erzeugt:"+ newEntry);
+       createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       copyFile(sampleFile,newEntry[0]._id);
+       res.redirect("/composition/" + newEntry[0]._id);
+      }
+    });
      
     }else if(req.files.templateImage){
      console.log("Template ausgewählt!:");
      sampleFile = req.files.templateImage;
      composition = [{name:req.body.name, image:req.files.templateImage.name,description:req.body.description,created:Date(),updated:Date()}];
      dBComposition.create(composition, function(err, newEntry){
-     if(err){
-      console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
-     }else{
-      console.log("Neuer Eintrag nur mit Template erzeugt:"+ newEntry);
-      createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
-      //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
-      copyFile(sampleFile,newEntry[0]._id+"/templates/");
-      res.redirect("/composition/show/" + newEntry._id);
-     }
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag nur mit Template erzeugt:"+ newEntry);
+       createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       copyFile(sampleFile,newEntry[0]._id+"/templates/");
+       res.redirect("/composition/" + newEntry[0]._id);
+      }
     });
     }else{
      console.log("Datei vorhanden zum Hochladen, aber kein Datenbankwert");
     }
    }
-   
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    //console.log("hochgeladene Datei:"+req.files.renderedImage.name);
-    //console.log("hochgeladenes Template:"+req.files.templateImage.name);
-    //let sampleFile = req.files.renderedImage;
-    /*sampleFile.mv('./public/images/compositions/' + sampleFile.name, function(err) {
-    if (err)
-      return res.status(500).send(err);
-    dBComposition.create(composition, function(err, newEntry){
-     if(err){
-      res.render("error", {error: err});
-     }else{
-      //console.log(newEntry);
-      res.redirect("/composition");
-     }
-    });
-   });*/
  });
 
 
@@ -291,9 +255,12 @@ router.get("/composition/:id/edit", function(req, res){
     tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
     magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
+    comments:    dBComments.find({compositionID:req.params.id}).execAsync()
   })
   .then(function(results) {
    console.log("results:" + results.composition._id);
+   getTasks(results,res,"compositions/edit");
+   /*
    dBComments.find({compositionID:req.params.id}, function(err, comments){
       if(err){
        res.render("error", {error: err});
@@ -307,7 +274,7 @@ router.get("/composition/:id/edit", function(req, res){
         todo:results.todo,
         tutorials:results.tutorials });
       }
-    });
+    });*/
   })
   .catch(function(err) {
    console.log(err);

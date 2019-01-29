@@ -4,3 +4,6 @@ public/images/*
 *.jpg
 package-lock.json
 package.json
+*.json
+package-lock.json
+package.json

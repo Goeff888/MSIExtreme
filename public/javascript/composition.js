@@ -63,6 +63,7 @@ function handleDrop(e){
   //e.target.appendChild("HAllo");
   //this.innerHTML = e.dataTransfer.getData('text');
   this.style.background="white";
+  this.innerHTML = e.dataTransfer.getData('text/html');
   //this.style.background-image=e.dataTransfer.getData('text');
    var file = e.dataTransfer.items[0].getAsFile();
   //console.log("File:" + e.dataTransfer.files[0].path);
