@@ -1,10 +1,10 @@
 <h2>Vorlagen</h2>
 <div class="gallery">
- <% for (var i = 0;   i < corel.templates.length; i++){ %>
-  <img src="/images/composition/<%= corel._id %>/templates/<%= corel.templates[i].image %>" class="galleryThumb">
+ <% for (var i = 0;   i < composition.templates.length; i++){ %>
+  <img src="/images/compositions/<%= composition._id %>/templates/<%= composition.templates[i].image %>" class="galleryThumb">
   <% if (i >= 4){ %>
    <a href="">...</a>
-  <% i = corel.templates.length;
+  <% i = composition.templates.length;
    } %>
  <% } %>
  
@@ -23,7 +23,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="/corel/<%= corel._id %>/edit?_method=PUT" encType="multipart/form-data">
+      <form method="post" action="/composition/<%= composition._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
         <textarea rows="4" cols="50" name="templateDescription"></textarea>

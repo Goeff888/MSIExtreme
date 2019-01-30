@@ -1,7 +1,7 @@
 <h2>Neue Bildversion</h2>
 <div class="gallery">
  <% for (var i = 0;   i < composition.history.length; i++){ %>
-  <img src="/images/composition/<%= composition._id %>/history/<%= composition.history[i].image %>" class="galleryThumb">
+  <img src="/images/compositions/<%= composition._id %>/history/<%= composition.history[i].image %>" class="galleryThumb">
   <% if (i >= 4){ %>
    <a href="">...</a>
   <% i = composition.history.length;
@@ -23,12 +23,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="/corel/<%= corel._id %>/edit?_method=PUT" encType="multipart/form-data">
+      <form method="post" action="/composition/<%= composition._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
         <textarea rows="4" cols="50" name="newDescription"></textarea>
         <input type="file" name="newFile" accept="image/*">
-        <input type="text" name="srcFile" value ="<%= corel.image %>" style="display: none;">
+        <input type="text" name="srcFile" value ="<%= composition.image %>" style="display: none;">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

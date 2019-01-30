@@ -184,7 +184,7 @@ router.post("/composition/new",function(req,res){
        console.log("Neuer Eintrag nur mit Bildergebnis erzeugt:"+ newEntry);
        createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
        //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
-       copyFile(sampleFile,newEntry[0]._id);
+       copyFile(sampleFile,newEntry[0]._id+"/");
        res.redirect("/composition/" + newEntry[0]._id);
       }
     });
@@ -286,7 +286,56 @@ router.get("/composition/:id/edit", function(req, res){
 
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
+//UPDATE ROUTES###########################
+//Bearbeiten eines Bildeintrags
 router.put("/composition/:id/edit", function(req, res){
+ console.log("Update Route Composition:" + req.params.id);
+ var data =  {};
+//Prüfen, welcher Array Eintrag (History/Template aktualisiert werden soll)
+ if ( req.files.templateFile){//Template wird nicht korrekt überprüft
+  console.log("template Datei ausgewählt:" +req.files.templateFile.name );
+  fileName= copyFile (req.files.templateFile,"/"+req.params.id+"/templates");//neue Datei ins entsprechende Verzeichnis kopieren
+  data =  {description:req.body.templateDescription,  image:fileName};//Array Eintrag festlegen und Eintrag aktualisieren
+  console.log("description:" +data.description + "image:" +data.image);
+  dBComposition.findOneAndUpdate({_id: req.params.id},{$push:{templates: data}}, function(err, updatedPost){
+    if(err){
+       console.log("Something wrong when updating data!");
+    }
+      console.log("updatedPost Template:"+updatedPost);
+  });  
+ }else if(req.files.newFile.name.length  > 0){
+  //alte Datei verschieben
+  fs.copyFile("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile, "public/images/compositions/"+req.params.id+"/history/"+req.body.srcFile, (err) => {
+  if (err) throw err;
+  //console.log('source.txt was copied to destination.txt');
+  });
+  fs.unlinkSync("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile,function(err){
+        if(err) return console.log(err);
+        console.log('file deleted successfully');
+   });  
+  fileName= copyFile (req.files.newFile,"/"+req.params.id);
+  
+  data =  {description:req.body.newDescription,  image:req.body.srcFile};
+  dBComposition.findOneAndUpdate({_id: req.params.id},{$push:{history: data}}, function(err, updatedPost){
+    if(err){
+      console.log("Something wrong when updating data!");
+    }
+      //console.log("updatedPost:"+updatedPost);
+  });
+  
+  dBComposition.findOneAndUpdate({_id: req.params.id},{$set:{image: req.files.newFile.name}}, function(err, updatedPost){
+    if(err){
+      console.log("Something wrong when updating data!");
+    }
+      //console.log("updatedPost:"+updatedPost);
+  });
+   
+ }else{
+  return res.status(400).send('No files selected');
+ }
+ res.redirect("/composition/"+ req.params.id +"/edit");
+});
+/*router.put("/composition/:id/edit", function(req, res){
  console.log("Update Route Composition:" + req.params.id);
  //Überpüfen, ob Bildbeschreibung oder History geändert wird fehlt noch
   if (!req.files)
@@ -307,7 +356,7 @@ router.put("/composition/:id/edit", function(req, res){
      res.redirect("/composition/"+ req.params.id +"/edit");
    });  
 });
-/*
+*/
 //DESTROY ROUTES###########################
 //Löschen von Bildern auf Blender-Seite
 router.delete("/composition/:id", function(req, res){
@@ -326,5 +375,5 @@ router.delete("/composition/:id", function(req, res){
   });
  //res.render ("compositions/index");
 });
-*/
+
 module.exports = router;
