@@ -19,6 +19,7 @@ var pythonRoutes = require ("./routes/pythonRoutes");
 var todoRoutes = require("./routes/todoRoutes");
 var taskRoutes = require("./routes/taskRoutes");
 var todoAjaxRoutes = require("./routes/todoAjaxRoutes");
+//var dbHandler = require("./dbHandler");
 //////MONGO-DATABASE-SCHEMES////////
 
 var app = express();
@@ -50,9 +51,10 @@ app.use(pythonRoutes);
 app.use(todoRoutes);
 app.use(taskRoutes);
 app.use(todoAjaxRoutes);
+
 //LANDING PAGE
 app.get("/", function(req, res){
- res.render ("index");
+ res.render ("index2");
 });
 //Anzeige der Fehlerseite
 app.get("/error", function(req, res){
@@ -64,6 +66,3 @@ app.get("/error", function(req, res){
 app.listen(8888,"127.0.0.1", function(){
         console.log( "Yoga-Server ist gestartet");
 });
-
-
-

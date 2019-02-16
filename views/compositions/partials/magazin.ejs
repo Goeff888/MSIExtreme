@@ -5,9 +5,9 @@
    <li><a href="/images/books/<%= magazine[i].fileName%>" target="_blank"><%= magazine[i].name %></a></li>
   <% } %>
  </ul>
+<button type="button" class="btn btn-secondary add" data-toggle="modal" data-target="#magazineModal"><i class="fa fa-plus faPartial"></i></button>
 </div>
-<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#magazineModal">
- <i class="fa fa-plus faPartial"></i>Neues Buch hinzufügen</button>
+
 
 <!-- Modal zum hinzufügen eines neuen History-Eintrags-->
 <div class="modal fade" id="magazineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -11,22 +11,26 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/composition.css">
 </head>
 <body>
-<% include ../partials/navBarTop %>
+
+<% include ../partials/navbarTop %>
+
+  
+
   <div class="row">
     <div class="col-md-2">
       <% include partials/magazin %>
       <hr>
-      <% include partials/todos %>
+      <% include partials/todos  %>
     </div>
     
     <div class="col-md-8">
       <div class="container">
-        <h1> Neues Blender File</h1>
+        <h1> Neues Projekt</h1>
           <form action="/composition/new" method="post" encType="multipart/form-data" id="newForm">
             <div class="row">
               <div class="col formFields">
                 <p>
-                  <input type="text" name="name" placeholder="Name">                
+                  <input type="text" name="name" placeholder="Name" id="name">                
                 </p>
                 <p>
                   <textarea name="description" placeholder="Beschreibung" rows="3" cols="60"></textarea>  

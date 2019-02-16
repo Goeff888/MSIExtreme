@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blender Gallerie</title>
+    <title>3D Visualisierungen</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -24,34 +24,12 @@
     
     <div class="col-md-8">
       <div class="container">
-        <header class="jumbotron">
-          <div class="container">
-            <h1> Blender Gallerie</h1>
-            <p>Meine persönliche Digital Art Gallery</p>
-            <a href="/composition/new" class="btn btn-large" >Neues Bild hinzufügen</a>
-          </div>  
-        </header>
-        <div class="row text-center">
-          <% composition.forEach(function(entry){ %>
-             <div class="col-md-3 col-sm-6">
-                <img src="/images/compositions/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
-                <div class="caption">
-                  <%= entry.name %>
-                </div>
-                <p><a href="/composition/<%= entry._id %>" class="btn btn-primary" >Details</a></p>
-            </div>
-           <% }); %>
-            <div class="col-md-3 col-sm-6">
-              <div id="dropzone">
-                <a href="/composition/new">
-                <img src="images/winkenderPanda.jpg" class="img-thumbnail">
-                <div class="caption">
-                  Neues Bild hinzufügen</a>
-                </div>
-              </div>
-            </div>
-        </div> 
+       <div class "container toolbar">
         
+       </div>
+       <div class="content">
+        
+       </div>
       </div>
     </div>
     
