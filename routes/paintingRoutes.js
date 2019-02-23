@@ -7,13 +7,14 @@ var path = require('path');
 var fileUpload = require('express-fileupload');
 //var formidable = require('formidable');
 var fs = require('fs');
-var dBCorel = require("../models/corel");
-var dBLinks = require("../models/links");
+var dBPainting = require("../models/painting");
 var dBComments = require("../models/comments");
-var dBTodo = require("../models/todo");
 var dBTasks = require("../models/tasks");
-var dbCategories = require("../models/categories");
+var dBTodo = require("../models/todo");
+var dbBooks = require("../models/books");
+var dBLinks = require("../models/links");
 var mongoose = require("mongoose");
+var dbHandler = require ("./dbHandler");
 router.use(fileUpload());
 router.use(express.static(path.join(__dirname, 'public')));
 router.use(express.static("public"));
@@ -21,7 +22,7 @@ router.use(express.static("public"));
 
 function copyFile(sampleFile,folder){ 
   console.log("copyFile:" + sampleFile.name);
-  sampleFile.mv('public/images/corel/'+ folder +'/' + sampleFile.name, function(err) {
+  sampleFile.mv('public/images/painting/'+ folder +'/' + sampleFile.name, function(err) {
     if (err) return console.log(err);
     
    });
@@ -30,15 +31,18 @@ function copyFile(sampleFile,folder){
 
 //INDEX ROUTES###########################
 //Anzeige aller Aufgaben
-router.get("/corel", function(req, res){
+router.get("/painting", function(req, res){
    promise.props({
-     composition: dBCorel.find().execAsync(),
-     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     tutorials:   dBLinks.find().execAsync()
+    painting:    dBPainting.find().execAsync(),
+    links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    todo:        dBTodo.findOne({'result': req.params.id }).execAsync(),//req.body.taskId
+    magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
+    comments:    dBComments.find({compositionID:req.params.id}).execAsync()
    })
    .then(function(results) {
-    console.log(results.links);
-     res.render("corel/index", results);
+    dbHandler.getTasks(results,res,"painting/index");
+     //res.render("painting/index", results);
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -48,16 +52,19 @@ router.get("/corel", function(req, res){
 //NEW ROUTES###########################
 
 //Anzeige der Blender-Seite zum Hinzufügen von Bildern
-router.get("/corel/new", function(req, res){
- console.log("Route: corel new");
+router.get("/painting/new", function(req, res){
+ console.log("Route: painting new");
  //Inhalte laden: Kategorien ,Tutorials
    promise.props({
-     categories:  dbCategories.find().execAsync(),
-     tutorials:   dBLinks.find().execAsync(),
+     painting:    dBPainting.find().execAsync(),
+     links:       dBLinks.find({ 'content': 'Painting' }).execAsync(),
+     tutorials:   dBLinks.find({ 'content': 'Painting' }).execAsync(),
+     todo:        dBTodo.findOne({'project': 'Painting' }).execAsync(),//req.body.taskId
+     magazine:    dbBooks.find({ 'content': 'Painting' }).execAsync(),
    })
    .then(function(results) {
     //console.log(results);
-     res.render("corel/new", results);
+     res.render("painting/new", results);
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -68,12 +75,12 @@ router.get("/corel/new", function(req, res){
 
 //CREATE ROUTES###########################
 //Hinzufügen eines neuen Bildes
-router.post("/corel/new",function(req,res){
-    console.log("Create Route corel für " + req.body.name); 
-    var corel = [];
+router.post("/painting/new",function(req,res){
+    console.log("Create Route painting für " + req.body.name); 
+    var painting = [];
     // Datei hochladen
     if (typeof req.files.cgArt == "undefined" ){
-         corel = [{
+         painting = [{
          name:req.body.name,
          //image:req.files.cgArt.name,
          description:req.body.description,
@@ -81,7 +88,7 @@ router.post("/corel/new",function(req,res){
          updated:Date()
                 }];
     }else{
-         corel = [{
+         painting = [{
          name:req.body.name,
          image:req.files.cgArt.name,
          description:req.body.description,
@@ -89,12 +96,12 @@ router.post("/corel/new",function(req,res){
          updated:Date()
                 }];
     }
-  dBCorel.create(corel, function(err, newEntry){
+  dBPainting.create(painting, function(err, newEntry){
      if(err){
       res.render("error", {error: err});
      }else{
       //console.log("ID:"+newEntry[0]._id);
-      var dir = './public/images/corel/'+ newEntry[0]._id;
+      var dir = './public/images/painting/'+ newEntry[0]._id;
       if (!fs.existsSync(dir)){
           fs.mkdirSync(dir);        
           fs.mkdirSync(dir + "/templates");
@@ -107,18 +114,18 @@ router.post("/corel/new",function(req,res){
             console.log("Verzeichnis muss wieder gelöscht werden");
            }
       }
-      res.redirect("/corel");
+      res.redirect("/painting");
      }
     });
  });
 
 //SHOW ROUTES###########################
 //Anzeige eines Eintrags
-router.get("/corel/:id", function(req, res){
-  console.log("Route:  corel Show von " + req.params.id);
+router.get("/painting/:id", function(req, res){
+  console.log("Route:  painting Show von " + req.params.id);
   promise.props({
    links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-   corel:       dBCorel.findById(req.params.id).execAsync(),
+   painting:       dBPainting.findById(req.params.id).execAsync(),
  })
  .then(function(results) {
   console.log("results:" + results.links);
@@ -126,7 +133,7 @@ router.get("/corel/:id", function(req, res){
      if(err){
       res.render("error");
      }else{
-      res.render("corel/show",{corel: results.corel, comments: comments,links:results.links,tutorials:results.tutorials });
+      res.render("painting/show",{painting: results.painting, comments: comments,links:results.links,tutorials:results.tutorials });
      }
    });     
   })
@@ -136,13 +143,13 @@ router.get("/corel/:id", function(req, res){
   });  
  });
 //EDIT ROUTES###########################
-//Seite zum Bearbeiten von Bildern auf corel-Seite
-router.get("/corel/:id/edit", function(req, res){
+//Seite zum Bearbeiten von Bildern auf painting-Seite
+router.get("/painting/:id/edit", function(req, res){
   console.log("Corel Edit Route für "+ req.params.id );
-  //console.log("ID für Todos "+ req.body.corelTodoId );
+  //console.log("ID für Todos "+ req.body.paintingTodoId );
   promise.props({
    todo:        dBTodo.findOne({ 'result': req.params.id }).execAsync(),
-   corel:       dBCorel.findById(req.params.id).execAsync()
+   painting:       dBPainting.findById(req.params.id).execAsync()
  })
  .then(function(results) {
   console.log("results todo:" + results.todo);
@@ -160,7 +167,7 @@ router.get("/corel/:id/edit", function(req, res){
    })
    .then(function(results_ID) {
      console.log("results tasks:" + results_ID.tasks);
-     res.render("corel/edit",{corel: results.corel, todo:results.todo, tasks: results_ID.tasks }); 
+     res.render("painting/edit",{painting: results.painting, todo:results.todo, tasks: results_ID.tasks }); 
     })
     .catch(function(err) {
       console.log(err);
@@ -175,7 +182,7 @@ router.get("/corel/:id/edit", function(req, res){
 
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
-router.put("/corel/:id/edit", function(req, res){
+router.put("/painting/:id/edit", function(req, res){
  console.log("Update Route Corel:" + req.params.id);
  var data =  {};
 //Prüfen, welcher Array Eintrag (History/Template aktualisiert werden soll)
@@ -185,7 +192,7 @@ router.put("/corel/:id/edit", function(req, res){
   
   data =  {description:req.body.templateDescription,  image:fileName};//Array Eintrag festlegen und Eintrag aktualisieren
   console.log("description:" +data.description + "image:" +data.image);
-  dBCorel.findOneAndUpdate({_id: req.params.id},{$push:{templates: data}}, function(err, updatedPost){
+  dBPainting.findOneAndUpdate({_id: req.params.id},{$push:{templates: data}}, function(err, updatedPost){
     if(err){
        console.log("Something wrong when updating data!");
     }
@@ -193,25 +200,25 @@ router.put("/corel/:id/edit", function(req, res){
   });  
  }else if(req.files.newFile.name.length  > 0){
   //alte Datei verschieben
-  fs.copyFile("public/images/corel/"+req.params.id+"/"+ req.body.srcFile, "public/images/corel/"+req.params.id+"/history/"+req.body.srcFile, (err) => {
+  fs.copyFile("public/images/painting/"+req.params.id+"/"+ req.body.srcFile, "public/images/painting/"+req.params.id+"/history/"+req.body.srcFile, (err) => {
   if (err) throw err;
   //console.log('source.txt was copied to destination.txt');
   });
-  fs.unlinkSync("public/images/corel/"+req.params.id+"/"+ req.body.srcFile,function(err){
+  fs.unlinkSync("public/images/painting/"+req.params.id+"/"+ req.body.srcFile,function(err){
         if(err) return console.log(err);
         console.log('file deleted successfully');
    });  
   fileName= copyFile (req.files.newFile,"/"+req.params.id);
   
   data =  {description:req.body.newDescription,  image:req.body.srcFile};
-  dBCorel.findOneAndUpdate({_id: req.params.id},{$push:{history: data}}, function(err, updatedPost){
+  dBPainting.findOneAndUpdate({_id: req.params.id},{$push:{history: data}}, function(err, updatedPost){
     if(err){
       console.log("Something wrong when updating data!");
     }
       //console.log("updatedPost:"+updatedPost);
   });
   
-  dBCorel.findOneAndUpdate({_id: req.params.id},{$set:{image: req.files.newFile.name}}, function(err, updatedPost){
+  dBPainting.findOneAndUpdate({_id: req.params.id},{$set:{image: req.files.newFile.name}}, function(err, updatedPost){
     if(err){
       console.log("Something wrong when updating data!");
     }
@@ -221,13 +228,13 @@ router.put("/corel/:id/edit", function(req, res){
  }else{
   return res.status(400).send('No files selected');
  }
- res.redirect("/corel/"+ req.params.id +"/edit");
+ res.redirect("/painting/"+ req.params.id +"/edit");
 });
 
 //DESTROY ROUTES###########################
 //Löschen von Bildern auf Crel-Seite
-router.delete("/corel/:id", function(req, res){
-  console.log("Delete Route corel");
+router.delete("/painting/:id", function(req, res){
+  console.log("Delete Route painting");
   dBComments.deleteMany({ compositionID: req.params.id }, function (err) {
   if (err) return handleError(err);
   console.log("Comments entfernt");
@@ -238,7 +245,7 @@ router.delete("/corel/:id", function(req, res){
      }else{
       
       console.log("Eintrag entfernt:" + req.params.id);
-      res.redirect("/corel");
+      res.redirect("/painting");
      }
   });*/
 });

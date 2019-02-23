@@ -3,45 +3,45 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CG ART - Digitale Kunst mit Gallerie, Tutorials und Tipps</title>
+    <title>Digitales Malen und klassisches Zeichnen</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/corel.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/painting.css">
 </head>
 <body>
 <% include ../partials/navbarTop %>
 
   <div class="row">
     <div class="col-md-2">
-      <% include partials/magazin %>
+      <% include ../partials/magazin %>
       <hr>
-      <% include partials/CMSPosts %>
+      <% include ../partials/blogNew %>
     </div>
     
     <div class="col-md-8">
       <div class="container">
         <header class="jumbotron">
           <div class="container">
-            <h1> Corel Gallerie</h1>
+            <h1> Gallerie</h1>
             <p>Meine persönliche Digital Art Gallery</p>
-            <a href="/corel/new" class="btn btn-large" >Neues Bild hinzufügen</a>
+            <a href="/dBPainting/new" class="btn btn-large" >Neues Bild hinzufügen</a>
           </div>  
         </header>
         <div class="row text-center">
-          <% composition.forEach(function(entry){ %>
+          <% painting.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
-                <img src="/images/corel/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
+                <img src="/images/painting/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
                 <div class="caption">
                   <%= entry.name %>
                 </div>
-                <p><a href="/corel/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
+                <p><a href="/painting/<%=entry._id %>" class="btn btn-primary" >Details</a></p>
             </div>
            <% }); %>
             <div class="col-md-3 col-sm-6">
               <div id="dropzone">
-                <a href="/corel/new">
+                <a href="/painting/new">
                 <img src="images/winkenderPanda.jpg" class="img-thumbnail">
                 <div class="caption">
                   Neues Bild hinzufügen</a>
@@ -54,9 +54,9 @@
     </div>
     
     <div class="col-md-2">
-      <% include partials/links %>
+      <% include ../partials/links %>
       <hr>
-      <% include partials/tutorials %>
+      <% include ../partials/todos %>
     </div>
   </div>
 
@@ -64,7 +64,7 @@
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/corel.js"></script>
+<script src="/javascript/painting.js"></script>
 <script src="/javascript/links.js"></script>
 
 <script src="/javascript/bootstrap.js"></script>

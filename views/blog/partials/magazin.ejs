@@ -1,0 +1,42 @@
+<h2>Bücher(pdfs)</h2>
+<div class="gallery">
+ <ul>
+  <% for(var i=0; i < magazine.length;i++){ %>
+   <li><a href="/images/books/<%= magazine[i].fileName%>" target="_blank"><%= magazine[i].name %></a></li>
+  <% } %>
+ </ul>
+<button type="button" class="btn btn-secondary add" data-toggle="modal" data-target="#magazineModal"><i class="fa fa-plus faPartial"></i></button>
+</div>
+
+
+<!-- Modal zum hinzufügen eines neuen History-Eintrags-->
+<div class="modal fade" id="magazineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neues Buch</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/book/new" method="post" encType="multipart/form-data">
+       <div class="modal-body">
+        <input type="text" name="bookContent" value="blender" style="display:none">
+        <input type="text" name="navigation" value="test" id="bookNavigation" style="display:none">
+        <div>Name:
+         <input type="text" name="bookName" placeholder="Neues Buch">
+        </div>
+        <input type="file" name="bookFile" accept=".pdf">
+        <div>
+         Beschreibung:
+        </div>
+         <textarea rows="4" cols="50" name="description"></textarea>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="submit" class="btn btn-primary" id="saveBook">Save changes</button>
+       </div>
+      </form>
+    </div>
+  </div>
+</div>

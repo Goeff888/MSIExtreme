@@ -93,9 +93,6 @@ hr {
   width: 50%;
 }
 
-.category{
- width:90%;
-}
 .date{
   float: right;
   font-size: 0.5em;
@@ -196,10 +193,24 @@ img {
 .jumbotron{
   background-color: black;
   background-image: url("/images/blender_logo.png");
-  background-size: cover;
   background-repeat:no-repeat;
   background-position: center;
 }
 
 
 
+
+.workSpace{
+    border: 1px solid black;
+    height: 100%;
+}
+
+.toolbar{
+    border: 1px dashed white;
+    height: 20%;
+}
+
+.content{
+    border: 2px dotted;
+    height: 80%;
+}

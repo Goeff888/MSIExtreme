@@ -1,17 +1,16 @@
 var express = require ("express");
 var router = express.Router();
-var http = require('http');
+//var http = require('http');
 var promise = require('bluebird');
 var path = require('path');
 //const fileUpload = require('express-fileupload');
 //var formidable = require('formidable');
 var fs = require('fs');
 var dBComposition = require("../models/composition");
-var dBTutorials = require("../models/links");
 var dBComments = require("../models/comments");
-var dbTasks = require("../models/tasks");
-var dbBooks = require("../models/books");
+//var dbTasks = require("../models/tasks");
 var dbTodo = require("../models/todo");
+var dbBooks = require("../models/books");
 var dBLinks = require("../models/links");
 var mongoose = require("mongoose");
 var dbHandler = require ("./dbHandler");
@@ -24,7 +23,6 @@ router.use(express.static("public"));
 
 //Neuen Projektordner anlegen und Status zurückgeben
 function createNewProjectFolder(dir){
- //var dir = './public/images/corel/'+ newEntry[0]._id;
  if (!fs.existsSync(dir)){
   fs.mkdirSync(dir);        
   fs.mkdirSync(dir + "/templates");
@@ -49,79 +47,6 @@ function copyFile(sampleFile,folder){
   return sampleFile.name;
 }
 
-//Alle Daten der Partials ermitteln
-/*function getPartialData(){
-   promise.props({
-     composition: dBComposition.find().execAsync(),
-     links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
-     magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
-   })
-   .then(function(results) {
-    return (results);
-    //console.log("Anzahl der Tasks vor Rendern:"+ data);
-   })
-   .catch(function(err) {
-     res.send(500); // oops - we're even handling errors!
-     console.log(err);
-   });
-}*/
-//Zum Partial gehörigen tasks ermittleln oder neue Datenbank anlegen
-//Anschließend rendern der Seite
-function getTasks(results,res,site){
- //console.log("Länge des übergebenen Parameters:"+results.todo._id);
- if (results.todo != null){
-  dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
-      if(err){
-       return err;
-      }else{
-       console.log("Anzahl der ermittelten Tasks:"+ tasksResults.length);
-       res.render(site,{
-                  composition:results.composition,
-                  todo:results.todo,
-                  tasks:tasksResults,
-                  links:results.links,
-                  magazine:results.magazine,
-                  comments:results.comments});
-      }
-  }); 
- }else{
-   var newTodo=[];
-   console.log(site);
-   if((site === "compositions/index") || (site == "compositions/new")){   
-    newTodo = {
-       project:"Composition General Todos",
-       description:"Verbesserungen an der Homepage",
-     };
-   }
-    else if(site === "compositions/show" || site == "compositions/edit"){
-     newTodo = {
-       project:"Projektdatenbank",
-       description:"Inhalte: Aufgaben zum Projekt",
-       result: results.composition._id };     
-    }else{
-    newTodo = {
-       project:"Fehler",
-       description:"Diese Datenbank sollte nicht erstellt werden",
-     };     
-    }
-    dbTodo.create(newTodo, function(err, newEntry){
-     if(err){
-      return err;
-     }else{
-      console.log("Neuer Eintrag erzeugt:"+newEntry);
-      res.render(site,{
-                 composition:results.composition,
-                 tasks:{},
-                 todo:newEntry,
-                 links:results.links,
-                 magazine:results.magazine,
-                 comments:results.comments});
-     }
-    });
-   }
-}
 
 //INDEX ROUTES###########################
 router.get("/composition", function(req, res){
@@ -130,11 +55,11 @@ router.get("/composition", function(req, res){
      composition: dBComposition.find().execAsync(),
      links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
      tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     todo:        dbTodo.findOne({'project': '3D Visualisierung' }).execAsync(),
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-    getTasks(results,res,"compositions/index");
+    dbHandler.getTasks(results,res,"compositions/index");
     //console.log("Anzahl der Tasks vor Rendern:"+ data);
    })
    .catch(function(err) {
@@ -152,12 +77,12 @@ router.get("/composition/new", function(req, res){
      composition: dBComposition.find().execAsync(),
      links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
      tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     todo:        dbTodo.findOne({'project': '3D Visualisierung' }).execAsync(),//req.body.taskId
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
    //console.log("Results.id:"+results.todo._id);
-    getTasks(results,res,"compositions/new");
+    dbHandler.getTasks(results,res,"compositions/new");
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -213,7 +138,6 @@ router.post("/composition/new",function(req,res){
    }
  });
 
-
 //SHOW ROUTES###########################
 //Anzeige eines Composition-Eintrags
 router.get("/composition/:id", function(req, res){
@@ -229,7 +153,7 @@ router.get("/composition/:id", function(req, res){
   })
  .then(function(results) {
   console.log(results.todo);
-   getTasks(results,res,"compositions/show");
+   dbHandler.getTasks(results,res,"compositions/show");
  })
  .catch(function(err) {
    res.sendStatus(err); // oops - we're even handling errors!
@@ -250,22 +174,7 @@ router.get("/composition/:id/edit", function(req, res){
   })
   .then(function(results) {
    console.log("results:" + results.composition._id);
-   getTasks(results,res,"compositions/edit");
-   /*
-   dBComments.find({compositionID:req.params.id}, function(err, comments){
-      if(err){
-       res.render("error", {error: err});
-      }else{
-       console.log("comments:"+comments);
-       res.render("compositions/edit",{
-        comments:comments,
-        magazine:"Buch1",
-        composition: results.composition,
-        links:results.links,
-        todo:results.todo,
-        tutorials:results.tutorials });
-      }
-    });*/
+   dbHandler.getTasks(results,res,"compositions/edit");
   })
   .catch(function(err) {
    console.log(err);
@@ -275,8 +184,6 @@ router.get("/composition/:id/edit", function(req, res){
   //});
 });
 
-//UPDATE ROUTES###########################
-//Bearbeiten eines Bildeintrags
 //UPDATE ROUTES###########################
 //Bearbeiten eines Bildeintrags
 router.put("/composition/:id/edit", function(req, res){
@@ -353,21 +260,16 @@ router.get("/compositionBlogNew/", function(req, res){
      composition: dBComposition.find().execAsync(),
      links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
      tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-     todo:        dbTodo.findOne({'project': 'Blender (General) Todos' }).execAsync(),//req.body.taskId
+     todo:        dbTodo.findOne({'project': '3D Visualisierungs Blog' }).execAsync(),//req.body.taskId
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-    //dbHandler.seedDB();
-    getTasks(results,res,"compositions/blog");
-    //getTasks(results,res,"compositions/blog/");
-    //console.log("Anzahl der Tasks vor Rendern:"+ data);
+     dbHandler.getTasks2(results,res,"compositions/blog");
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
      console.log(err);
    });
-
-  
 });
 
 module.exports = router;

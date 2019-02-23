@@ -10,8 +10,8 @@ var cmsAjaxRoutes = require ("./routes/cmsAjaxRoutes");
 var cmsUnitRoutes = require("./routes/cmsUnitRoutes");//?
 var cmsPostRoutes = require("./routes/cmsPostsRoutes");//?
 var compositionRoutes = require ("./routes/compositionRoutes");
-var corelRoutes = require ("./routes/corelRoutes");
-var corelAjaxRoutes = require ("./routes/corelAjaxRoutes");
+var paintingRoutes = require ("./routes/paintingRoutes");
+var paintingAjaxRoutes = require ("./routes/paintingAjaxRoutes");
 var linkRoutes = require ("./routes/linkRoutes");
 var commentRoutes = require ("./routes/commentRoutes");
 var mediaRoutes = require ("./routes/mediaRoutes");
@@ -19,6 +19,8 @@ var pythonRoutes = require ("./routes/pythonRoutes");
 var todoRoutes = require("./routes/todoRoutes");
 var taskRoutes = require("./routes/taskRoutes");
 var todoAjaxRoutes = require("./routes/todoAjaxRoutes");
+var blogRoutes = require("./routes/blogRoutes");
+var blogAjax = require("./routes/blogAjax");
 //var dbHandler = require("./dbHandler");
 //////MONGO-DATABASE-SCHEMES////////
 
@@ -44,14 +46,15 @@ app.use(compositionRoutes);
 app.use(commentRoutes);
 app.use(linkRoutes);
 app.use(mediaRoutes);
-app.use(corelRoutes);
-app.use(corelAjaxRoutes);
+app.use(paintingRoutes);
+app.use(paintingAjaxRoutes);
 app.use(cmsAjaxRoutes);
 app.use(pythonRoutes);
 app.use(todoRoutes);
 app.use(taskRoutes);
 app.use(todoAjaxRoutes);
-
+app.use(blogRoutes);
+app.use(blogAjax);
 //LANDING PAGE
 app.get("/", function(req, res){
  res.render ("index2");

@@ -13,8 +13,8 @@
     <form method="post" action="/blog" encType="multipart/form-data">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          <input type="text" name="name" placeholder="Blogtitel">
-          <input class="d-none" type="text" name="area" placeholder="3D-Visualisierung">
+          <input type="text" name="newBlog[name]" placeholder="Blogtitel">
+          <input class="d-none" type="text" name="newBlog[area]" placeholder="3D-Visualisierung">
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -22,9 +22,9 @@
       </div>
   
       <div class="modal-body">
-        <textarea rows="4" cols="50" name="description" placeholder="Beschreibung"></textarea>
+        <textarea rows="4" cols="50" name="newDescription" placeholder="Beschreibung"></textarea>
          <div class="form-group">
-          <select class="form-control category" name="category"exampleFormControlSelect1">
+          <select class="form-control category" id="exampleFormControlSelect1">
             <option>Modelling</option>
             <option>Texturing</option>
             <option>BodyPaint</option>

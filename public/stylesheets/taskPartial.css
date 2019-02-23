@@ -1,0 +1,18 @@
+.newTaskInput{
+    margin-left : 10px;
+    width:90%;
+}
+
+.taskList{
+    margin-left : 0px;
+}
+
+.status9{
+    text-decoration:line-through;
+    color:grey;  
+}
+
+.status0{
+   text-decoration:none;
+   color:black;
+}

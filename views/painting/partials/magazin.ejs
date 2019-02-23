@@ -1,0 +1,37 @@
+<h2>Bücher über digitale Kunst</h2>
+<div class="gallery">
+ <ul>
+  <li>Bücher über digitale Kunst Liste</li>
+ </ul>
+</div>
+<button type="button" class="btn btn-primary btnPartial" data-toggle="modal" data-target="#historyModal">
+ <i class="fa fa-plus faPartial"></i>Buch hinzufügen
+</button>
+
+<!-- Modal zum hinzufügen eines neuen History-Eintrags-->
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Neues Buch oder Artikel</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/book/new" method="post" encType="multipart/form-data">
+       <div class="modal-body">
+        <div>Name:
+         <input type="text" name="bookName" placeholder="Neues Buch">
+        </div>
+        <input type="file" name="bookFile">
+         Beschreibung:
+         <textarea rows="4" cols="50" name="description"></textarea>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <button type="submit" class="btn btn-primary">Save changes</button>
+       </div>
+      </form>
+    </div>
+  </div>
+</div>

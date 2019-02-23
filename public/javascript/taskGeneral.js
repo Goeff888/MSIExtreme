@@ -1,5 +1,21 @@
 console.log("taskGeneral.js wird jetzt ausgeführt");
 
+///Task im Fenster für Status 0 oder 9 hervorheben
+function setStatusVisual(itemID,status){
+  console.log("setStatusVisual wird aufgerufen mit itemID:"+itemID+" und status:"+status);
+  console.log("spTask"+itemID);
+  item = document.getElementById("spTask"+itemID);
+  if(status == 0){
+    item.style.textDecoration = "none";
+    item.style.color = "black";
+  }else if(status == 9){
+    item.style.textDecoration = "line-through";
+    item.style.color = "grey";
+  }else{
+    console.log("Fehler beim Verändern des Task-Textes");
+  }
+}
+
 //neuen Eintrag im Aufgabenbereich hinzufügen
 function addTaskbyEnter(e){  
   //this.focus();e.preventDefault();
@@ -101,12 +117,10 @@ function setStatusReady(e){
   var ckID = this.getAttribute("data-id");
   //var liID = "li" + ckID.slice(2, ckID.length-1);
   //var liElement = document.getElementById(liID);
-  console.log("ckID:"+ckID);
-  
+  console.log("ckID:"+ckID); 
   if (this.checked == true){
     //console.log("ausgewählt");
     status = 9;
-    
     //liElement.style.textDecoration = "line-through";
     //liElement.style.text-decoration = "line-through",  
   }else{
@@ -117,16 +131,20 @@ function setStatusReady(e){
   }
   
   var data = {status: status};
-  console.log("Status:"+ data.status);
- $.post("/updateStatus/"+ ckID,
+  console.log("gesendeter Status:"+ data.status);
+  $.post("/updateStatus/"+ ckID,
     {
         data: data   
     },
     function(daten, status){
-      console.log("Callback mit daten:" +daten);
-      console.log("Callback mit Status:" +daten.status);
-      //location.reload(true);
-    });
+     console.log(status);
+     if (status == "success"){
+       console.log("Status wurde erfolgreich übertragen");
+       console.log(daten.status);
+       setStatusVisual(ckID,daten.status);
+       
+     }
+  });
 }
 
 //Öffnen des Task-Modal

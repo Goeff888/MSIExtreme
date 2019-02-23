@@ -1,50 +1,77 @@
 var mongoose = require("mongoose");
+var dbTasks = require("../models/tasks");
+var dbTodo = require("../models/todo");
 
+var newTodo3DVisualization = [{'project': '3D Visualisierung' },{"description":"Verbesserungen an der Homepage"}];
+var newTodo3DVisualProject = [{'project': 'Dummy Name des Projekts' },{"description":"Inhalte: Aufgaben zum Projekt"}];
+var newTodo3DVisualizationBlog = [{'project': '3D Visualisierungs Blog' },{"description":"Verbesserungen am Blog zur 3D Visualisierung"}];
 
- 
-exports.seedDB=function(s){
-   //Remove all campgrounds
-   console.log("Aufruf ddd erfolgt");
-   console.log(s);
-};
+function renderComposition (results,res,site){
+ res.render(site,{
+                  composition:results.composition,
+                  todo:results.todo,
+                  tasks:[],
+                  links:results.links,
+                  magazine:results.magazine,
+                  comments:results.comments,
+                  blog:results.blog});
+}
+
+function renderPainting (results,res,site){
+ res.render(site,{
+                  painting:results.painting,
+                  todo:results.todo,
+                  tasks:[],
+                  links:results.links,
+                  magazine:results.magazine,
+                  comments:results.comments,
+                  blog:results.blog});
+}
 
 exports.getTasks = function(results,res,site){
- //console.log("Länge des übergebenen Parameters:"+results.todo._id);
+ console.log("tasks per dbHandler ermitteln");
+
  //Datenbank bereits vorhanden, es wird nur die Seite gerendert
  if (results.todo != null){
   dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
       if(err){
        return err;
       }else{
-       console.log("Anzahl der ermittelten Tasks:"+ tasksResults.length);
-       res.render(site,{
-                  composition:results.composition,
-                  todo:results.todo,
-                  tasks:tasksResults,
-                  links:results.links,
-                  magazine:results.magazine,
-                  comments:results.comments});
+       if (site.slice(0,8)=="painting"){
+        console.log("Aufruf von painting");
+        renderPainting(results,res,site);
+       }else if(site.slice(0,11)=="composition"){
+        console.log("Aufruf von composition");
+        renderComposition(results,res,site);
+       }else{
+        console.log("Aufruf unbekannt");
+       }
+       //renderComposition(results,res,site);
       }
   });
   //Datenbank nicht vorhanden
  }else{
-   console.log("datenbank nicht vorhanden");
-   /*
+   console.log("datenbank zu "+ site +" nicht vorhanden");
    var newTodo=[];
-   console.log(site);
    //Datenbak für Verbesserungen an der Homepage generieren
    if((site === "compositions/index") || (site == "compositions/new")){   
     newTodo = {
-       project:"Composition General Todos",
-       description:"Verbesserungen an der Homepage",
+       'project':newTodo3DVisualization[0].project,
+       'description':newTodo3DVisualization[0].description,
      };
    }
-   //Datenbak für Verbesserungen am Projekt generieren
+   //Datenbank für Verbesserungen am Projekt generieren
     else if(site === "compositions/show" || site == "compositions/edit"){
      newTodo = {
-       project:"Projektdatenbank",
-       description:"Inhalte: Aufgaben zum Projekt",
+       project:newTodo3DVisualProject[0].project,
+       description:newTodo3DVisualProject[0].description,
        result: results.composition._id };
+        //Datenbank für Verbesserungen am Projekt generieren
+    }else if(site === "compositions/blog" ){
+     newTodo = {
+       project:newTodo3DVisualizationBlog[0].project,
+       description:newTodo3DVisualizationBlog[0].description,
+       result: results.composition._id };//Prüfen ob richtig!!!!!!!!!!!
    //Dummydatenbak bei Fehler um Stabilität sicherzustellen
     }else{
     newTodo = {
@@ -64,9 +91,23 @@ exports.getTasks = function(results,res,site){
                  todo:newEntry,
                  links:results.links,
                  magazine:results.magazine,
-                 comments:results.comments});
+                 comments:results.comments,
+                 blog:results.blog});
+      return newEntry;
      }
     });
-    */
+    
    }
+};
+
+//neuen datenbankeintrag erzeugen und Seite rendern
+exports.createNewDB = function(dbNew, content,res, site){
+   console.log("Neue datenbank erzeugen");
+   dbNew.create(content, function(err, newEntry){
+   if(err){
+    res.render("error", {error: err});
+   }else{
+    res.redirect (site+"/"+newEntry[0]._id);
+   }
+  });
 };

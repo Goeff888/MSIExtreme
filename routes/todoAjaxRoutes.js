@@ -100,16 +100,16 @@ router.post("/addSubTask/:id",function(req,res){
 //Aktualisieren des Status eines Tasks###########################
 router.post("/updateStatus/:id",function(req,res){
   console.log("Funktion: UpdateStatus:" + req.params.id);
-  console.log("Status:" + req.body.data.status);
-  //console.log("ID:" + req.params.id);
-    dBTasks.findOneAndUpdate(req.params.id,{status:req.body.data.status}, function(err, updatedTask){
+  //console.log("erhaltener Status:" + req.body.data.status);
+    dBTasks.findOneAndUpdate({"_id":req.params.id},{status:req.body.data.status},{new : true}, function(err, result){ //new:true um geändertes statt Originaldokument zurückzugeben
     if(err){
+//ES wird nicht der korrekte datensatz geupdated
       //Funktion wird korrekt aufgerufen, aber der gespeicherte Datensatz schient fehlerhaft. Mit Compass prüfen (DOWNLOAD!)
       console.log("Something wrong when updating data!");
       res.send (err);
     }
-      console.log("updatedTask Status:"+ updatedTask);
-      res.send (updatedTask);
+      console.log("geupdatede ID:" + result._id);
+      res.send (result);
   }); 
 });
 

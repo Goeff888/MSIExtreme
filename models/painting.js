@@ -9,7 +9,7 @@ var templateSchema = new mongoose.Schema({
   image:        String,
   created:      {type:Date, default: Date.now}
 });
-var corelSchema = new mongoose.Schema({
+var paintingSchema = new mongoose.Schema({
   name:         String,
   image:        {type: String, default: '/images/winkenderPanda.jpg'},
   description:  {type: String, default: 'n.a'},
@@ -20,4 +20,4 @@ var corelSchema = new mongoose.Schema({
   templates:    [templateSchema]
 });
 
-module.exports = mongoose.model("Corel", corelSchema);
+module.exports = mongoose.model("Painting", paintingSchema);
