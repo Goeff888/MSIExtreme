@@ -5,6 +5,7 @@
   <ul id="taskList">
  <% }else{ %>
  <ul id="taskList">
+  <% console.log(tasks.length); %>
   <% for (var i = 0; i < tasks.length;i++){ %>
    <li class="taskList" id="<%= tasks[i]._id %>">
     <% if (tasks[i].status==0){ %>

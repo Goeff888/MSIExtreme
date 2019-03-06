@@ -1,4 +1,4 @@
- console.log("Hallo vom Blender.js");
+ console.log("Hallo vom composition.js");
 //Drag n Drop*****************************
 //File Dialog mit Klick auf Dropzone öffnen
 

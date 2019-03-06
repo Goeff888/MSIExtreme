@@ -59,6 +59,7 @@ router.get("/composition", function(req, res){
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
+    console.log("Results.id:"+results.todo._id);
     dbHandler.getTasks(results,res,"compositions/index");
     //console.log("Anzahl der Tasks vor Rendern:"+ data);
    })
@@ -81,7 +82,7 @@ router.get("/composition/new", function(req, res){
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-   //console.log("Results.id:"+results.todo._id);
+   console.log("Results.id:"+results.todo._id);
     dbHandler.getTasks(results,res,"compositions/new");
    })
    .catch(function(err) {
@@ -98,9 +99,6 @@ router.post("/composition/new",function(req,res){
    var composition = [];
    let sampleFile ; 
    //Prüfen, ob Datei, Template oder beides ausgewählt wurde
-   if (!req.files){
-    console.log("Keine Datei zum Hochladen");
-   }else{
     if(req.files.renderedImage){
      console.log("Bilddatei ausgewählt!:"+req.files.renderedImage.name);
      sampleFile = req.files.renderedImage; 
@@ -120,7 +118,7 @@ router.post("/composition/new",function(req,res){
     }else if(req.files.templateImage){
      console.log("Template ausgewählt!:");
      sampleFile = req.files.templateImage;
-     composition = [{name:req.body.name, image:req.files.templateImage.name,description:req.body.description,created:Date(),updated:Date()}];
+     composition = [{name:req.body.name, templates:{image:req.files.templateImage.name,created:Date()},description:req.body.description,created:Date(),updated:Date()}];
      dBComposition.create(composition, function(err, newEntry){
       if(err){
        console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
@@ -133,9 +131,21 @@ router.post("/composition/new",function(req,res){
       }
     });
     }else{
-     console.log("Datei vorhanden zum Hochladen, aber kein Datenbankwert");
+     console.log("keine Datei vorhanden zum Hochladen");
+     composition = [{name:req.body.name, description:req.body.description,created:Date(),updated:Date()}];
+     dBComposition.create(composition, function(err, newEntry){
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag ohne Bild erzeugt:"+ newEntry);
+       
+       createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       res.redirect("/composition/" + newEntry[0]._id);
+      }
+    });
     }
-   }
+   
  });
 
 //SHOW ROUTES###########################
@@ -152,7 +162,7 @@ router.get("/composition/:id", function(req, res){
     comments:    dBComments.find({compositionID:req.params.id}).execAsync()
   })
  .then(function(results) {
-  console.log(results.todo);
+  console.log(results.composition);
    dbHandler.getTasks(results,res,"compositions/show");
  })
  .catch(function(err) {
@@ -190,6 +200,8 @@ router.put("/composition/:id/edit", function(req, res){
  console.log("Update Route Composition:" + req.params.id);
  var data =  {};
 //Prüfen, welcher Array Eintrag (History/Template aktualisiert werden soll)
+ 
+ 
  if ( req.files.templateFile){//Template wird nicht korrekt überprüft
   console.log("template Datei ausgewählt:" +req.files.templateFile.name );
   fileName= copyFile (req.files.templateFile,"/"+req.params.id+"/templates");//neue Datei ins entsprechende Verzeichnis kopieren
@@ -203,14 +215,24 @@ router.put("/composition/:id/edit", function(req, res){
   });  
  }else if(req.files.newFile.name.length  > 0){
   //alte Datei verschieben
-  fs.copyFile("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile, "public/images/compositions/"+req.params.id+"/history/"+req.body.srcFile, (err) => {
+  console.log("neue Bildversion ausgewählt:" +req.files.newFile.name );
+  if ( req.body.srcFile == "winkender Panda.jpg"){
+   console.log("noch kein Bild vorhanden");
+  }else{
+   fs.copyFile("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile, "public/images/compositions/"+req.params.id+"/history/"+req.body.srcFile, (err) => {
   if (err) throw err;
-  //console.log('source.txt was copied to destination.txt');
-  });
-  fs.unlinkSync("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile,function(err){
+   fs.unlinkSync("public/images/compositions/"+req.params.id+"/"+ req.body.srcFile,function(err){
         if(err) return console.log(err);
         console.log('file deleted successfully');
+  });
+ 
    });  
+ }
+  
+ // }
+  
+
+
   fileName= copyFile (req.files.newFile,"/"+req.params.id);
   
   data =  {description:req.body.newDescription,  image:req.body.srcFile};

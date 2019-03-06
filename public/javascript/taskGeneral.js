@@ -27,7 +27,11 @@ function addTaskbyEnter(e){
         console.log(this.dataset.value);
         $(this).val("");
         //$("ul").append("<li>"+ todotext +"<input type='text' name='tasks[task]' value='" +todotext+"' hidden='true'></li>");
-        $("#taskList").append("<li><input type='checkbox' class='form-check-input' id='exampleCheck1' >" + todotext +"<span class='iconRight' data-value=''><i class='fas fa-trash'></i></span>");              
+        $("#taskList").append("<li class='taskList'><input type='checkbox' class='form-check-input ckTasks' id='exampleCheck1' >" + todotext +"<span class='status9' data-value=''><i class='fa fa-trash'></i></span>");              
+       //<li class="taskList" id="<%= tasks[i]._id %>">
+       //input type='checkbox' checked class='form-check-input ckTasks' data-id="<%= tasks[i]._id %>" id='ckTask<%= i %>'>
+     //<span class = "status9" id="spTask<%= tasks[i]._id %>"><%= tasks[i].task %></span>
+        
         sendText(todotext, todoID);
    }
 }

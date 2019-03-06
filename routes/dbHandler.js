@@ -6,11 +6,11 @@ var newTodo3DVisualization = [{'project': '3D Visualisierung' },{"description":"
 var newTodo3DVisualProject = [{'project': 'Dummy Name des Projekts' },{"description":"Inhalte: Aufgaben zum Projekt"}];
 var newTodo3DVisualizationBlog = [{'project': '3D Visualisierungs Blog' },{"description":"Verbesserungen am Blog zur 3D Visualisierung"}];
 
-function renderComposition (results,res,site){
+function renderComposition (results,res,site,tasks){
  res.render(site,{
                   composition:results.composition,
                   todo:results.todo,
-                  tasks:[],
+                  tasks:tasks,
                   links:results.links,
                   magazine:results.magazine,
                   comments:results.comments,
@@ -21,7 +21,7 @@ function renderPainting (results,res,site){
  res.render(site,{
                   painting:results.painting,
                   todo:results.todo,
-                  tasks:[],
+                  tasks:tasks,
                   links:results.links,
                   magazine:results.magazine,
                   comments:results.comments,
@@ -30,7 +30,7 @@ function renderPainting (results,res,site){
 
 exports.getTasks = function(results,res,site){
  console.log("tasks per dbHandler ermitteln");
-
+//console.log("Results.id:"+results.todo._id);
  //Datenbank bereits vorhanden, es wird nur die Seite gerendert
  if (results.todo != null){
   dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
@@ -39,10 +39,10 @@ exports.getTasks = function(results,res,site){
       }else{
        if (site.slice(0,8)=="painting"){
         console.log("Aufruf von painting");
-        renderPainting(results,res,site);
+        renderPainting(results,res,site,tasksResults);
        }else if(site.slice(0,11)=="composition"){
         console.log("Aufruf von composition");
-        renderComposition(results,res,site);
+        renderComposition(results,res,site,tasksResults);
        }else{
         console.log("Aufruf unbekannt");
        }
@@ -53,7 +53,7 @@ exports.getTasks = function(results,res,site){
  }else{
    console.log("datenbank zu "+ site +" nicht vorhanden");
    var newTodo=[];
-   //Datenbak für Verbesserungen an der Homepage generieren
+   //Datenbank für Verbesserungen an der Homepage generieren
    if((site === "compositions/index") || (site == "compositions/new")){   
     newTodo = {
        'project':newTodo3DVisualization[0].project,
