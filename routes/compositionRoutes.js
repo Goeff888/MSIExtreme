@@ -59,8 +59,8 @@ router.get("/composition", function(req, res){
      magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
    })
    .then(function(results) {
-    console.log("Results.id:"+results.todo._id);
-    dbHandler.getTasks(results,res,"compositions/index");
+    //console.log("Results.id:"+results.todo._id);
+    dbHandler.getTasks(results,res,"composition/index");
     //console.log("Anzahl der Tasks vor Rendern:"+ data);
    })
    .catch(function(err) {
@@ -83,7 +83,7 @@ router.get("/composition/new", function(req, res){
    })
    .then(function(results) {
    console.log("Results.id:"+results.todo._id);
-    dbHandler.getTasks(results,res,"compositions/new");
+    dbHandler.getTasks(results,res,"composition/new");
    })
    .catch(function(err) {
      res.send(500); // oops - we're even handling errors!
@@ -162,8 +162,8 @@ router.get("/composition/:id", function(req, res){
     comments:    dBComments.find({compositionID:req.params.id}).execAsync()
   })
  .then(function(results) {
-  console.log(results.composition);
-   dbHandler.getTasks(results,res,"compositions/show");
+  //console.log(results.composition);
+   dbHandler.getTasks(results,res,"composition/show");
  })
  .catch(function(err) {
    res.sendStatus(err); // oops - we're even handling errors!
@@ -184,7 +184,7 @@ router.get("/composition/:id/edit", function(req, res){
   })
   .then(function(results) {
    console.log("results:" + results.composition._id);
-   dbHandler.getTasks(results,res,"compositions/edit");
+   dbHandler.getTasks(results,res,"composition/edit");
   })
   .catch(function(err) {
    console.log(err);

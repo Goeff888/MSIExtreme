@@ -1,10 +1,11 @@
 <h2>nächste Schritte</h2>   
 <div class="gallery">
- <% /*Setzen der TODO ID vn Blender oder ID neu holen*/ %>
+ <% /*Setzen der TODO ID  oder ID neu holen*/ %>
  <% if ( todo == null){ %>
   <ul id="taskList">
  <% }else{ %>
  <ul id="taskList">
+  <% console.log() %>
   <% for (var i = 0; i < tasks.length;i++){ %>
    <li class="taskList" id="<%= tasks[i]._id %>">
     <% if (tasks[i].status==0){ %>

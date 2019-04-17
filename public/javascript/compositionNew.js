@@ -36,40 +36,7 @@ function showSelectedImage(){
   //Bild auf der Seite anzeigen
 }
 
-function handleDragOverZone(e){
-  //e.stopPropagation();
-  e.preventDefault();
-  //e.style.opacity ='0.7'; 
-  this.classList.remove('renderDropzone');
-  this.classList.add('renderDropzoneOver');
-  console.log("Über Dropzone gezogen");
-}
 
-
-function handleDragLeaveZone(e){
-  e.preventDefault();
-  this.classList.remove('renderDropzoneOver');
-  this.classList.add('renderDropzone');
-  console.log("von Dropzone weggezogen");
-}
-
-function handleDrop(e){
-  e.preventDefault();
- // e.dataTransfer.effectAllowed ='move';
-  //this.classList.remove('dropzoneOver');
-  this.classList.add('renderDropzoneOverDrop');
-  console.log(e.target);
-  console.log("daten in e:" + e.dataTransfer.getData("text"));
-  //e.target.appendChild("HAllo");
-  //this.innerHTML = e.dataTransfer.getData('text');
-  this.style.background="white";
-  this.innerHTML = e.dataTransfer.getData('text/html');
-  //this.style.background-image=e.dataTransfer.getData('text');
-   var file = e.dataTransfer.items[0].getAsFile();
-  //console.log("File:" + e.dataTransfer.files[0].path);
-  console.log("Item:" + file);
-  console.log("Abgelegt");
-}
 //Formulareinträge prüfen*****************************
 //Überprüfen, ob "neues Bild" korrekt ausgefüllt ist
 function chkFormular() {

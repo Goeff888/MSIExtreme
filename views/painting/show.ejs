@@ -14,27 +14,27 @@
 <% include ../partials/navbarTop %>
   <div class="row">
     <div class="col-md-2">
-      <% include partials/magazin %>
+      <% include ../partials/magazin %>
       <hr>
-      <% include partials/CMSPosts %>
+      <% include ../partials/todos %>
     </div>
 
     <div class="col-md-8">
-      <% if (typeof corel.image == "undefined"){ %>
+      <% if(painting.image == "winkenderPanda.jpg"){ %>
         <img class="img-responsive img-composition" src="/images/winkenderPanda.jpg">
       <% }else{ %>
-        <img class="img-responsive img-composition" src="/images/corel/<%= corel._id %>/<%= corel.image %>">
+        <img class="img-responsive img-composition" src="/images/paintings/<%= painting._id %>/<%= painting.image %>">
       <% } %>
       <div class="caption">
         <h4>
-          <%= corel.name %>
+          <%= painting.name %>
           <span class="date ">
-          <%= corel.created.getDate() %>.
-          <%= corel.created.getMonth() %>.
-          <%= corel.created.getYear() +1900  %>
+          <%= painting.created.getDate() %>.
+          <%= painting.created.getMonth() %>.
+          <%= painting.created.getYear() +1900  %>
           </span>
         </h4>
-        <p class="compText"><%= corel.description %></p>
+        <p class="compText"><%= painting.description %></p>
         <% comments.forEach(function(comment){ %>    
         <div class ="row">
          <div class="col-md-8">
@@ -45,7 +45,7 @@
         </div>
         <% });%>
         </div>
-      <form method="post" action="/corel/<%= corel._id %>?_method=DELETE""
+      <form method="post" action="/corel/<%= painting._id %>?_method=DELETE""
         <p>
           <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseComment" aria-expanded="false" aria-controls="collapseComment">
             Neuer Kommentar
@@ -53,25 +53,25 @@
             <button class="btn btn-primary" type="submit">
               Eintrag löschen
             </button>
-            <a href="/corel/<%= corel._id %>/edit" class="btn btn-primary" type="button">
+            <a href="/painting/<%= painting._id %>/edit" class="btn btn-primary" type="button">
               Eintrag bearbeiten
             </a>
           </form>
         </p>
         <div class="collapse" id="collapseComment">
           <div class="card card-body">
-            <form method="post" action="/corel/<%= corel._id  %>/comments">
+            <form method="post" action="/corel/<%= painting._id  %>/comments">
               <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
-              <button class="btn btn-primary" name="comment[corelID]" value="<%=corel._id  %>" type="submit">Speichern</button>
+              <button class="btn btn-primary" name="comment[corelID]" value="<%=painting._id  %>" type="submit">Speichern</button>
             </form>
           </div>
         </div>
     </div>
     
     <div class="col-md-2">
-      <% include partials/links %>
+      <% include partials/template%>
       <hr>
-      <% include partials/tutorials %>
+      <% include partials/history %> 
     </div>
   </div>
 

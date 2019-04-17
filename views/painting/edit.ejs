@@ -17,37 +17,37 @@
 
   <div class="row">
     <div class="col-md-2">
-      <% include partials/todos %>
+      <% include ../partials/magazin %>
       <hr>
-      <% include partials/CMSPosts %>
+      <% include ../partials/todos %>
     </div>
     
     <div class="col-md-8">
       <div class="container">
        
           <h1>Eintrag bearbeiten</h1>
-          <% console.log(corel.image); %>
-          <% if(typeof corel.image === "/images/winkenderPanda.jpg"){ %>
-            <img class="img-responsive img-composition" src="images/corel/<%= corel._id %>">
+          <% console.log(painting.image); %>
+          <% if(typeof painting.image === "/images/winkenderPanda.jpg"){ %>
+            <img class="img-responsive img-composition" src="images/corel/<%= painting._id %>">
           <% }else{ %>
-            <img class="img-responsive img-composition" src="/images/corel/<%= corel._id %>/<%= corel.image %>">
+            <img class="img-responsive img-composition" src="/images/corel/<%= painting._id %>/<%= painting.image %>">
           <% } %>
           
           <h4>
-            <%= corel.name %>
+            <%= painting.name %>
             <span class="date ">
-            <%= corel.created.getDate() %>.
-            <%= corel.created.getMonth() %>.
-            <%= corel.created.getYear() +1900  %>
+            <%= painting.created.getDate() %>.
+            <%= painting.created.getMonth() %>.
+            <%= painting.created.getYear() +1900  %>
             </span>
           </h4>
           <div style="width :30%; margin: 50px auto;">
-            <form action="/corel/<%= corel._id %>" method="post">
+            <form action="/corel/<%= painting._id %>" method="post">
               <div class="form-group">
-                <input class="form-control" type="text" id="pictureName" name="corel[name]" value="<%= corel.name %>">                
+                <input class="form-control" type="text" id="pictureName" name="corel[name]" value="<%= painting.name %>">                
               </div>
               <div class="form-group">
-                <input class="form-control" type="text" name="corel[description]" value="<%= corel.description %>">  
+                <input class="form-control" type="text" name="corel[description]" value="<%= painting.description %>">  
               </div>
               <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
@@ -57,9 +57,9 @@
       </div>
     </div>
     <div class="col-md-2">
-      <% include partials/history %>
+      <% include partials/template%>
       <hr>
-      <% include partials/template %>
+      <% include partials/history %> 
     </div>
   </div>
 

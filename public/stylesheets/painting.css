@@ -195,11 +195,15 @@ img {
 
 .jumbotron{
   background-color: black;
-  background-image: url("/images/blender_logo.png");
+  
   background-size: cover;
   background-repeat:no-repeat;
   background-position: center;
 }
+.composition{
+  background-image: url("/images/blender_logo.png");
+}
 
-
-
+.painting{
+  background-image: url("/images/corel_logo_jamaica.png");
+}

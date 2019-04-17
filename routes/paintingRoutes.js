@@ -1,11 +1,10 @@
 //var bodyParser = require("body-parser"); //Request Data from Form in HTML-Body
 var express = require ("express");
 var router = express.Router();
-var http = require('http');
+
 var promise = require('bluebird');
 var path = require('path');
-var fileUpload = require('express-fileupload');
-//var formidable = require('formidable');
+
 var fs = require('fs');
 var dBPainting = require("../models/painting");
 var dBComments = require("../models/comments");
@@ -15,10 +14,27 @@ var dbBooks = require("../models/books");
 var dBLinks = require("../models/links");
 var mongoose = require("mongoose");
 var dbHandler = require ("./dbHandler");
-router.use(fileUpload());
+
 router.use(express.static(path.join(__dirname, 'public')));
 router.use(express.static("public"));
 //router.use(bodyParser.urlencoded({extended: true}));
+//Neuen Projektordner anlegen und Status zurückgeben
+function createNewProjectFolder(dir){
+ if (!fs.existsSync(dir)){
+  fs.mkdirSync(dir);        
+  fs.mkdirSync(dir + "/templates");
+  fs.mkdirSync(dir + "/history");
+ }else{
+  console.log("Ordner exisitert bereits");
+ }
+  /*
+  if(req.files.cgArt){
+    copyFile(req.files.cgArt,newEntry[0]._id +"/");
+   }else{
+    console.log("Verzeichnis muss wieder gelöscht werden");
+   }
+ }*/
+}
 
 function copyFile(sampleFile,folder){ 
   console.log("copyFile:" + sampleFile.name);
@@ -78,7 +94,57 @@ router.get("/painting/new", function(req, res){
 router.post("/painting/new",function(req,res){
     console.log("Create Route painting für " + req.body.name); 
     var painting = [];
+    let sampleFile ;
     // Datei hochladen
+    if(req.files.renderedImage){
+     console.log("Bilddatei ausgewählt!:"+req.files.renderedImage.name);
+     sampleFile = req.files.renderedImage; 
+     painting = [{name:req.body.name, image:req.files.renderedImage.name,description:req.body.description,created:Date(),updated:Date()}];
+     dBPainting.create(painting, function(err, newEntry){
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag nur mit Bildergebnis erzeugt:"+ newEntry);
+       createNewProjectFolder("./public/images/paintings/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       copyFile(sampleFile,newEntry[0]._id+"/");
+       res.redirect("/painting/" + newEntry[0]._id);
+      }
+    });
+     
+    }else if(req.files.templateImage){
+     console.log("Template ausgewählt!:");
+     sampleFile = req.files.templateImage;
+     painting = [{name:req.body.name, templates:{image:req.files.templateImage.name,created:Date()},description:req.body.description,created:Date(),updated:Date()}];
+     dBPainting.create(painting, function(err, newEntry){
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag nur mit Template erzeugt:"+ newEntry);
+       createNewProjectFolder("./public/images/paintings/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       copyFile(sampleFile,newEntry[0]._id+"/templates/");
+       res.redirect("/painting/" + newEntry[0]._id);
+      }
+    });
+    }else{
+     console.log("keine Datei vorhanden zum Hochladen");
+     painting = [{name:req.body.name, description:req.body.description,created:Date(),updated:Date()}];
+     dBPainting.create(painting, function(err, newEntry){
+      if(err){
+       console.log("Fehler beim Anlegen des Datenbankeintrags:"+ err);
+      }else{
+       console.log("Neuer Eintrag ohne Bild erzeugt:"+ newEntry);
+       
+       createNewProjectFolder("./public/images/compositions/"+ newEntry[0]._id);
+       //copyFile(sampleFile,"./public/images/compositions/"+ newEntry[0]._id);
+       res.redirect("/composition/" + newEntry[0]._id);
+      }
+    });
+    }
+ });
+
+/*
     if (typeof req.files.cgArt == "undefined" ){
          painting = [{
          name:req.body.name,
@@ -118,24 +184,22 @@ router.post("/painting/new",function(req,res){
      }
     });
  });
-
+*/
 //SHOW ROUTES###########################
 //Anzeige eines Eintrags
 router.get("/painting/:id", function(req, res){
   console.log("Route:  painting Show von " + req.params.id);
   promise.props({
-   links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
-   painting:       dBPainting.findById(req.params.id).execAsync(),
+    painting:    dBPainting.findOne({ '_id': req.params.id}).execAsync(),
+    links:       dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    tutorials:   dBLinks.find({ 'content': 'digital Art' }).execAsync(),
+    todo:        dBTodo.findOne({'result': req.params.id }).execAsync(),//req.body.taskId
+    magazine:    dbBooks.find({ 'content': 'blender' }).execAsync(),
+    comments:    dBComments.find({compositionID:req.params.id}).execAsync()
  })
  .then(function(results) {
-  console.log("results:" + results.links);
-  dBComments.find({compositionID:req.params.id}, function(err, comments){
-     if(err){
-      res.render("error");
-     }else{
-      res.render("painting/show",{painting: results.painting, comments: comments,links:results.links,tutorials:results.tutorials });
-     }
-   });     
+  console.log("results:" + results.painting);
+   dbHandler.getTasks(results,res,"painting/show");   
   })
   .catch(function(err) {
     console.log(err);

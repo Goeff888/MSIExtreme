@@ -86,20 +86,11 @@ function chkFormular() {
 
 //Überprüfen, ob "neues Tutorial" korrekt ausgefüllt
 function chkModal() {
-  console.log(document.getElementsByName("tutorial")[0].value);
-  event.preventDefault();
-  if (document.getElementsByName("renderedImage")[0].value == "") {
-    alert("Bitte ein Bild auswählen!");
+  console.log("Formular prüfen");
+  if (document.getElementsByName("name").value == "") {
+    alert("Bitte einen Namen eingeben");
     event.preventDefault();
-  }else if(document.getElementsByName("name")[0].value == ""){
-    alert("Bitte einen Namen eingeben!");
-    event.preventDefault();    
-  }else if(document.getElementsByName("name")[0].value == ""){
-    alert("Bitte einen Namen eingeben!");
-    event.preventDefault(); 
-  }else if(document.getElementsByName("name")[0].value == ""){
-    alert("Bitte einen Namen eingeben!");
-    event.preventDefault(); 
+ 
   //return false;
 }
 
@@ -147,7 +138,10 @@ fileDialog.addEventListener('change', showSelectedImage);
 
 var fileTemplateDialog = document.getElementById("templateLoader");
 fileTemplateDialog.addEventListener('change', showSelectedImage);
-//Button Bild löschen
+//Button Bild speichern
+var buttonSave = document.getElementById("sendBtn");
+//buttonSave.addEventListener('click', chkModal);
+
 //Views: Index, Edit
 /*var deleteBtn = document.getElementById("btnDelete");
 deleteBtn.addEventListener("click", verifyDelete);

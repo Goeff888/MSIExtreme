@@ -6,6 +6,35 @@ var newTodo3DVisualization = [{'project': '3D Visualisierung' },{"description":"
 var newTodo3DVisualProject = [{'project': 'Dummy Name des Projekts' },{"description":"Inhalte: Aufgaben zum Projekt"}];
 var newTodo3DVisualizationBlog = [{'project': '3D Visualisierungs Blog' },{"description":"Verbesserungen am Blog zur 3D Visualisierung"}];
 
+function getArea(site){
+ var area = [];
+ if (site.slice(0,8) == "painting"){
+  area = "painting";
+ }else if (site.slice(0,11) == "composition"){
+    area = "composition";
+  }
+ return area;
+}
+
+function getRouteArea(string,site){
+ var area = 0;
+ var routeString = site.slice(string.length+1, site.length);
+ console.log("Aufruf von getRouteArea");
+ console.log("routeString: " +routeString);
+ console.log("string:"+string);
+ console.log("site:"+site);
+ if((routeString=="index")||(routeString=="new")){
+  area = 1;
+ }else if((routeString =="show")||(routeString=="edit")){
+  area = 2;
+ }else if(routeString=="blog"){
+  area = 3;
+ } else{
+  area = 0;
+ }
+ return area;
+}
+
 function renderComposition (results,res,site,tasks){
  res.render(site,{
                   composition:results.composition,
@@ -17,7 +46,7 @@ function renderComposition (results,res,site,tasks){
                   blog:results.blog});
 }
 
-function renderPainting (results,res,site){
+function renderPainting (results,res,site,tasks){
  res.render(site,{
                   painting:results.painting,
                   todo:results.todo,
@@ -30,6 +59,8 @@ function renderPainting (results,res,site){
 
 exports.getTasks = function(results,res,site){
  console.log("tasks per dbHandler ermitteln");
+ var area = getArea(site);
+ console.log("area:" +area);
 //console.log("Results.id:"+results.todo._id);
  //Datenbank bereits vorhanden, es wird nur die Seite gerendert
  if (results.todo != null){
@@ -37,8 +68,8 @@ exports.getTasks = function(results,res,site){
       if(err){
        return err;
       }else{
-       if (site.slice(0,8)=="painting"){
-        console.log("Aufruf von painting");
+       if (site.slice(0,8) =="painting"){
+        console.log("Aufruf von painting" + results.painting);
         renderPainting(results,res,site,tasksResults);
        }else if(site.slice(0,11)=="composition"){
         console.log("Aufruf von composition");
@@ -53,21 +84,42 @@ exports.getTasks = function(results,res,site){
  }else{
    console.log("datenbank zu "+ site +" nicht vorhanden");
    var newTodo=[];
+   var routeArea = getRouteArea(area,site);
+   console.log("routeArea:" + routeArea);
    //Datenbank für Verbesserungen an der Homepage generieren
-   if((site === "compositions/index") || (site == "compositions/new")){   
-    newTodo = {
+   if(routeArea === 1){
+    console.log("area: " +area);
+    if (area =="composition"){
+     newTodo = {
+       'project':newTodo3DVisualization[0].project,
+       'description':newTodo3DVisualization[0].description,
+     };    
+    }else if(area == "painting"){
+      newTodo = {
        'project':newTodo3DVisualization[0].project,
        'description':newTodo3DVisualization[0].description,
      };
-   }
+    }
+   } 
    //Datenbank für Verbesserungen am Projekt generieren
-    else if(site === "compositions/show" || site == "compositions/edit"){
+    else if(routeArea === 2){
+     if (area =="composition"){
      newTodo = {
        project:newTodo3DVisualProject[0].project,
        description:newTodo3DVisualProject[0].description,
-       result: results.composition._id };
+       result: results.composition._id };   
+    }else if(area == "painting"){
+     console.log("results.painting._id" + results.painting._id);
+     console.log("results.painting._id" + results.painting._id);
+     newTodo = {
+       'project':newTodo3DVisualProject[0].project,
+       'description':newTodo3DVisualProject[0].description,
+       'result': results.painting._id };
+       console.log("newTodo" + newTodo);
+    }
+    
         //Datenbank für Verbesserungen am Projekt generieren
-    }else if(site === "compositions/blog" ){
+    }else if(routeArea === 3){
      newTodo = {
        project:newTodo3DVisualizationBlog[0].project,
        description:newTodo3DVisualizationBlog[0].description,
@@ -77,7 +129,7 @@ exports.getTasks = function(results,res,site){
     newTodo = {
        project:"Fehler",
        description:"Diese Datenbank sollte nicht erstellt werden",
-     };     
+     };
     }
     //Datenkank erzeugen und Seite rendern
     dbTodo.create(newTodo, function(err, newEntry){
@@ -85,7 +137,9 @@ exports.getTasks = function(results,res,site){
       return err;
      }else{
       console.log("Neuer Eintrag erzeugt:"+newEntry);
-      res.render(site,{
+      console.log("site:"+site);
+      if (area == "composition"){
+       res.render(site,{
                  composition:results.composition,
                  tasks:{},
                  todo:newEntry,
@@ -93,7 +147,33 @@ exports.getTasks = function(results,res,site){
                  magazine:results.magazine,
                  comments:results.comments,
                  blog:results.blog});
-      return newEntry;
+      }
+      else if(area == "painting"){
+       console.log("---------------------------------");
+       //console.log("newEntry: " +newEntry._id);
+       res.render(site,{
+                 painting:results.painting,
+                 tasks:[],
+                 todo:newEntry,
+                 links:results.links,
+                 magazine:results.magazine,
+                 comments:results.comments,
+                 blog:results.blog});
+
+      }
+      else{}
+      //results.push({todo:newEntry});
+      /*res.render(site,{
+                 composition:results.magazine,
+                 tasks:{},
+                 todo:newEntry,
+                 links:results.links,
+                 magazine:results.magazine,
+                 comments:results.comments,
+                 blog:results.blog});
+      return newEntry;*/
+      //*********************************nötig?
+      //res.render(site,results);
      }
     });
     
