@@ -2,9 +2,12 @@ var mongoose = require("mongoose");
 var dbTasks = require("../models/tasks");
 var dbTodo = require("../models/todo");
 
-var newTodo3DVisualization = [{'project': '3D Visualisierung' },{"description":"Verbesserungen an der Homepage"}];
-var newTodo3DVisualProject = [{'project': 'Dummy Name des Projekts' },{"description":"Inhalte: Aufgaben zum Projekt"}];
+var newTodo3DVisualization = [{'project': '3D Visualisierung' },{"description":"Verbesserungen an der Composition Homepage"}];
+var newTodo3DVisualProject = [{'project': '3D:' },{"description":"Inhalte: Aufgaben zum Projekt"}];
 var newTodo3DVisualizationBlog = [{'project': '3D Visualisierungs Blog' },{"description":"Verbesserungen am Blog zur 3D Visualisierung"}];
+var newTodoPainting = [{'project': 'Digital Painting' },{"description":"Verbesserungen an der Painting Homepage"}];
+var newTodoPaintingProject = [{'project': 'Painting:' },{"description":"Inhalte: Aufgaben zum Projekt"}];
+var newTodoPaintingBlog = [{'project': 'Painting Blog' },{"description":"Verbesserungen am Painting-Blog"}];
 
 function getArea(site){
  var area = [];
@@ -20,9 +23,6 @@ function getRouteArea(string,site){
  var area = 0;
  var routeString = site.slice(string.length+1, site.length);
  console.log("Aufruf von getRouteArea");
- console.log("routeString: " +routeString);
- console.log("string:"+string);
- console.log("site:"+site);
  if((routeString=="index")||(routeString=="new")){
   area = 1;
  }else if((routeString =="show")||(routeString=="edit")){
@@ -60,22 +60,20 @@ function renderPainting (results,res,site,tasks){
 exports.getTasks = function(results,res,site){
  console.log("tasks per dbHandler ermitteln");
  var area = getArea(site);
- console.log("area:" +area);
-//console.log("Results.id:"+results.todo._id);
  //Datenbank bereits vorhanden, es wird nur die Seite gerendert
  if (results.todo != null){
   dbTasks.find({ 'todoID': results.todo._id }, function(err, tasksResults){
       if(err){
        return err;
       }else{
-       if (site.slice(0,8) =="painting"){
-        console.log("Aufruf von painting" + results.painting);
+       if (area == "painting"){
+        //console.log("Aufruf von painting");
         renderPainting(results,res,site,tasksResults);
-       }else if(site.slice(0,11)=="composition"){
-        console.log("Aufruf von composition");
+       }else if(area =="composition"){
+        //console.log("Aufruf von composition");
         renderComposition(results,res,site,tasksResults);
        }else{
-        console.log("Aufruf unbekannt");
+        console.log("Fehler:Aufruf unbekannt");
        }
        //renderComposition(results,res,site);
       }
@@ -96,8 +94,8 @@ exports.getTasks = function(results,res,site){
      };    
     }else if(area == "painting"){
       newTodo = {
-       'project':newTodo3DVisualization[0].project,
-       'description':newTodo3DVisualization[0].description,
+       'project':newTodoPainting[0].project,
+       'description':newTodoPainting[0].description,
      };
     }
    } 
@@ -109,11 +107,9 @@ exports.getTasks = function(results,res,site){
        description:newTodo3DVisualProject[0].description,
        result: results.composition._id };   
     }else if(area == "painting"){
-     console.log("results.painting._id" + results.painting._id);
-     console.log("results.painting._id" + results.painting._id);
      newTodo = {
-       'project':newTodo3DVisualProject[0].project,
-       'description':newTodo3DVisualProject[0].description,
+       'project':newTodoPaintingProject[0].project,
+       'description':newTodoPaintingProject[0].description,
        'result': results.painting._id };
        console.log("newTodo" + newTodo);
     }
@@ -162,18 +158,6 @@ exports.getTasks = function(results,res,site){
 
       }
       else{}
-      //results.push({todo:newEntry});
-      /*res.render(site,{
-                 composition:results.magazine,
-                 tasks:{},
-                 todo:newEntry,
-                 links:results.links,
-                 magazine:results.magazine,
-                 comments:results.comments,
-                 blog:results.blog});
-      return newEntry;*/
-      //*********************************nötig?
-      //res.render(site,results);
      }
     });
     

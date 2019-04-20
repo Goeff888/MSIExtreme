@@ -55,23 +55,10 @@
       </div>
     </div>
     <div class="col-md-2">
-        <h2>Links</h2>
-        <a href="/corel">zurück</a>
-        <ul>
-          <li>Liste in der </li>
-          <li>Datebank erstellen</li>
-          <li>und mit</li>
-          <li>Projekt verknüpfen</li>
-        </ul>
-        <h2>externe Tutorials</h2>
-        <ul>
-          <form method="post" action="/tutorial">
-            <input type="text" name=tutorials[name] placeholder="Name">
-            <input type="text" name=tutorials[url] placeholder="URL">
-            <input type="text" name=tutorials[category] placeholder="Kategorie">
-            <input type="submit">
-          </form>
-        </ul>
+      <% include ../partials/links %>
+      <hr>
+      <% include ../partials/todos %> 
+    </div>
     </div>
   </div>
 
@@ -79,7 +66,8 @@
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
 <script src="/javascript/painting.js"></script>
-
+<script src="/javascript/links.js"></script>
+<script src="/javascript/taskGeneral.js"></script>
 <script src="/javascript/bootstrap.js"></script>
 </body>
 </html>

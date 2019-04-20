@@ -32,7 +32,13 @@
         <div class="row text-center">
           <% composition.forEach(function(entry){ %>
              <div class="col-md-3 col-sm-6">
+              <% if (!entry.image){ %>
+                <img src="/images/winkenderPanda.jpg" class="img-thumbnail">
+              <% }else{ %>
                 <img src="/images/compositions/<%= entry._id %>/<%= entry.image %>" class="img-thumbnail">
+              <% } %>                
+                
+                
                 <div class="caption">
                   <%= entry.name %>
                 </div>
@@ -66,8 +72,6 @@
 <script src="/javascript/jQuery_3_2_1.js"></script>
 <script src="/javascript/popper.js"></script>
 <script src="/javascript/bootstrap.js"></script>
-
-
 <script src="/javascript/composition.js"></script>
 <script src="/javascript/taskGeneral.js"></script>
 </body>

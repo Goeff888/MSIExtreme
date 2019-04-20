@@ -1,7 +1,7 @@
 <h2>Neue Bildversion</h2>
 <div class="gallery">
  <% for (var i = 0;   i < painting.history.length; i++){ %>
-  <img src="/images/corel/<%= painting._id %>/history/<%= painting.history[i].image %>" class="galleryThumb">
+  <img src="/images/paintings/<%= painting._id %>/history/<%= painting.history[i].image %>" class="galleryThumb">
   <% if (i >= 4){ %>
    <a href="">...</a>
   <% i = painting.history.length;
@@ -23,7 +23,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="/corel/<%= painting._id %>/edit?_method=PUT" encType="multipart/form-data">
+      <form method="post" action="/painting/<%= painting._id %>/edit?_method=PUT" encType="multipart/form-data">
       <div class="modal-body">
         Beschreibung:
         <textarea rows="4" cols="50" name="newDescription"></textarea>

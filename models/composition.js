@@ -18,7 +18,7 @@ var templateSchema = new mongoose.Schema({
 });
 var compositionSchema = new mongoose.Schema({
   name:         String,
-  image:        {type: String, default: '/images/compositions/winkenderPanda.jpg'},
+  image:        String,
   description:  {type: String, default: 'n.a'},
   rating:       Number,
   created:      {type:Date, default: Date.now},

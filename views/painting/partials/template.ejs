@@ -1,7 +1,7 @@
 <h2>Vorlagen</h2>
 <div class="gallery">
  <% for (var i = 0;   i < painting.templates.length; i++){ %>
-  <img src="/images/painting/<%= painting._id %>/templates/<%= painting.templates[i].image %>" class="galleryThumb">
+  <img src="/images/paintings/<%= painting._id %>/templates/<%= painting.templates[i].image %>" class="galleryThumb">
   <% if (i >= 4){ %>
    <a href="">...</a>
   <% i = painting.templates.length;

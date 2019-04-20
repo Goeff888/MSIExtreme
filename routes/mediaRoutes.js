@@ -21,16 +21,7 @@ router.get("/media/new", function(req, res){
 });
 //CREATE ROUTES###########################
 //neuer Eintrag
-router.post("/todo", function(req, res){
-   dBMedia.create(req.body.media, function(err, newEntry){
-   if(err){
-    res.render("error", {error: err});
-   }else{
-    console.log(newEntry);
-    res.render ("media/show", {media: newEntry});
-   }
-  });
-});
+
 //SHOW ROUTES###########################
 //ANZEIGE einer Eintrags
 router.get("/media/:id", function(req, res){

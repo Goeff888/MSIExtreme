@@ -28,11 +28,12 @@
         <a href="/composition" class="btn btn-primary">vorheriges Bild</a>
         <a href="/composition" class="btn btn-primary">nächstes Bild</a>
       </div>
-      <% if(composition.image == "winkenderPanda.jpg"){ %>
-        <img class="img-responsive img-composition imgComp" src="/images/<%= composition.image %>">
+ 
+      <% if (!composition.image){ %>
+        <img src="/images/winkenderPanda.jpg" class="img-responsive img-composition">
       <% }else{ %>
-        <img class="img-responsive img-composition imgComp" src="/images/compositions/<%= composition._id %>/<%= composition.image %>">
-      <% } %>
+        <img src="/images/compositions/<%= composition._id %>/<%= composition.image %>" class="img-thumbnail">
+      <% } %> 
       
       <div class="caption">
         <h4>

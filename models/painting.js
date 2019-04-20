@@ -11,7 +11,7 @@ var templateSchema = new mongoose.Schema({
 });
 var paintingSchema = new mongoose.Schema({
   name:         String,
-  image:        {type: String, default: '/images/winkenderPanda.jpg'},
+  image:        String,
   description:  {type: String, default: 'n.a'},
   rating:       Number,
   created:      {type:Date, default: Date.now},

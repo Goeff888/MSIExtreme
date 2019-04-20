@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blender Gallerie</title>
+    <title>3D Visualisierungen</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Joti+One" >
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -20,7 +20,11 @@
     </div>
     
     <div class="col-md-8">
-      <img class="img-responsive img-composition" src="/images/compositions/<%= composition._id %>/<%= composition.image %>">
+      <% if (!composition.image){ %>
+        <img src="/images/winkenderPanda.jpg" class="img-responsive img-composition">
+      <% }else{ %>
+        <img src="/images/compositions/<%= composition._id %>/<%= composition.image %>" class="img-thumbnail">
+      <% } %> 
       <div class="caption">
         <h4>
           <span><%= composition.name %></span>

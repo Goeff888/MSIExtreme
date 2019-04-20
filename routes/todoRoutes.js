@@ -28,12 +28,13 @@ router.get("/todo/new", function(req, res){
 //CREATE ROUTES###########################
 //neuer Eintrag
 router.post("/todo", function(req, res){
+ console.log("Post Route Todo Create");
    dBTodo.create(req.body.todo, function(err, newEntry){
    if(err){
     res.render("error", {error: err});
    }else{
-    console.log(newEntry);
-    res.redirect("/todo/"+ newEntry._id+"/edit");
+    console.log("Datenbank erzeugt:" +newEntry);
+    res.redirect("/todo/"+ newEntry._id);
    }
   });
 });
@@ -52,7 +53,7 @@ router.get("/todo/:id", function(req, res){
     }else{
      //console.log("id:" + entries._id);
      //console.log("tasks:" + tasks);
-     res.redirect("/todo/"+ entries._id+"/edit");
+     res.render("todo/show", tasks);
     } 
    });
    

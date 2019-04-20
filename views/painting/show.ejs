@@ -20,11 +20,13 @@
     </div>
 
     <div class="col-md-8">
-      <% if(painting.image == "winkenderPanda.jpg"){ %>
-        <img class="img-responsive img-composition" src="/images/winkenderPanda.jpg">
+      
+      <% if (!painting.image){ %>
+        <img src="/images/winkenderPanda.jpg" class="img-responsive img-composition">
       <% }else{ %>
-        <img class="img-responsive img-composition" src="/images/paintings/<%= painting._id %>/<%= painting.image %>">
+        <img src="/images/paintings/<%= painting._id %>/<%= painting.image %>" class="img-thumbnail">
       <% } %>
+      
       <div class="caption">
         <h4>
           <%= painting.name %>
@@ -60,7 +62,7 @@
         </p>
         <div class="collapse" id="collapseComment">
           <div class="card card-body">
-            <form method="post" action="/corel/<%= painting._id  %>/comments">
+            <form method="post" action="/painting/<%= painting._id  %>/comments">
               <textarea id="newComment" rows="5" cols="100" name="comment[comment]"></textarea>
               <button class="btn btn-primary" name="comment[corelID]" value="<%=painting._id  %>" type="submit">Speichern</button>
             </form>

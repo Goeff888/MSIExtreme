@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Arvo:400,700,700i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/corel.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/painting.css">
 </head>
 <body>
 <% include ../partials/navbarTop %>
@@ -25,35 +25,33 @@
     <div class="col-md-8">
       <div class="container">
        
-          <h1>Eintrag bearbeiten</h1>
-          <% console.log(painting.image); %>
-          <% if(typeof painting.image === "/images/winkenderPanda.jpg"){ %>
-            <img class="img-responsive img-composition" src="images/corel/<%= painting._id %>">
-          <% }else{ %>
-            <img class="img-responsive img-composition" src="/images/corel/<%= painting._id %>/<%= painting.image %>">
-          <% } %>
-          
-          <h4>
-            <%= painting.name %>
-            <span class="date ">
-            <%= painting.created.getDate() %>.
-            <%= painting.created.getMonth() %>.
-            <%= painting.created.getYear() +1900  %>
-            </span>
-          </h4>
-          <div style="width :30%; margin: 50px auto;">
-            <form action="/corel/<%= painting._id %>" method="post">
-              <div class="form-group">
-                <input class="form-control" type="text" id="pictureName" name="corel[name]" value="<%= painting.name %>">                
-              </div>
-              <div class="form-group">
-                <input class="form-control" type="text" name="corel[description]" value="<%= painting.description %>">  
-              </div>
-              <div class="form-group">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
-              </div>                           
-            </form>
-          </div>
+      <h1>Eintrag bearbeiten</h1>
+      <% if (!painting.image){ %>
+        <img src="/images/winkenderPanda.jpg" class="img-responsive img-composition">
+      <% }else{ %>
+        <img src="/images/paintings/<%= painting._id %>/<%= painting.image %>" class="img-thumbnail">
+      <% } %>
+        <h4>
+          <%= painting.name %>
+          <span class="date ">
+          <%= painting.created.getDate() %>.
+          <%= painting.created.getMonth() %>.
+          <%= painting.created.getYear() +1900  %>
+          </span>
+        </h4>
+        <div style="width :30%; margin: 50px auto;">
+          <form action="/painting/<%= painting._id %>" method="post">
+            <div class="form-group">
+              <input class="form-control" type="text" id="pictureName" name="painting[name]" value="<%= painting.name %>">                
+            </div>
+            <div class="form-group">
+              <input class="form-control" type="text" name="painting[description]" value="<%= painting.description %>">  
+            </div>
+            <div class="form-group">
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Speichern</button>  
+            </div>                           
+          </form>
+        </div>
       </div>
     </div>
     <div class="col-md-2">
@@ -66,8 +64,7 @@
 <div class="footer">Trademark 2018 Groefics</div>
 
 <script src="/javascript/jQuery_3_2_1.js"></script>
-<script src="/javascript/corelEdit.js"></script>
-
+<script src="/javascript/paintingEdit.js"></script>
 <script src="/javascript/bootstrap.js"></script>
 </body>
 </html>
