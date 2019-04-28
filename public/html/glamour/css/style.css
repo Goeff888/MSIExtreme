@@ -287,7 +287,7 @@ ol {
 	left: 50%;
 	margin-left: -0.003em;
 	top: 0;
-	background: #081624;
+	background: #1F2020;
 	opacity: 0.15;
 	z-index: 99;
 }
@@ -300,7 +300,7 @@ ol {
 	height: 100%;
 	top: 0;
 	left: 574px;
-	background: #081624;
+	background: #1F2020;
 }
 
 .sp-line:before {
@@ -317,18 +317,18 @@ ol {
 	display: block;
 	font-weight: 600;
 	position: relative;
-	border: 2px solid #081624;
+	border: 2px solid #1F2020;
 	-webkit-transition: all 0.4s ease-out 0s;
 	transition: all 0.4s ease-out 0s;
 }
 
 .accordion-area .panel-header.active .panel-link {
 	color: #fff;
-	background-color: #081624;
+	background-color: #1F2020;
 }
 
 .accordion-area .panel-header.active .panel-link.collapsed {
-	color: #081624;
+	color: #1F2020;
 	background-color: transparent;
 }
 
@@ -339,7 +339,7 @@ ol {
 	font-weight: 400;
 	right: 25px;
 	top: 50%;
-	color: #081624;
+	color: #1F2020;
 	line-height: 16px;
 	margin-top: -8px;
 	margin-left: -4px;
@@ -353,7 +353,7 @@ ol {
 
 .accordion-area .panel-header.active .panel-link.collapsed:after {
 	content: "+";
-	color: #081624;
+	color: #1F2020;
 }
 
 .accordion-area .panel-link {
@@ -366,7 +366,7 @@ ol {
 	padding-left: 34px;
 	font-size: 14px;
 	text-transform: uppercase;
-	color: #081624;
+	color: #1F2020;
 	font-weight: 400;
 	cursor: pointer;
 }
@@ -394,7 +394,7 @@ ol {
 }
 
 .tab-element .nav-tabs .nav-link {
-	border: 2px solid #081624;
+	border: 2px solid #1F2020;
 	text-align: left;
 	background-color: transparent;
 	border-radius: 0;
@@ -403,7 +403,7 @@ ol {
 	padding: 20px 35px;
 	font-size: 14px;
 	text-transform: uppercase;
-	color: #081624;
+	color: #1F2020;
 	font-weight: 400;
 	cursor: pointer;
 }
@@ -413,7 +413,7 @@ ol {
 }
 
 .tab-element .nav-tabs .nav-link.active {
-	background: #081624;
+	background: #1F2020;
 	color: #fff;
 }
 
@@ -449,7 +449,7 @@ ol {
 }
 
 .circle-progress .progress-info p {
-	color: #081624;
+	color: #1F2020;
 	margin-bottom: 0;
 	line-height: 1;
 }
@@ -474,11 +474,11 @@ ol {
 
 .milestone .milestone-text h2 {
 	font-size: 60px;
-	color: #081624;
+	color: #1F2020;
 }
 
 .milestone .milestone-text p {
-	color: #081624;
+	color: #1F2020;
 }
 
 /* search model */
@@ -528,7 +528,7 @@ ol {
 	---------------------*/
 
 .header-section {
-	background: #081624;
+	background: #1F2020;
 	text-align: center;
 	padding: 16px 90px;
 	position: relative;
@@ -658,7 +658,7 @@ ol {
 
 .hero-slider .owl-nav button.owl-prev {
 	color: #fff;
-	background: #081624;
+	background: #B98847 ;
 }
 
 .hero-slider-item {
@@ -676,7 +676,7 @@ ol {
 .hero-slider-item .hs-content h2 {
 	font-size: 160px;
 	font-weight: 700;
-	color: #081624;
+	color: #B98847;
 	margin-bottom: 42px;
 	position: relative;
 	top: 50px;
